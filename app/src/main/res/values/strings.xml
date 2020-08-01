@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">swimmer</string>
+    <string name="signin_message">Type phone number to sign in</string>
+    <string name="hint_username">User phone number</string>
 </resources>
