@@ -3,4 +3,5 @@
     <string name="signin_message">Type phone number to sign in</string>
     <string name="hint_username">User phone number</string>
     <string name="button_sign_in">Sign in</string>
+    <string name="username">Username</string>
 </resources>
