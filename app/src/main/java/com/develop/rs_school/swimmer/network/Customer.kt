@@ -10,7 +10,9 @@ data class Customer(
     val name: String,
     val dob: String,
     val balance: String,
-    @Json(name = "paid_count") val paid_lesson: Int
+    @Json(name = "paid_count") val paid_lesson: Int,
+    val phone: List<String>,
+    val email: List<String>
 ) : Parcelable
 
 
