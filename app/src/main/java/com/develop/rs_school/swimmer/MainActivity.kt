@@ -1,6 +1,5 @@
 package com.develop.rs_school.swimmer
 
-import android.database.Observable
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -8,6 +7,8 @@ import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
+import com.develop.rs_school.swimmer.model.CustomerCalendarItem
+import com.develop.rs_school.swimmer.model.Lesson
 import com.develop.rs_school.swimmer.network.SwimmerApi
 import kotlinx.android.synthetic.main.login_activity.*
 import kotlinx.coroutines.*
@@ -16,6 +17,8 @@ import kotlinx.coroutines.*
 class MainActivity : AppCompatActivity() {
 
     private var name = MutableLiveData<String>()
+    private var calendar = MutableLiveData<List<CustomerCalendarItem>>()
+    private var lessons = MutableLiveData<List<Lesson>>()
 
     private var coroutineJob = Job()
     private val uiScope = CoroutineScope(Dispatchers.Main + coroutineJob)
@@ -35,9 +38,17 @@ class MainActivity : AppCompatActivity() {
 
         uiScope.launch {
             SwimmerApi.firstAuth()
-            name.value = SwimmerApi.getCustomersImpl()[3].toString()
+            name.value = SwimmerApi.getCustomersImpl()[2].id
+            calendar.value = SwimmerApi.getCustomerCalendarImpl(name.value ?: "")
+            lessons.value = SwimmerApi.getLessonsImpl(2)
         }
         name.observe(this, Observer { newValue ->
+            Toast.makeText(this, newValue.toString(), Toast.LENGTH_LONG).show()
+        })
+        calendar.observe(this, Observer { newValue ->
+            Toast.makeText(this, newValue.toString(), Toast.LENGTH_LONG).show()
+        })
+        lessons.observe(this, Observer { newValue ->
             Toast.makeText(this, newValue.toString(), Toast.LENGTH_LONG).show()
         })
     }
