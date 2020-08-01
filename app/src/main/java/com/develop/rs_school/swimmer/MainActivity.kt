@@ -12,7 +12,6 @@ import kotlinx.coroutines.*
 
 class MainActivity : AppCompatActivity() {
 
-    private var token = MutableLiveData<String>()
     private var name = MutableLiveData<String>()
 
     private var coroutineJob = Job()
@@ -26,22 +25,13 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun testAPI() {
-        token.observe(
-            this,
-            Observer { newValue ->
-                Toast.makeText(this, newValue.toString(), Toast.LENGTH_SHORT).show()
-                uiScope.launch {
-                    name.value = SwimmerApi.getCustomerNameImpl(newValue)
-                }
-            })
-
+        uiScope.launch {
+            SwimmerApi.firstAuth()
+            name.value = SwimmerApi.getCustomersImpl()[3].toString()
+        }
         name.observe(this, Observer { newValue ->
             Toast.makeText(this, newValue.toString(), Toast.LENGTH_LONG).show()
         })
-
-        uiScope.launch {
-            token.value = SwimmerApi.getAuthTokenImpl()
-        }
     }
 
 
