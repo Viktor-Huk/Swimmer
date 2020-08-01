@@ -1,5 +1,6 @@
 package com.develop.rs_school.swimmer.network
 
+import com.develop.rs_school.swimmer.model.*
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import kotlinx.coroutines.Dispatchers
@@ -10,6 +11,7 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.Body
 import retrofit2.http.Header
 import retrofit2.http.POST
+import retrofit2.http.Query
 
 private const val BASE_URL = "https://mevis.s20.online/v2api/"
 private const val BRANCH_ID = "2"
@@ -24,6 +26,21 @@ interface SwimmerApiService {
     suspend fun getCustomers(
         @Header("X-ALFACRM-TOKEN") token: String
     ): Response<CustomerList>
+
+    @POST("$BRANCH_ID/lesson/index")
+    suspend fun getLessons(
+        @Header("X-ALFACRM-TOKEN") token: String,
+        @Body statusObject: LessonStatusObject
+    ): Response<LessonList>
+
+    @POST("$BRANCH_ID/calendar/customer")
+    suspend fun getCustomerCalendar(
+        @Header("X-ALFACRM-TOKEN") token: String,
+        @Query(value = "id") id: String,
+        @Query(value = "date1") dateFrom: String,//01.01.2020
+        @Query(value = "date2") dateTo: String
+    ): Response<List<CustomerCalendarItem>>
+
 }
 
 object SwimmerApi {
@@ -52,14 +69,48 @@ object SwimmerApi {
         }
     }
 
+    //TODO make fabric method
     suspend fun getCustomersImpl(): List<Customer> {
         return withContext(Dispatchers.IO) {
             val response = retrofitService.getCustomers(token)
             when {
-                response.isSuccessful -> response.body()!!.items
+                response.isSuccessful -> response.body()?.items ?: listOf()
                 response.code() == 403 -> {
                     getAuthTokenImpl()
-                    retrofitService.getCustomers(token).body()!!.items
+                    retrofitService.getCustomers(token).body()?.items ?: listOf()
+                }
+                else -> listOf()
+            }
+        }
+    }
+
+    suspend fun getCustomerCalendarImpl(
+        customerId: String,
+        dateFrom: String = "01.01.2020",
+        dateTo: String = "31.12.2020"
+    ): List<CustomerCalendarItem> {
+        return withContext(Dispatchers.IO) {
+            val response = retrofitService.getCustomerCalendar(token, customerId, dateFrom, dateTo)
+            when {
+                response.isSuccessful -> response.body() ?: listOf()
+                response.code() == 403 -> {
+                    getAuthTokenImpl()
+                    retrofitService.getCustomerCalendar(token, customerId, dateFrom, dateTo).body()
+                        ?: listOf()
+                }
+                else -> listOf()
+            }
+        }
+    }
+
+    suspend fun getLessonsImpl(status: Int = 3): List<Lesson> {
+        return withContext(Dispatchers.IO) {
+            val response = retrofitService.getLessons(token, LessonStatusObject(status.toString()))
+            when {
+                response.isSuccessful -> response.body()?.items ?: listOf()
+                response.code() == 403 -> {
+                    getAuthTokenImpl()
+                    retrofitService.getLessons(token, LessonStatusObject(status.toString())).body()?.items ?: listOf()
                 }
                 else -> listOf()
             }
