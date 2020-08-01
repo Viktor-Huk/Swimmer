@@ -12,15 +12,15 @@ import retrofit2.http.Header
 import retrofit2.http.POST
 
 private const val BASE_URL = "https://mevis.s20.online/v2api/"
+private const val BRANCH_ID = "2"
 
 interface SwimmerApiService {
     @POST("auth/login")
     suspend fun getAuthToken(
-        //@HeaderMap headers: Map<String, String>,
         @Body authObject: AuthObject
     ): TokenObject
 
-    @POST("2/customer/index")
+    @POST("$BRANCH_ID/customer/index")
     suspend fun getCustomers(
         @Header("X-ALFACRM-TOKEN") token: String
     ): Response<CustomerList>
