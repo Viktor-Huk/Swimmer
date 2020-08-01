@@ -115,7 +115,7 @@
             android:layout_height="wrap_content"
             android:text="Email"
             android:textColor="@color/black_color"
-           HEAD android:textSize="13sp" />
+            android:textSize="13sp" />
 
         <TextView
             android:layout_width="wrap_content"

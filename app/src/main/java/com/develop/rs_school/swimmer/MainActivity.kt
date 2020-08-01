@@ -4,7 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import android.view.WindowManager
+import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
@@ -15,7 +15,6 @@ import kotlinx.coroutines.*
 
 class MainActivity : AppCompatActivity() {
 
-    private var token = MutableLiveData<String>()
     private var name = MutableLiveData<String>()
 
     private var coroutineJob = Job()
@@ -26,7 +25,6 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.login_activity)
 
         testAPI()
-
         button_signin.setOnClickListener {
             val toolbarActivity = Intent(this, HomeScreenActivity::class.java)
             startActivity(toolbarActivity)
@@ -34,21 +32,26 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun testAPI() {
-        token.observe(
-            this,
-            Observer { newValue ->
-                Toast.makeText(this, newValue.toString(), Toast.LENGTH_SHORT).show()
-                uiScope.launch {
-                    name.value = SwimmerApi.getCustomerNameImpl(newValue)
-                }
-            })
 
+        uiScope.launch {
+            SwimmerApi.firstAuth()
+            name.value = SwimmerApi.getCustomersImpl()[3].toString()
+        }
         name.observe(this, Observer { newValue ->
             Toast.makeText(this, newValue.toString(), Toast.LENGTH_LONG).show()
         })
+    }
 
+    private fun auth(authData: String){
         uiScope.launch {
-            token.value = SwimmerApi.getAuthTokenImpl()
+            SwimmerApi.firstAuth()
+            try {
+                val res = SwimmerApi.getCustomersImpl().first { it.phone.contains(authData) }
+                Log.d("1", res.name)
+            }
+            catch (e: NoSuchElementException){
+                Log.d("1", "authError")
+            }
         }
     }
 

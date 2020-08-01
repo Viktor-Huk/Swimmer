@@ -4,27 +4,27 @@ import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import org.json.JSONObject
+import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
-import retrofit2.http.*
+import retrofit2.http.Body
+import retrofit2.http.Header
+import retrofit2.http.POST
 
 private const val BASE_URL = "https://mevis.s20.online/v2api/"
+private const val BRANCH_ID = "2"
 
-//TODO 15 minutes !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-interface SwimmerApiService{
+interface SwimmerApiService {
     @POST("auth/login")
     suspend fun getAuthToken(
-        //@HeaderMap headers: Map<String, String>,
         @Body authObject: AuthObject
     ): TokenObject
 
-    @POST("2/customer/index")
+    @POST("$BRANCH_ID/customer/index")
     suspend fun getCustomers(
         @Header("X-ALFACRM-TOKEN") token: String
-    ): CustomerList
+    ): Response<CustomerList>
 }
-
 
 object SwimmerApi {
     private val moshi = Moshi.Builder()
@@ -35,18 +35,34 @@ object SwimmerApi {
         .addConverterFactory(MoshiConverterFactory.create(moshi))
         .baseUrl(BASE_URL)
         .build()
-    val retrofitService: SwimmerApiService = retrofit.create(SwimmerApiService::class.java)
+    private val retrofitService: SwimmerApiService = retrofit.create(SwimmerApiService::class.java)
 
-    suspend fun getAuthTokenImpl(): String {
-        return withContext(Dispatchers.IO){
+    private var token: String = ""
+
+    //TODO make one method for auth
+    private suspend fun getAuthTokenImpl() {
+        val auth = AuthObject()
+        token = retrofitService.getAuthToken(auth).token
+    }
+
+    suspend fun firstAuth() {
+        withContext(Dispatchers.IO) {
             val auth = AuthObject()
-            retrofitService.getAuthToken(auth).token
+            token = retrofitService.getAuthToken(auth).token
         }
     }
 
-    suspend fun getCustomerNameImpl(token: String): String {
-        return withContext(Dispatchers.IO){
-            retrofitService.getCustomers(token).items[3].name
+    suspend fun getCustomersImpl(): List<Customer> {
+        return withContext(Dispatchers.IO) {
+            val response = retrofitService.getCustomers(token)
+            when {
+                response.isSuccessful -> response.body()!!.items
+                response.code() == 403 -> {
+                    getAuthTokenImpl()
+                    retrofitService.getCustomers(token).body()!!.items
+                }
+                else -> listOf()
+            }
         }
     }
 }
