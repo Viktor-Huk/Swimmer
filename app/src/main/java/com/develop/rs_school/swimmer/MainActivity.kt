@@ -2,41 +2,51 @@ package com.develop.rs_school.swimmer
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.TextView
 import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import com.develop.rs_school.swimmer.network.AuthObject
 import com.develop.rs_school.swimmer.network.SwimmerApi
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
-import org.json.JSONObject
-
+import kotlinx.coroutines.*
 
 
 class MainActivity : AppCompatActivity() {
 
     private var token = MutableLiveData<String>()
+    private var name = MutableLiveData<String>()
+
+    private var coroutineJob = Job()
+    private val uiScope = CoroutineScope(Dispatchers.Main + coroutineJob)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        token.observe(this, Observer { newValue -> Toast.makeText(this, newValue.toString(), Toast.LENGTH_SHORT).show()})
+        testAPI()
+    }
 
-        val coroutineScope = CoroutineScope(Job() + Dispatchers.Main )
-        coroutineScope.launch {
+    private fun testAPI() {
+        token.observe(
+            this,
+            Observer { newValue ->
+                Toast.makeText(this, newValue.toString(), Toast.LENGTH_SHORT).show()
+                uiScope.launch {
+                    name.value = SwimmerApi.getCustomerNameImpl(newValue)
+                }
+            })
 
-//            val headers = HashMap<String, String>()
-//            headers["X-ALFACRM-TOKEN"] = "paste AUTHORIZATION value here"
-//            headers["KEY_TOKEN"] = "paste TOKEN value here"
+        name.observe(this, Observer { newValue ->
+            Toast.makeText(this, newValue.toString(), Toast.LENGTH_LONG).show()
+        })
 
-
-            val auth = AuthObject()
-
-            token.value = SwimmerApi.retrofitService.getAuthToken(auth).token
+        uiScope.launch {
+            token.value = SwimmerApi.getAuthTokenImpl()
         }
+    }
+
+
+    override fun onDestroy() {
+        super.onDestroy()
+        coroutineJob.cancel()
     }
 }
