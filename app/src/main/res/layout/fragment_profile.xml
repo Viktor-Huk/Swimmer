@@ -46,19 +46,19 @@
             android:textSize="32sp" />
 
         <TextView
-            android:id="@+id/tv_address"
+            android:id="@+id/dob"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tv_name"
             android:layout_centerHorizontal="true"
             android:fontFamily="sans-serif"
-            android:text="some address"
+            android:text="some date of birth"
             android:textAllCaps="true"
             android:textColor="@color/address"
             android:textSize="14sp" />
 
         <ImageButton
-            android:id="@+id/settings"
+            android:id="@+id/logout_button"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_alignParentEnd="true"
@@ -91,6 +91,7 @@
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/paied_visits"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="sans-serif-light"
@@ -129,6 +130,7 @@
             android:textSize="13sp" />
 
         <TextView
+            android:id="@+id/email_f"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif-light"
@@ -151,7 +153,7 @@
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
         android:orientation="vertical"
-        app:layout_constraintBottom_toTopOf="@+id/additional_layout"
+        app:layout_constraintBottom_toTopOf="@+id/balance"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/email_layout">
@@ -164,6 +166,7 @@
             android:textSize="13sp" />
 
         <TextView
+            android:id="@+id/phone_f"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif-light"
@@ -180,13 +183,13 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/additional_layout"
+        android:id="@+id/balance"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
-        app:layout_constraintBottom_toTopOf="@+id/addit_lin_layout"
+        app:layout_constraintBottom_toTopOf="@+id/payment"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/phone_field">
@@ -194,15 +197,16 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Some text"
+            android:text="Balance"
             android:textColor="@color/primaryDarkColor"
             android:textSize="13sp" />
 
         <TextView
+            android:id="@+id/balance_f"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif-light"
-            android:text="some additional data"
+            android:text="balance"
             android:textColor="@color/black_color"
             android:textSize="18sp" />
 
@@ -215,7 +219,7 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/addit_lin_layout"
+        android:id="@+id/payment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -224,20 +228,21 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/additional_layout">
+        app:layout_constraintTop_toBottomOf="@+id/balance">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Some data"
+            android:text="Last paymant date:"
             android:textColor="@color/primaryDarkColor"
             android:textSize="13sp" />
 
         <TextView
+            android:id="@+id/payment_f"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif-light"
-            android:text="some data"
+            android:text="paymant"
             android:textColor="@color/black_color"
             android:textSize="18sp" />
 
