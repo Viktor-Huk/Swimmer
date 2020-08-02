@@ -28,7 +28,7 @@ class LessonRecyclerAdapter(private val itemClickListener: LessonRecyclerItemLis
 //            itemBinding. .duration.text = rssItem.duration
 //            itemBinding.title.text = rssItem.title
 //            itemBinding.speaker.text = rssItem.speaker
-            itemBinding.name.text = customerLessonWithAgenda.date.toString()
+//            itemBinding.name.text = customerLessonWithAgenda.date.toString()
         }
     }
 
