@@ -3,7 +3,7 @@ package com.develop.rs_school.swimmer
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.develop.rs_school.swimmer.network.Customer
+import com.develop.rs_school.swimmer.model.Customer
 
 class RecyclerViewAdapter : RecyclerView.Adapter<CustomViewHolder>(){
 
