@@ -1,6 +1,7 @@
 package com.develop.rs_school.swimmer
 
 
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -30,8 +31,13 @@ class LessonRecyclerAdapter(private val itemClickListener: LessonRecyclerItemLis
 //            itemBinding.title.text = rssItem.title
 //            itemBinding.speaker.text = rssItem.speaker
             //itemBinding.name.text = customerLessonWithAgenda.date.toString()
+
+            itemBinding.date.text = customerLessonWithAgenda.date?.toString()
+
             if(customerLessonWithAgenda.agendaStatus == AgendaStatus.MISSED_FREE){
                 //TODO ...
+                itemView.setBackgroundColor(Color.GREEN)
+                itemBinding.image.setImageResource(R.drawable.person_icon)
             }
             if(customerLessonWithAgenda.agendaStatus == AgendaStatus.CANCELED){
                 //TODO ...

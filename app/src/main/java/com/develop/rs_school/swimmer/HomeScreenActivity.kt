@@ -23,18 +23,12 @@ class HomeScreenActivity : BaseActivity(1){
         super.onCreate(savedInstanceState)
         setContentView(R.layout.toolbar_layout)
         setupBottomNavigationBar()
-        initRecyclerView()
-        Toast.makeText(this, "Home", Toast.LENGTH_SHORT).show()
 
+        recyclerview.adapter = adapter
 
         uiScope.launch {
             adapter.submitList(getCustomerLessonsWithFullInfo("2376"))
         }
-    }
-
-    private fun initRecyclerView() {
-        recyclerview.layoutManager = LinearLayoutManager(this@HomeScreenActivity)
-        recyclerview.adapter = adapter
     }
 
     override fun onDestroy() {
