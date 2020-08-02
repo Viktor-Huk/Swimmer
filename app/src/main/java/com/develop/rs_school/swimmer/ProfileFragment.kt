@@ -37,7 +37,6 @@ class ProfileFragment : Fragment() {
             }
             email_f.text = it.email.firstOrNull()
             phone_f.text = it.phone.firstOrNull()
-            balance_f.text = it.balance
             payment_f.text = it.paidDate.toString()
 
         })
