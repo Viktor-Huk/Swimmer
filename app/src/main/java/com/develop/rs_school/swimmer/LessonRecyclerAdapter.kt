@@ -95,7 +95,7 @@ class LessonRecyclerAdapter(private val itemClickListener: LessonRecyclerItemLis
             "1" -> itemBinding.image.setImageResource(R.drawable.person_icon)
             "2" -> itemBinding.image.setImageResource(R.drawable.person_stalker)
             "3" -> itemBinding.image.setImageResource(R.drawable.asterisk)
-            "4" -> itemBinding.image.setImageResource(R.drawable.paperplane)
+            "4" -> itemBinding.image.setImageResource(R.drawable.paperplanenew)
             "5" -> itemBinding.image.setImageResource(R.drawable.md_contacts)
             "6" -> itemBinding.image.setImageResource(R.drawable.asterisk)
         }
