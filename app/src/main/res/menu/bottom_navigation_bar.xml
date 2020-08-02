@@ -7,6 +7,6 @@
         android:title="" />
     <item
         android:id="@+id/home_button"
-        android:icon="@drawable/ic_home"
+        android:icon="@drawable/calendar"
         android:title="" />
 </menu>
