@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import kotlinx.android.synthetic.main.fragment_profile.*
@@ -28,9 +27,21 @@ class ProfileFragment : Fragment() {
         val model = ViewModelProvider(requireActivity()).get(DataViewModel::class.java)
         model.profile.observe(viewLifecycleOwner, Observer {
             tv_name.text = it.name
+            dob.text = it.dob
+            val paidStatus = it.paid_lesson.toString()
+            if(paidStatus.toInt() < 0){
+                paied_visits.text = "You need to pay for ${it.paid_lesson.toString()} days"
+            }else {
+                paied_visits.text = it.paid_lesson.toString()
+            }
+            email_f.text = it.email.firstOrNull()
+            phone_f.text = it.phone.firstOrNull()
+            balance_f.text = it.balance
+            payment_f.text = it.paidDate.toString()
+
         })
 
-        view.settings.setOnClickListener {
+        view.logout_button.setOnClickListener {
             openActivity()
         }
 
