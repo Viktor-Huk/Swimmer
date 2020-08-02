@@ -2,17 +2,22 @@ package com.develop.rs_school.swimmer
 
 import android.os.Bundle
 import android.util.Log
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
-    val dataViewModel by viewModels<DataViewModel>()
+    //val dataViewModel by viewModels<DataViewModel>{DataViewModelFactory("t")}
+    lateinit var dataViewModel: DataViewModel
+    lateinit var viewModelFactory: DataViewModelFactory
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        viewModelFactory = DataViewModelFactory("2376")
+        dataViewModel = ViewModelProvider(this, viewModelFactory).get(DataViewModel::class.java)
 
         bottom_navigation_view.setIconSize(29f, 29f)
             .setTextVisibility(false)
@@ -46,4 +51,6 @@ class MainActivity : AppCompatActivity() {
                 .replace(R.id.fl_content, LessonsFragment())
                 .commit()
     }
+
+    //override fun onBackPressed() {}
 }
