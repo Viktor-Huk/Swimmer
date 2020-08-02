@@ -10,6 +10,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import com.develop.rs_school.swimmer.model.*
 import com.develop.rs_school.swimmer.network.SwimmerApi
+import com.develop.rs_school.swimmer.network.SwimmerApi.getCustomerLessonsWithFullInfo
 import kotlinx.android.synthetic.main.login_activity.*
 import kotlinx.coroutines.*
 import java.util.*
@@ -56,64 +57,6 @@ class MainActivity : AppCompatActivity() {
         lessons.observe(this, Observer { newValue ->
             Toast.makeText(this, newValue.toString(), Toast.LENGTH_LONG).show()
         })
-    }
-
-    //TODO need paid_count
-    fun getCustomerLessonsWithFullInfo(customerId: String) {
-        uiScope.launch {
-            val customer = SwimmerApi.getCustomersImpl().first { it.id == customerId }
-            //TODO parallel ?
-            val lessonInCalendarList = SwimmerApi.getCustomerCalendarImpl(customerId).sortedBy { it.date }
-            val lessonList = SwimmerApi.getCustomerLesson(customerId).sortedByDescending { it.date }
-
-            val resultList = mutableListOf<CustomerLessonWithAgenda>()
-            var paidLessonInFuture = customer.paid_lesson
-            val notPaidLessonIdsInHistory =
-                if (paidLessonInFuture < 0)
-                    lessonList.map { it.id }.subList(0, -paidLessonInFuture)
-                else listOf()
-            for (item in lessonInCalendarList) {
-
-                val lessonWithStatus = CustomerLessonWithAgenda(
-                    id = item.id,
-                    type = item.type,
-                    date = item.date,
-                    duration = item.duration
-                )
-                if (item.status == "1") {
-                    if (item.date != null && item.date > Date())
-                        lessonWithStatus.agendaStatus = AgendaStatus.PLANNED
-                    else
-                        lessonWithStatus.agendaStatus = AgendaStatus.FORGOT
-                    //TODO hack
-                    if (lessonWithStatus.agendaStatus == AgendaStatus.PLANNED && paidLessonInFuture > 0) {
-                        lessonWithStatus.agendaStatus = AgendaStatus.PREPAID
-                        paidLessonInFuture--
-                    }
-                }
-                if (item.status == "2") {
-                    lessonWithStatus.agendaStatus = AgendaStatus.CANCELED
-                }
-                if (item.status == "3") {
-                    val lessonDetail = lessonList.first { it.id == item.id }
-                    if (lessonDetail.isAttend == 1) {
-                        lessonWithStatus.agendaStatus = AgendaStatus.VISIT_PAID
-                        if(notPaidLessonIdsInHistory.contains(item.id))
-                            lessonWithStatus.agendaStatus = AgendaStatus.VISIT_NOT_PAID
-                    }
-                    if (lessonDetail.isAttend == 0) {
-                        lessonWithStatus.agendaStatus = AgendaStatus.MISSED_PAID
-                        if(notPaidLessonIdsInHistory.contains(item.id))
-                            lessonWithStatus.agendaStatus = AgendaStatus.MISSED_NOT_PAID
-                    }
-                    if (lessonDetail.isAttend == 0 && lessonDetail.price == "0.00") {
-                        lessonWithStatus.agendaStatus = AgendaStatus.MISSED_FREE
-                    }
-                }
-
-                resultList.add(lessonWithStatus)
-            }
-        }
     }
 
     private fun auth(authData: String) {
