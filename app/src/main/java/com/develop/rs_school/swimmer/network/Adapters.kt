@@ -13,7 +13,7 @@ class CustomDateTimeAdapter {
 
     @FromJson
     fun fromJson(value: String): Date? {
-        val parser = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US)
+        val parser = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
         return parser.parse(value)
     }
 }
