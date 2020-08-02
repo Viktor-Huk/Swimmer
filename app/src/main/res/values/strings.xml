@@ -21,7 +21,7 @@
     </string>
     <string name="attachment_summary_off">Only download attachments when manually requested</string>
 
-    <!--Settings fragment-->
+    <!--logout_button fragment-->
     <string name="logout_msg">Tap to logout</string>
     <string name="logout_button">Logout</string>
     <!-- TODO: Remove or change this placeholder text -->
