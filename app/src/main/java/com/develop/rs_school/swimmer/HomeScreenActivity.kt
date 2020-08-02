@@ -3,7 +3,7 @@ package com.develop.rs_school.swimmer
 import android.os.Bundle
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.develop.rs_school.swimmer.network.SwimmerApi
+import com.develop.rs_school.swimmer.network.getCustomerLessonsWithFullInfo
 import kotlinx.android.synthetic.main.toolbar_layout.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -28,7 +28,7 @@ class HomeScreenActivity : BaseActivity(1){
 
 
         uiScope.launch {
-            adapter.submitList(SwimmerApi.getCustomerLessonsWithFullInfo("2379"))
+            adapter.submitList(getCustomerLessonsWithFullInfo("2379"))
         }
     }
 
