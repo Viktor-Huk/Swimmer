@@ -7,10 +7,10 @@ import kotlinx.android.synthetic.main.recycler_view_raw.view.*
 
 class CustomViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     val image = view.image
-    val userName = view.name
+//    val userName = view.name
     val dob = view.dob
-    val balance = view.balance
-    val paid_lesson = view.paid_balance
+//    val balance = view.balance
+//    val paid_lesson = view.paid_balance
     val phone = view.phone_field
     val email = view.email_layout
 }
