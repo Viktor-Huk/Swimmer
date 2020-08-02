@@ -13,6 +13,9 @@ class MainActivity : AppCompatActivity() {
     lateinit var dataViewModel: DataViewModel
     lateinit var viewModelFactory: DataViewModelFactory
 
+    //FIXME sorry)
+    var currentFragment = 0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -32,17 +35,21 @@ class MainActivity : AppCompatActivity() {
         bottom_navigation_view.setOnNavigationItemSelectedListener {
             when (it.itemId) {
                 R.id.profile_button -> {
+                    if (currentFragment == 2) return@setOnNavigationItemSelectedListener true
                     supportFragmentManager.beginTransaction()
                         .setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right)
                         .replace(R.id.fl_content, ProfileFragment())
                         .commit()
+                    currentFragment = 2
                     return@setOnNavigationItemSelectedListener true
                 }
                 R.id.lessons_button -> {
+                    if (currentFragment == 1) return@setOnNavigationItemSelectedListener true
                     supportFragmentManager.beginTransaction()
                         .setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left)
                         .replace(R.id.fl_content, LessonsFragment())
                         .commit()
+                    currentFragment = 1
                     return@setOnNavigationItemSelectedListener true
                 }
                 else -> {
@@ -51,10 +58,12 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
-        if (savedInstanceState == null)
+        if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
                 .replace(R.id.fl_content, LessonsFragment())
                 .commit()
+            currentFragment = 1
+        }
     }
 
     private fun getSavedSession(): String {
