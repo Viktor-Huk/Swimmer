@@ -1,17 +1,15 @@
 package com.develop.rs_school.swimmer
 
 
-import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.develop.rs_school.swimmer.databinding.RecyclerViewRawBinding
 import com.develop.rs_school.swimmer.model.AgendaStatus
 import com.develop.rs_school.swimmer.model.CustomerLessonWithAgenda
+import java.text.SimpleDateFormat
 
 class LessonRecyclerAdapter(private val itemClickListener: LessonRecyclerItemListener) :
     ListAdapter<CustomerLessonWithAgenda, LessonRecyclerAdapter.ViewHolder>(LessonDiffUtilCallback()) {
@@ -35,9 +33,11 @@ class LessonRecyclerAdapter(private val itemClickListener: LessonRecyclerItemLis
 
             itemBinding.date.text = customerLessonWithAgenda.date?.toString()
             itemBinding.weekDay.text = customerLessonWithAgenda.date.toString().split("\\s".toRegex())[0]
-            val month = customerLessonWithAgenda.date.toString().split("\\s".toRegex())[1]
-            val date = customerLessonWithAgenda.date.toString().split("\\s".toRegex())[2]
-            itemBinding.date.text = "$date $month"
+            val pattern = "dd.MM"
+            val simpleDateFormat = SimpleDateFormat(pattern)
+            val date: String = simpleDateFormat.format(customerLessonWithAgenda.date)
+            itemBinding.date.text = date
+
 
             if(customerLessonWithAgenda.agendaStatus == AgendaStatus.MISSED_FREE){
                 itemView.setBackgroundResource(R.drawable.layout_border_green)
