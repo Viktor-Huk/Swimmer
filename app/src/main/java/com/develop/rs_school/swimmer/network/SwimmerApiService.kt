@@ -13,6 +13,7 @@ import retrofit2.http.Header
 import retrofit2.http.POST
 import retrofit2.http.Query
 
+
 private const val BASE_URL = "https://mevis.s20.online/v2api/"
 private const val BRANCH_ID = "2"
 
@@ -43,9 +44,11 @@ interface SwimmerApiService {
 
 }
 
+//TODO move to another file
 object SwimmerApi {
     private val moshi = Moshi.Builder()
         .add(KotlinJsonAdapterFactory())
+        .add(CustomDateTimeAdapter())
         .build()
 
     private val retrofit = Retrofit.Builder()
@@ -55,6 +58,7 @@ object SwimmerApi {
     private val retrofitService: SwimmerApiService = retrofit.create(SwimmerApiService::class.java)
 
     private var token: String = ""
+    private const val lessonStatusForHistory = 3
 
     //TODO make one method for auth
     private suspend fun getAuthTokenImpl() {
@@ -103,17 +107,38 @@ object SwimmerApi {
         }
     }
 
-    suspend fun getLessonsImpl(status: Int = 3): List<Lesson> {
+    suspend fun getLessonsImpl(status: Int = lessonStatusForHistory): List<Lesson> {
         return withContext(Dispatchers.IO) {
             val response = retrofitService.getLessons(token, LessonStatusObject(status.toString()))
             when {
                 response.isSuccessful -> response.body()?.items ?: listOf()
                 response.code() == 403 -> {
                     getAuthTokenImpl()
-                    retrofitService.getLessons(token, LessonStatusObject(status.toString())).body()?.items ?: listOf()
+                    retrofitService.getLessons(token, LessonStatusObject(status.toString()))
+                        .body()?.items ?: listOf()
                 }
                 else -> listOf()
             }
+        }
+    }
+
+    suspend fun getCustomerLesson(customerId: String): List<CustomerLesson> {
+        val allLessonsContainsDetails = getLessonsImpl(lessonStatusForHistory)
+
+        return allLessonsContainsDetails.filter { lesson ->
+            lesson.lessonDetails.find { it.customerId == customerId } != null
+        }.map {
+            val detail = it.lessonDetails.first { d -> d.customerId == customerId }
+            CustomerLesson(
+                isAttend = detail.isAttend,
+                customerId = detail.customerId,
+                reason = detail.reason,
+                price = detail.price,
+                status = it.status,
+                type = it.type,
+                date = it.date,
+                id = it.id
+            )
         }
     }
 }

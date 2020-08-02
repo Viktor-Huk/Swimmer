@@ -7,8 +7,7 @@ import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
-import com.develop.rs_school.swimmer.model.CustomerCalendarItem
-import com.develop.rs_school.swimmer.model.Lesson
+import com.develop.rs_school.swimmer.model.*
 import com.develop.rs_school.swimmer.network.SwimmerApi
 import kotlinx.android.synthetic.main.login_activity.*
 import kotlinx.coroutines.*
@@ -16,9 +15,9 @@ import kotlinx.coroutines.*
 
 class MainActivity : AppCompatActivity() {
 
-    private var name = MutableLiveData<String>()
+    private var customers = MutableLiveData<List<Customer>>()
     private var calendar = MutableLiveData<List<CustomerCalendarItem>>()
-    private var lessons = MutableLiveData<List<Lesson>>()
+    private var lessons = MutableLiveData<List<CustomerLesson>>()
 
     private var coroutineJob = Job()
     private val uiScope = CoroutineScope(Dispatchers.Main + coroutineJob)
@@ -38,11 +37,12 @@ class MainActivity : AppCompatActivity() {
 
         uiScope.launch {
             SwimmerApi.firstAuth()
-            name.value = SwimmerApi.getCustomersImpl()[2].id
-            calendar.value = SwimmerApi.getCustomerCalendarImpl(name.value ?: "")
-            lessons.value = SwimmerApi.getLessonsImpl(2)
+            customers.value = SwimmerApi.getCustomersImpl()
+            //TODO parallel ?
+            calendar.value = SwimmerApi.getCustomerCalendarImpl("2376")//name.value ?: "")
+            lessons.value = SwimmerApi.getCustomerLesson("2376")//name.value ?: "")
         }
-        name.observe(this, Observer { newValue ->
+        customers.observe(this, Observer { newValue ->
             Toast.makeText(this, newValue.toString(), Toast.LENGTH_LONG).show()
         })
         calendar.observe(this, Observer { newValue ->
@@ -51,6 +51,19 @@ class MainActivity : AppCompatActivity() {
         lessons.observe(this, Observer { newValue ->
             Toast.makeText(this, newValue.toString(), Toast.LENGTH_LONG).show()
         })
+    }
+
+    //TODO need paid_count
+    fun getCustomerLessonsWithFullInfo(customerId: String){
+        uiScope.launch {
+            val calendarList = SwimmerApi.getCustomerCalendarImpl("2385")
+            val lessonList = SwimmerApi.getCustomerLesson("2385")
+
+            var resultList = mutableListOf<CustomerLessonWithFullInfo>()
+            for(item in calendarList)
+            {
+            }
+        }
     }
 
     private fun auth(authData: String){
