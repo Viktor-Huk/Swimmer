@@ -13,10 +13,12 @@ class AccoutActivity : BaseActivity(0){
     lateinit var settingsButton : ImageButton
 
     override fun onCreate(savedInstanceState: Bundle?) {
+//        setupBottomNavigationBar()
+//        setContentView(R.layout.toolbar_layout)
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.toolbar_layout)
-        setupBottomNavigationBar()
         setContentView(R.layout.account_layout)
+
+
         Toast.makeText(this, "Account", Toast.LENGTH_SHORT).show()
 
         settingsButton = findViewById(R.id.settings) as ImageButton
