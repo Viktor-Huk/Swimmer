@@ -1,5 +1,6 @@
 package com.develop.rs_school.swimmer
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
@@ -8,7 +9,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
-    //val dataViewModel by viewModels<DataViewModel>{DataViewModelFactory("t")}
+    //val dataViewModel by viewModels<DataViewModel>()
     lateinit var dataViewModel: DataViewModel
     lateinit var viewModelFactory: DataViewModelFactory
 
@@ -16,13 +17,15 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        viewModelFactory = DataViewModelFactory("2376")
+        val customerId = getSavedSession()
+
+        viewModelFactory = DataViewModelFactory(customerId)
         dataViewModel = ViewModelProvider(this, viewModelFactory).get(DataViewModel::class.java)
 
         bottom_navigation_view.setIconSize(29f, 29f)
             .setTextVisibility(false)
             .enableAnimation(true)
-        for(i in 0 until bottom_navigation_view.menu.size()){
+        for (i in 0 until bottom_navigation_view.menu.size()) {
             bottom_navigation_view.setIconTintList(i, null)
         }
 
@@ -30,12 +33,14 @@ class MainActivity : AppCompatActivity() {
             when (it.itemId) {
                 R.id.profile_button -> {
                     supportFragmentManager.beginTransaction()
+                        .setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right)
                         .replace(R.id.fl_content, ProfileFragment())
                         .commit()
                     return@setOnNavigationItemSelectedListener true
                 }
                 R.id.lessons_button -> {
                     supportFragmentManager.beginTransaction()
+                        .setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left)
                         .replace(R.id.fl_content, LessonsFragment())
                         .commit()
                     return@setOnNavigationItemSelectedListener true
@@ -46,10 +51,15 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
-        if(savedInstanceState == null)
+        if (savedInstanceState == null)
             supportFragmentManager.beginTransaction()
                 .replace(R.id.fl_content, LessonsFragment())
                 .commit()
+    }
+
+    private fun getSavedSession(): String {
+        val sharedPref = getSharedPreferences(getString(R.string.app_pref), Context.MODE_PRIVATE)
+        return sharedPref.getString(getString(R.string.sessionId), "2376") ?: "2376"
     }
 
     //override fun onBackPressed() {}

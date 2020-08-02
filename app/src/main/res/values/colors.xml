@@ -19,4 +19,5 @@
     <color name="silver">#C0C0C0</color>
     <color name="black_overlay">#66000000</color>
     <color name="orange">#E76A27</color>
+    <color name="md_amber_700">#FFA000</color>
 </resources>

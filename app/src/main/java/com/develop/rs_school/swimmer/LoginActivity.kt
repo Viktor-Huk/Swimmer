@@ -1,5 +1,6 @@
 package com.develop.rs_school.swimmer
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
@@ -27,20 +28,25 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.login_activity)
 
+        if(getSavedSession()!=null){
+            startActivity(Intent(this@LoginActivity, MainActivity::class.java))
+            finish()
+        }
+
         uiScope.launch {firstAuth()}
 
         val slots = UnderscoreDigitSlotsParser().parseSlots("+375(__)___-__-__")
         val formatWatcher: FormatWatcher = MaskFormatWatcher(MaskImpl.createTerminated(slots))
         formatWatcher.installOn(text_input)
-
+        val t = getSavedSession()
         button_signin.setOnClickListener {
 
             uiScope.launch {
                 val authApiStatus = auth(text_input.text.toString())
                 if(authApiStatus != ""){
-                    val mainActivity = Intent(this@LoginActivity, MainActivity::class.java)
-
-                    startActivity(mainActivity)
+                    val mainActivityIntent = Intent(this@LoginActivity, MainActivity::class.java)
+                    createSession(authApiStatus)
+                    startActivity(mainActivityIntent)
                     finish()
                 }
                 else{
@@ -64,6 +70,19 @@ class LoginActivity : AppCompatActivity() {
                 or View.SYSTEM_UI_FLAG_FULLSCREEN)
     }
 
+    private fun createSession(session: String){
+        val sharedPref = getSharedPreferences(getString(R.string.app_pref), Context.MODE_PRIVATE)
+        sharedPref?.let{
+            with (sharedPref.edit()) {
+                putString(getString(R.string.sessionId), session)
+                commit()
+            }
+        }
+    }
+    private fun getSavedSession(): String? {
+        val sharedPref = getSharedPreferences(getString(R.string.app_pref), Context.MODE_PRIVATE)
+        return sharedPref.getString(getString(R.string.sessionId), null)
+    }
 
     override fun onDestroy() {
         super.onDestroy()

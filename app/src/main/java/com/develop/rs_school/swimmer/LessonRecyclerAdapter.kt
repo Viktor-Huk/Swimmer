@@ -2,14 +2,13 @@ package com.develop.rs_school.swimmer
 
 
 import android.annotation.SuppressLint
-import android.graphics.Color
+import android.graphics.Color.parseColor
+import android.graphics.Paint
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.develop.rs_school.swimmer.databinding.RecyclerViewRawBinding
 import com.develop.rs_school.swimmer.model.AgendaStatus
 import com.develop.rs_school.swimmer.model.CustomerLessonWithAgenda
@@ -28,31 +27,26 @@ class LessonRecyclerAdapter(private val itemClickListener: LessonRecyclerItemLis
 
         @SuppressLint("SimpleDateFormat")
         fun bind(customerLessonWithAgenda: CustomerLessonWithAgenda) {
-//            Glide.with(itemView.context).load(rssItem.imageUrl)
-//                .thumbnail(GLIDE_THUMBNAIL_SIZE)
-//                .into(itemBinding.rssImage)
-//            itemBinding. .duration.text = rssItem.duration
-//            itemBinding.title.text = rssItem.title
-//            itemBinding.speaker.text = rssItem.speaker
-            //itemBinding.name.text = customerLessonWithAgenda.date.toString()
-
             customerLessonWithAgenda.date?.let {
                 val weekPattern = SimpleDateFormat("E")
                 val datePattern = SimpleDateFormat("dd.MM")
 
                 itemBinding.date.text = datePattern.format(it)
-                itemBinding.weekDay.text = weekPattern.format(it)
+                itemBinding.weekDay.text = weekPattern.format(it).capitalize()
             }
 
             if(customerLessonWithAgenda.agendaStatus == AgendaStatus.MISSED_FREE){
-                itemView.setBackgroundResource(R.drawable.layout_border_green)
+                itemView.setBackgroundResource(R.drawable.layout_border_yellow)
                 selectIconType(itemBinding, customerLessonWithAgenda.type)
-                itemBinding.icon.setImageResource(R.drawable.ic_baseline_done_24)
+                itemBinding.icon.setImageResource(R.drawable.ic_baseline_close_24)
+                itemBinding.image.setColorFilter(parseColor("#FFA000"))
             }
             if(customerLessonWithAgenda.agendaStatus == AgendaStatus.CANCELED){
                 itemView.setBackgroundResource(R.drawable.layout_border_gray)
                 selectIconType(itemBinding, customerLessonWithAgenda.type)
                 itemBinding.icon.setImageResource(R.drawable.ic_baseline_remove_circle_outline_24)
+                itemBinding.date.paintFlags = itemBinding.date.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
+                itemBinding.weekDay.paintFlags = itemBinding.weekDay.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
             }
             if(customerLessonWithAgenda.agendaStatus == AgendaStatus.PLANNED ){
                 itemView.setBackgroundResource(R.drawable.layout_border_gray)
@@ -67,25 +61,30 @@ class LessonRecyclerAdapter(private val itemClickListener: LessonRecyclerItemLis
                 itemView.setBackgroundResource(R.drawable.layout_border_red)
                 selectIconType(itemBinding, customerLessonWithAgenda.type)
                 itemBinding.icon.setImageResource(R.drawable.ic_baseline_close_24)
+                itemBinding.image.setColorFilter(parseColor("#C62828"))
             }
             if(customerLessonWithAgenda.agendaStatus == AgendaStatus.MISSED_PAID){
                 itemView.setBackgroundResource(R.drawable.layout_border_yellow)
                 selectIconType(itemBinding, customerLessonWithAgenda.type)
                 itemBinding.icon.setImageResource(R.drawable.ic_baseline_remove_circle_outline_24)
+                itemBinding.image.setColorFilter(parseColor("#C62828"))
             }
             if(customerLessonWithAgenda.agendaStatus == AgendaStatus.PREPAID){
                 itemView.setBackgroundResource(R.drawable.layout_border_green)
                 selectIconType(itemBinding, customerLessonWithAgenda.type)
+                itemBinding.image.setColorFilter(parseColor("#2E7D32"))
             }
             if(customerLessonWithAgenda.agendaStatus == AgendaStatus.VISIT_PAID){
                 itemView.setBackgroundResource(R.drawable.layout_border_green)
                 itemBinding.icon.setImageResource(R.drawable.ic_baseline_done_24)
                 selectIconType(itemBinding, customerLessonWithAgenda.type)
+                itemBinding.image.setColorFilter(parseColor("#2E7D32"))
             }
             if(customerLessonWithAgenda.agendaStatus == AgendaStatus.VISIT_NOT_PAID){
                 itemView.setBackgroundResource(R.drawable.layout_border_red)
-                itemBinding.icon.setImageResource(R.drawable.ic_baseline_close_24)
+                itemBinding.icon.setImageResource(R.drawable.ic_baseline_done_24)
                 selectIconType(itemBinding, customerLessonWithAgenda.type)
+                itemBinding.image.setColorFilter(parseColor("#C62828"))
             }
         }
     }
