@@ -18,8 +18,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ToolbarActivity"
-            android:launchMode="singleTop"/>
         <activity android:name=".AccoutActivity"
             android:launchMode="singleTop"/>
         <activity android:name=".HomeScreenActivity"
