@@ -1,5 +1,6 @@
 package com.develop.rs_school.swimmer
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -42,11 +43,21 @@ class ProfileFragment : Fragment() {
         })
 
         view.logout_button.setOnClickListener {
+            deleteSession()
             openActivity()
         }
 
     }
 
+    private fun deleteSession(){
+        val sharedPref = requireActivity().getSharedPreferences(getString(R.string.app_pref), Context.MODE_PRIVATE)
+        sharedPref?.let{
+            with (sharedPref.edit()) {
+                remove(getString(R.string.sessionId))
+                commit()
+            }
+        }
+    }
     private fun openActivity() {
         startActivity(
             Intent(
