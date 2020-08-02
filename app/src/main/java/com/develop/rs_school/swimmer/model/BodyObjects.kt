@@ -1,4 +1,4 @@
-package com.develop.rs_school.swimmer.network
+package com.develop.rs_school.swimmer.model
 
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
@@ -12,3 +12,6 @@ data class AuthObject(
 
 @Parcelize
 data class TokenObject(val token: String) : Parcelable
+
+@Parcelize
+data class LessonStatusObject(val status: String) : Parcelable

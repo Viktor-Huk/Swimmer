@@ -1,4 +1,4 @@
-package com.develop.rs_school.swimmer.network
+package com.develop.rs_school.swimmer.model
 
 import android.os.Parcelable
 import com.squareup.moshi.Json
