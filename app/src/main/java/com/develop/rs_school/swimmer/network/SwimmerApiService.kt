@@ -108,7 +108,7 @@ object SwimmerApi {
         }
     }
 
-    suspend fun getLessonsImpl(status: Int = lessonStatusForHistory): List<Lesson> {
+    private suspend fun getLessonsImpl(status: Int = lessonStatusForHistory): List<Lesson> {
         return withContext(Dispatchers.IO) {
             val response = retrofitService.getLessons(token, LessonStatusObject(status.toString()))
             when {

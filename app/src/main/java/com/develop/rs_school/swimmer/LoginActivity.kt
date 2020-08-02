@@ -1,24 +1,22 @@
 package com.develop.rs_school.swimmer
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
 import android.widget.Toast
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Observer
-import com.develop.rs_school.swimmer.model.*
-import com.develop.rs_school.swimmer.network.SwimmerApi
+import androidx.appcompat.app.AppCompatActivity
 import com.develop.rs_school.swimmer.network.auth
 import kotlinx.android.synthetic.main.login_activity.*
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 
 
 class LoginActivity : AppCompatActivity() {
 
-    private var customers = MutableLiveData<List<Customer>>()
-    private var calendar = MutableLiveData<List<CustomerCalendarItem>>()
-    private var lessons = MutableLiveData<List<CustomerLesson>>()
+//    private var customers = MutableLiveData<List<Customer>>()
+//    private var calendar = MutableLiveData<List<CustomerCalendarItem>>()
+//    private var lessons = MutableLiveData<List<CustomerLesson>>()
 
     private var coroutineJob = Job()
     private val uiScope = CoroutineScope(Dispatchers.Main + coroutineJob)
@@ -33,55 +31,55 @@ class LoginActivity : AppCompatActivity() {
             uiScope.launch {
                 val loginStatus = auth(text_input.text.toString())
                 if(loginStatus != ""){
-                    val toolbarActivity = Intent(this@LoginActivity, HomeScreenActivity::class.java)
+                    val toolbarActivity = Intent(this@LoginActivity, MainActivity::class.java)
                     startActivity(toolbarActivity)
                 }
                 else{
                     Toast.makeText(this@LoginActivity, "Incorrect data", Toast.LENGTH_LONG).show()
 
-                    //FIX for test
-                    val toolbarActivity = Intent(this@LoginActivity, HomeScreenActivity::class.java)
+                    //FIXME for test
+                    val toolbarActivity = Intent(this@LoginActivity, MainActivity::class.java)
                     startActivity(toolbarActivity)
                 }
             }
         }
     }
 
-    private fun testAPI() {
+//    private fun testAPI() {
+//
+//        uiScope.launch {
+//            SwimmerApi.firstAuth()
+//            customers.value = SwimmerApi.getCustomersImpl()
+//            //TODO parallel ?
+//            calendar.value = SwimmerApi.getCustomerCalendarImpl("2376")//name.value ?: "")
+//            lessons.value = SwimmerApi.getCustomerLesson("2376")//name.value ?: "")
+//
+//            //getCustomerLessonsWithFullInfo("2379")
+//        }
+//        customers.observe(this, Observer { newValue ->
+//            Toast.makeText(this, newValue.toString(), Toast.LENGTH_LONG).show()
+//        })
+//        calendar.observe(this, Observer { newValue ->
+//            Toast.makeText(this, newValue.toString(), Toast.LENGTH_LONG).show()
+//        })
+//        lessons.observe(this, Observer { newValue ->
+//            Toast.makeText(this, newValue.toString(), Toast.LENGTH_LONG).show()
+//        })
+//    }
 
-        uiScope.launch {
-            SwimmerApi.firstAuth()
-            customers.value = SwimmerApi.getCustomersImpl()
-            //TODO parallel ?
-            calendar.value = SwimmerApi.getCustomerCalendarImpl("2376")//name.value ?: "")
-            lessons.value = SwimmerApi.getCustomerLesson("2376")//name.value ?: "")
-
-            //getCustomerLessonsWithFullInfo("2379")
-        }
-        customers.observe(this, Observer { newValue ->
-            Toast.makeText(this, newValue.toString(), Toast.LENGTH_LONG).show()
-        })
-        calendar.observe(this, Observer { newValue ->
-            Toast.makeText(this, newValue.toString(), Toast.LENGTH_LONG).show()
-        })
-        lessons.observe(this, Observer { newValue ->
-            Toast.makeText(this, newValue.toString(), Toast.LENGTH_LONG).show()
-        })
-    }
-
-    override fun onWindowFocusChanged(hasFocus: Boolean) {
-        super.onWindowFocusChanged(hasFocus)
-        if (hasFocus) hideSystemUI()
-    }
-
-    private fun hideSystemUI() {
-        window.decorView.systemUiVisibility = (View.SYSTEM_UI_FLAG_IMMERSIVE
-                or View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-                or View.SYSTEM_UI_FLAG_FULLSCREEN)
-    }
+//    override fun onWindowFocusChanged(hasFocus: Boolean) {
+//        super.onWindowFocusChanged(hasFocus)
+//        if (hasFocus) hideSystemUI()
+//    }
+//
+//    private fun hideSystemUI() {
+//        window.decorView.systemUiVisibility = (View.SYSTEM_UI_FLAG_IMMERSIVE
+//                or View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+//                or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+//                or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+//                or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+//                or View.SYSTEM_UI_FLAG_FULLSCREEN)
+//    }
 
 
     override fun onDestroy() {

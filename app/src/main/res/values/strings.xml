@@ -24,4 +24,6 @@
     <!--Settings fragment-->
     <string name="logout_msg">Tap to logout</string>
     <string name="logout_button">Logout</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
