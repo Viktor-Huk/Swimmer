@@ -1,6 +1,7 @@
 package com.develop.rs_school.swimmer
 
 
+import android.annotation.SuppressLint
 import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -12,6 +13,7 @@ import com.bumptech.glide.Glide
 import com.develop.rs_school.swimmer.databinding.RecyclerViewRawBinding
 import com.develop.rs_school.swimmer.model.AgendaStatus
 import com.develop.rs_school.swimmer.model.CustomerLessonWithAgenda
+import java.text.SimpleDateFormat
 
 class LessonRecyclerAdapter(private val itemClickListener: LessonRecyclerItemListener) :
     ListAdapter<CustomerLessonWithAgenda, LessonRecyclerAdapter.ViewHolder>(LessonDiffUtilCallback()) {
@@ -24,6 +26,7 @@ class LessonRecyclerAdapter(private val itemClickListener: LessonRecyclerItemLis
             }
         }
 
+        @SuppressLint("SimpleDateFormat")
         fun bind(customerLessonWithAgenda: CustomerLessonWithAgenda) {
 //            Glide.with(itemView.context).load(rssItem.imageUrl)
 //                .thumbnail(GLIDE_THUMBNAIL_SIZE)
@@ -33,11 +36,13 @@ class LessonRecyclerAdapter(private val itemClickListener: LessonRecyclerItemLis
 //            itemBinding.speaker.text = rssItem.speaker
             //itemBinding.name.text = customerLessonWithAgenda.date.toString()
 
-            itemBinding.date.text = customerLessonWithAgenda.date?.toString()
-            itemBinding.weekDay.text = customerLessonWithAgenda.date.toString().split("\\s".toRegex())[0]
-            val month = customerLessonWithAgenda.date.toString().split("\\s".toRegex())[1]
-            val date = customerLessonWithAgenda.date.toString().split("\\s".toRegex())[2]
-            itemBinding.date.text = "$date $month"
+            customerLessonWithAgenda.date?.let {
+                val weekPattern = SimpleDateFormat("E")
+                val datePattern = SimpleDateFormat("dd.MM")
+
+                itemBinding.date.text = datePattern.format(it)
+                itemBinding.weekDay.text = weekPattern.format(it)
+            }
 
             if(customerLessonWithAgenda.agendaStatus == AgendaStatus.MISSED_FREE){
                 itemView.setBackgroundResource(R.drawable.layout_border_green)

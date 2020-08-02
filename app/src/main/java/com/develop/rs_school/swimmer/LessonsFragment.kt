@@ -29,7 +29,7 @@ class LessonsFragment : Fragment() {
         lesson_recycler.adapter = adapter
 
         val model = ViewModelProvider(requireActivity()).get(DataViewModel::class.java)
-        model.lessons.observe(this, Observer {
+        model.lessons.observe(viewLifecycleOwner, Observer {
             adapter.submitList(it)
         })
     }
