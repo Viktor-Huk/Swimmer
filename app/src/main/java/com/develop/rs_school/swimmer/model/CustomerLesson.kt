@@ -10,6 +10,6 @@ data class CustomerLesson(
     @Json(name = "time_from") val date: Date?,
     val customerId: String,
     val reason: String?, // причина пропуска - от этого зависит стиль айтема в табличке с занятиями
-    val isAttend: String, // был или пропустил занятие
+    val isAttend: Int, // был или пропустил занятие
     val price: String
 )

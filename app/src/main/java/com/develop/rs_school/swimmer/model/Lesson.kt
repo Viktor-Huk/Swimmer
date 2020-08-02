@@ -20,7 +20,7 @@ data class LessonDetailsByCustomer(
     val id: String,
     @Json(name = "customer_id") val customerId: String,
     @Json(name = "reason_id") val reason: String?,
-    @Json(name = "is_attend") val isAttend: String,
+    @Json(name = "is_attend") val isAttend: Int,
     @Json(name = "commission") val price: String
 ) : Parcelable
 
