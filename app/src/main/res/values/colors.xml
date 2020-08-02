@@ -18,4 +18,5 @@
     <color name="circleBorder">#50FFFFFF</color>
     <color name="silver">#C0C0C0</color>
     <color name="black_overlay">#66000000</color>
+    <color name="orange">#E76A27</color>
 </resources>
