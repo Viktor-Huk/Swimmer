@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.develop.rs_school.swimmer.databinding.RecyclerViewRawBinding
+import com.develop.rs_school.swimmer.model.AgendaStatus
 import com.develop.rs_school.swimmer.model.CustomerLessonWithAgenda
 
 class LessonRecyclerAdapter(private val itemClickListener: LessonRecyclerItemListener) :
@@ -28,7 +29,13 @@ class LessonRecyclerAdapter(private val itemClickListener: LessonRecyclerItemLis
 //            itemBinding. .duration.text = rssItem.duration
 //            itemBinding.title.text = rssItem.title
 //            itemBinding.speaker.text = rssItem.speaker
-            itemBinding.name.text = customerLessonWithAgenda.date.toString()
+            //itemBinding.name.text = customerLessonWithAgenda.date.toString()
+            if(customerLessonWithAgenda.agendaStatus == AgendaStatus.MISSED_FREE){
+                //TODO ...
+            }
+            if(customerLessonWithAgenda.agendaStatus == AgendaStatus.CANCELED){
+                //TODO ...
+            }
         }
     }
 

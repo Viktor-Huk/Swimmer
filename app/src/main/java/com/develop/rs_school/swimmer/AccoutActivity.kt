@@ -2,8 +2,6 @@ package com.develop.rs_school.swimmer
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.View
-import android.view.animation.AlphaAnimation
 import android.widget.ImageButton
 import android.widget.Toast
 
@@ -25,7 +23,7 @@ class AccoutActivity : BaseActivity(0){
 
 
         settingsButton.setOnClickListener {
-            val intent = Intent(this, MainActivity::class.java)
+            val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
         }
     }

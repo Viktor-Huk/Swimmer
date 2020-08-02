@@ -4,7 +4,6 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
@@ -13,11 +12,9 @@ import com.develop.rs_school.swimmer.network.SwimmerApi
 import com.develop.rs_school.swimmer.network.auth
 import kotlinx.android.synthetic.main.login_activity.*
 import kotlinx.coroutines.*
-import java.util.*
-import kotlin.NoSuchElementException
 
 
-class MainActivity : AppCompatActivity() {
+class LoginActivity : AppCompatActivity() {
 
     private var customers = MutableLiveData<List<Customer>>()
     private var calendar = MutableLiveData<List<CustomerCalendarItem>>()
@@ -36,14 +33,14 @@ class MainActivity : AppCompatActivity() {
             uiScope.launch {
                 val loginStatus = auth(text_input.text.toString())
                 if(loginStatus != ""){
-                    val toolbarActivity = Intent(this@MainActivity, HomeScreenActivity::class.java)
+                    val toolbarActivity = Intent(this@LoginActivity, HomeScreenActivity::class.java)
                     startActivity(toolbarActivity)
                 }
                 else{
-                    Toast.makeText(this@MainActivity, "Incorrect data", Toast.LENGTH_LONG).show()
+                    Toast.makeText(this@LoginActivity, "Incorrect data", Toast.LENGTH_LONG).show()
 
                     //FIX for test
-                    val toolbarActivity = Intent(this@MainActivity, HomeScreenActivity::class.java)
+                    val toolbarActivity = Intent(this@LoginActivity, HomeScreenActivity::class.java)
                     startActivity(toolbarActivity)
                 }
             }

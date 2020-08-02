@@ -28,7 +28,7 @@ class HomeScreenActivity : BaseActivity(1){
 
 
         uiScope.launch {
-            adapter.submitList(getCustomerLessonsWithFullInfo("2379"))
+            adapter.submitList(getCustomerLessonsWithFullInfo("2376"))
         }
     }
 
