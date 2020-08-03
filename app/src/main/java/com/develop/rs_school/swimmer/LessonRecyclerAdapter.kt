@@ -110,7 +110,7 @@ class LessonRecyclerAdapter(private val itemClickListener: LessonRecyclerItemLis
 
     private fun selectImageType(itemBinding: RecyclerViewRawBinding, status : String){
         when(status){
-            "1" -> itemBinding.image.setImageResource(R.drawable.person_icon)
+            "1" -> itemBinding.image.setImageResource(R.drawable.person_grey)
             "2" -> itemBinding.image.setImageResource(R.drawable.person_stalker)
             "3" -> itemBinding.image.setImageResource(R.drawable.asterisk)
             "4" -> itemBinding.image.setImageResource(R.drawable.paperplanenew)
