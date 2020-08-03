@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.develop.rs_school.swimmer.model.CustomerLessonWithAgenda
 import kotlinx.android.synthetic.main.fragment_lessons.*
 
 class LessonsFragment : Fragment() {
@@ -27,10 +28,14 @@ class LessonsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         lesson_recycler.adapter = adapter
+        swipe_refresh.isRefreshing = true
 
         val model = ViewModelProvider(requireActivity()).get(DataViewModel::class.java)
         model.lessons.observe(viewLifecycleOwner, Observer {
             adapter.submitList(it)
+            swipe_refresh.isRefreshing = false
         })
+
+        swipe_refresh.setOnRefreshListener { model.updateData() }
     }
 }

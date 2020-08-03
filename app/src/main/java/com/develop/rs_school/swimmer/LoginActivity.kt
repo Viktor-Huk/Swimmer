@@ -38,7 +38,6 @@ class LoginActivity : AppCompatActivity() {
         val slots = UnderscoreDigitSlotsParser().parseSlots("+375(__)___-__-__")
         val formatWatcher: FormatWatcher = MaskFormatWatcher(MaskImpl.createTerminated(slots))
         formatWatcher.installOn(text_input)
-        val t = getSavedSession()
         button_signin.setOnClickListener {
 
             uiScope.launch {

@@ -30,11 +30,12 @@ class ProfileFragment : Fragment() {
             tv_name.text = it.name
             dob.text = it.dob
             val paidStatus = it.paid_lesson.toString()
-            if(paidStatus.toInt() < 0){
+            /*if(paidStatus.toInt() < 0){
                 paied_visits.text = "You need to pay for ${it.paid_lesson.toString()} days"
             }else {
                 paied_visits.text = it.paid_lesson.toString()
-            }
+            }*/
+            paied_visits.text = it.paid_lesson.toString()
             email_f.text = it.email.firstOrNull()
             phone_f.text = it.phone.firstOrNull()
             balance_f.text = it.balance

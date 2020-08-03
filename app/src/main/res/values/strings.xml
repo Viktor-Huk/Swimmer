@@ -29,4 +29,8 @@
     <string name="caption_lessons">Мои занятия</string>
     <string name="sessionId">CustomerId</string>
     <string name="app_pref">APP_PREFERENCES</string>
+    <string name="BalanceTitle">Общий баланс занятий</string>
+    <string name="emailTitle">E-mail</string>
+    <string name="phoneTitle">Телефон</string>
+    <string name="BalanceMoneyTitle">Баланс</string>
 </resources>

@@ -1,14 +1,15 @@
 package com.develop.rs_school.swimmer
 
 import androidx.lifecycle.*
+import com.develop.rs_school.swimmer.model.AgendaStatus
 import com.develop.rs_school.swimmer.model.Customer
 import com.develop.rs_school.swimmer.model.CustomerLessonWithAgenda
 import com.develop.rs_school.swimmer.network.SwimmerApi.getCustomersImpl
 import com.develop.rs_school.swimmer.network.getCustomerLessonsWithFullInfo
 import kotlinx.coroutines.launch
+import java.util.*
 
-//TODO fabric
-class DataViewModel(customerId: String) : ViewModel() {
+class DataViewModel(private val customerId: String) : ViewModel() {
 
     private val _lessons = MutableLiveData<List<CustomerLessonWithAgenda>>()
     val lessons: LiveData<List<CustomerLessonWithAgenda>> get() = _lessons
@@ -17,8 +18,17 @@ class DataViewModel(customerId: String) : ViewModel() {
     val profile: LiveData<Customer> get() = _profile
 
     init {
+        updateData()
+    }
+
+    fun updateData(){
         viewModelScope.launch {
-            _lessons.value = getCustomerLessonsWithFullInfo(customerId)
+            val lessons = getCustomerLessonsWithFullInfo(customerId)
+            //FIXME add 2 type holder after
+            val currentMoment = CustomerLessonWithAgenda("","", Date(),"", AgendaStatus.NONE)
+            lessons.add(currentMoment)
+            lessons.sortBy { it.date }
+            _lessons.value = lessons
             _profile.value = getCustomersImpl().first { it.id == customerId}
         }
     }
