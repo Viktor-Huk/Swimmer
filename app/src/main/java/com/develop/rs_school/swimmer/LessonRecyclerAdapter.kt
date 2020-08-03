@@ -50,7 +50,6 @@ class LessonRecyclerAdapter(private val itemClickListener: LessonRecyclerItemLis
             if(customerLessonWithAgenda.agendaStatus == AgendaStatus.NONE){
                 itemView.setBackgroundResource(R.drawable.layout_border_white)
                 itemBinding.date.text = "Сейчас"
-                //itemBinding.date.setTextColor(parseColor("#2E7D32"))
                 itemBinding.weekDay.visibility = View.GONE
                 itemBinding.image.setImageResource(R.drawable.ion_flag)
                 itemBinding.image.setColorFilter(parseColor("#2E7D32"))

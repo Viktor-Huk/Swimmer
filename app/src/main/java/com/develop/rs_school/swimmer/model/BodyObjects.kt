@@ -3,7 +3,6 @@ package com.develop.rs_school.swimmer.model
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 
-
 @Parcelize
 data class AuthObject(
     val email: String = "luba200296.lv@gmail.com",

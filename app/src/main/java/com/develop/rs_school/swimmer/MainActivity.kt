@@ -9,12 +9,11 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
-    //val dataViewModel by viewModels<DataViewModel>()
     lateinit var dataViewModel: DataViewModel
     lateinit var viewModelFactory: DataViewModelFactory
 
     //FIXME sorry)
-    var currentFragment = 0
+    private var currentFragment = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

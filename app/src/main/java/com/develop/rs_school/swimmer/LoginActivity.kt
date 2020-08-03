@@ -35,7 +35,7 @@ class LoginActivity : AppCompatActivity() {
 
         uiScope.launch {firstAuth()}
 
-        val slots = UnderscoreDigitSlotsParser().parseSlots("+375(__)___-__-__")
+        val slots = UnderscoreDigitSlotsParser().parseSlots(getString(R.string.phoneNumberMask))
         val formatWatcher: FormatWatcher = MaskFormatWatcher(MaskImpl.createTerminated(slots))
         formatWatcher.installOn(text_input)
         button_signin.setOnClickListener {

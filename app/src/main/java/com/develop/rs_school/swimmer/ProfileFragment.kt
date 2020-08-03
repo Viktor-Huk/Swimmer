@@ -21,7 +21,6 @@ class ProfileFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_profile, container, false)
     }
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -29,12 +28,6 @@ class ProfileFragment : Fragment() {
         model.profile.observe(viewLifecycleOwner, Observer {
             tv_name.text = it.name
             dob.text = it.dob
-            val paidStatus = it.paid_lesson.toString()
-            /*if(paidStatus.toInt() < 0){
-                paied_visits.text = "You need to pay for ${it.paid_lesson.toString()} days"
-            }else {
-                paied_visits.text = it.paid_lesson.toString()
-            }*/
             paied_visits.text = it.paid_lesson.toString()
             email_f.text = it.email.firstOrNull()
             phone_f.text = it.phone.firstOrNull()
@@ -66,10 +59,4 @@ class ProfileFragment : Fragment() {
             ).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
         )
     }
-
-    override fun onDestroy() {
-        super.onDestroy()
-    }
-
-
 }
