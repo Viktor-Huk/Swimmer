@@ -68,6 +68,7 @@ class LessonRecyclerAdapter(private val itemClickListener: LessonRecyclerItemLis
                 itemBinding.weekDay.paintFlags = itemBinding.weekDay.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
             }
             if(customerLessonWithAgenda.agendaStatus == AgendaStatus.PLANNED ){
+                itemBinding.image.setColorFilter(parseColor("#575757"))
                 itemView.setBackgroundResource(R.drawable.layout_border_gray)
                 selectImageType(itemBinding, customerLessonWithAgenda.type)
             }
