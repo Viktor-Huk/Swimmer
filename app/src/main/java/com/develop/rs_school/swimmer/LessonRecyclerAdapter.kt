@@ -15,6 +15,7 @@ import com.develop.rs_school.swimmer.databinding.RecyclerViewRawBinding
 import com.develop.rs_school.swimmer.model.AgendaStatus
 import com.develop.rs_school.swimmer.model.CustomerLessonWithAgenda
 import java.text.SimpleDateFormat
+import java.util.*
 
 class LessonRecyclerAdapter(private val itemClickListener: LessonRecyclerItemListener) :
     ListAdapter<CustomerLessonWithAgenda, LessonRecyclerAdapter.ViewHolder>(LessonDiffUtilCallback()) {
@@ -39,8 +40,8 @@ class LessonRecyclerAdapter(private val itemClickListener: LessonRecyclerItemLis
             //itemBinding.date.setTextColor(Color.BLACK)
 
             customerLessonWithAgenda.date?.let {
-                val weekPattern = SimpleDateFormat("E")
-                val datePattern = SimpleDateFormat("dd.MM")
+                val weekPattern = SimpleDateFormat("E", Locale("ru"))
+                val datePattern = SimpleDateFormat("dd.MM", Locale("ru"))
 
                 itemBinding.date.text = datePattern.format(it)
                 itemBinding.weekDay.text = weekPattern.format(it).capitalize()
@@ -86,7 +87,7 @@ class LessonRecyclerAdapter(private val itemClickListener: LessonRecyclerItemLis
             if(customerLessonWithAgenda.agendaStatus == AgendaStatus.MISSED_PAID){
                 itemView.setBackgroundResource(R.drawable.layout_border_yellow)
                 selectImageType(itemBinding, customerLessonWithAgenda.type)
-                itemBinding.icon.setImageResource(R.drawable.ic_baseline_remove_circle_outline_24)
+                itemBinding.icon.setImageResource(R.drawable.ic_baseline_close_24)
                 itemBinding.image.setColorFilter(parseColor("#C62828"))
             }
             if(customerLessonWithAgenda.agendaStatus == AgendaStatus.PREPAID){
