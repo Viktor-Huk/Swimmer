@@ -18,6 +18,7 @@ class DataViewModel(private val customerId: String) : ViewModel() {
     val profile: LiveData<Customer> get() = _profile
 
     init {
+        
         updateData()
     }
 
