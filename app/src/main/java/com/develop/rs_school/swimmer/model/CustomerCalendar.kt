@@ -11,5 +11,5 @@ data class CustomerCalendarItem(
     val type: String, // 1-6 Индивидуальный Групповой Пробный Отработка Индивид.2 Инд+ - от этого разная иконка
     val status: String, // 1 - запланировано, 3 - проведено, 2 - отменено
     @Json(name = "start") val date: Date?,
-    val duration: String
+    val duration: String?
 ) : Parcelable

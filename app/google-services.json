@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "517538360840",
+    "firebase_url": "https://swimmer-1f55f.firebaseio.com",
+    "project_id": "swimmer-1f55f",
+    "storage_bucket": "swimmer-1f55f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:517538360840:android:ec144bb5183d3fcb2cebbd",
+        "android_client_info": {
+          "package_name": "com.develop.rs_school.swimmer"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "517538360840-h41dto8qg74k99skao4v7584lv1sps2u.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyABrRJuyT9T5dDPw6amuaMUMvw1n2JZawg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "517538360840-h41dto8qg74k99skao4v7584lv1sps2u.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
