@@ -9,16 +9,19 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import kotlinx.android.synthetic.main.fragment_profile.*
-import kotlinx.android.synthetic.main.fragment_profile.view.*
+import com.develop.rs_school.swimmer.databinding.FragmentProfileBinding
 
 class ProfileFragment : Fragment() {
+
+    private var _binding : FragmentProfileBinding? = null
+    private val binding get() = requireNotNull(_binding)
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_profile, container, false)
+        _binding = FragmentProfileBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -26,16 +29,16 @@ class ProfileFragment : Fragment() {
 
         val model = ViewModelProvider(requireActivity()).get(DataViewModel::class.java)
         model.profile.observe(viewLifecycleOwner, Observer {
-            tv_name.text = it.name
-            dob.text = it.dob
-            paied_visits.text = it.paid_lesson.toString()
-            email_f.text = it.email.firstOrNull()
-            phone_f.text = it.phone.firstOrNull()
-            balance_f.text = it.balance
+            binding.tvName.text = it.name
+            binding.dob.text = it.dob
+            binding.paiedVisits.text = it.paid_lesson.toString()
+            binding.emailF.text = it.email.firstOrNull()
+            binding.phoneF.text = it.phone.firstOrNull()
+            binding.balanceF.text = it.balance
 
         })
 
-        view.logout_button.setOnClickListener {
+        binding.logoutButton.setOnClickListener {
             deleteSession()
             openActivity()
         }
@@ -58,5 +61,10 @@ class ProfileFragment : Fragment() {
                 LoginActivity::class.java
             ).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
         )
+    }
+
+    override fun onDestroyView() {
+        _binding = null
+        super.onDestroyView()
     }
 }

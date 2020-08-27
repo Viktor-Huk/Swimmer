@@ -6,9 +6,9 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.develop.rs_school.swimmer.databinding.ActivityLoginBinding
 import com.develop.rs_school.swimmer.network.SwimmerApi.firstAuth
 import com.develop.rs_school.swimmer.network.auth
-import kotlinx.android.synthetic.main.login_activity.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -24,9 +24,12 @@ class LoginActivity : AppCompatActivity() {
     private var coroutineJob = Job()
     private val uiScope = CoroutineScope(Dispatchers.Main + coroutineJob)
 
+    private lateinit var binding: ActivityLoginBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.login_activity)
+        binding = ActivityLoginBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         if(getSavedSession()!=null){
             startActivity(Intent(this@LoginActivity, MainActivity::class.java))
@@ -37,11 +40,11 @@ class LoginActivity : AppCompatActivity() {
 
         val slots = UnderscoreDigitSlotsParser().parseSlots(getString(R.string.phoneNumberMask))
         val formatWatcher: FormatWatcher = MaskFormatWatcher(MaskImpl.createTerminated(slots))
-        formatWatcher.installOn(text_input)
-        button_signin.setOnClickListener {
+        formatWatcher.installOn(binding.textInput)
 
+        binding.buttonSignin.setOnClickListener {
             uiScope.launch {
-                val authApiStatus = auth(text_input.text.toString())
+                val authApiStatus = auth(binding.textInput.text.toString())
                 if(authApiStatus != ""){
                     val mainActivityIntent = Intent(this@LoginActivity, MainActivity::class.java)
                     createSession(authApiStatus)

@@ -2,7 +2,6 @@ package com.develop.rs_school.swimmer
 
 
 import android.annotation.SuppressLint
-import android.graphics.Color
 import android.graphics.Color.parseColor
 import android.graphics.Paint
 import android.view.LayoutInflater

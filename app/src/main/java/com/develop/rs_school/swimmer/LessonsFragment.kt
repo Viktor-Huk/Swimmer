@@ -7,10 +7,12 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.develop.rs_school.swimmer.model.CustomerLessonWithAgenda
-import kotlinx.android.synthetic.main.fragment_lessons.*
+import com.develop.rs_school.swimmer.databinding.FragmentLessonsBinding
 
 class LessonsFragment : Fragment() {
+
+    private var _binding : FragmentLessonsBinding? = null
+    private val binding get() = requireNotNull(_binding)
 
     private val adapter = LessonRecyclerAdapter(
         LessonRecyclerItemListener{}
@@ -20,21 +22,27 @@ class LessonsFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_lessons, container, false)
+        _binding = FragmentLessonsBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        lesson_recycler.adapter = adapter
-        swipe_refresh.isRefreshing = true
+        binding.lessonRecycler.adapter = adapter
+        binding.swipeRefresh.isRefreshing = true
 
         val model = ViewModelProvider(requireActivity()).get(DataViewModel::class.java)
         model.lessons.observe(viewLifecycleOwner, Observer {
             adapter.submitList(it)
-            swipe_refresh.isRefreshing = false
+            binding.swipeRefresh.isRefreshing = false
         })
 
-        swipe_refresh.setOnRefreshListener { model.updateData() }
+        binding.swipeRefresh.setOnRefreshListener { model.updateData() }
+    }
+
+    override fun onDestroyView() {
+        _binding = null
+        super.onDestroyView()
     }
 }
