@@ -1,6 +1,6 @@
 package com.develop.rs_school.swimmer.data.network
 
-import com.develop.rs_school.swimmer.model.*
+import com.develop.rs_school.swimmer.data.network.model.*
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import kotlinx.coroutines.Dispatchers

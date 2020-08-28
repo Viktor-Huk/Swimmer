@@ -1,4 +1,4 @@
-package com.develop.rs_school.swimmer
+package com.develop.rs_school.swimmer.presentation.main.ui
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,15 +8,17 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.develop.rs_school.swimmer.databinding.FragmentLessonsBinding
+import com.develop.rs_school.swimmer.presentation.main.viewModels.DataViewModel
 
 class LessonsFragment : Fragment() {
 
     private var _binding : FragmentLessonsBinding? = null
     private val binding get() = requireNotNull(_binding)
 
-    private val adapter = LessonRecyclerAdapter(
-        LessonRecyclerItemListener{}
-    )
+    private val adapter =
+        LessonRecyclerAdapter(
+            LessonRecyclerItemListener {}
+        )
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

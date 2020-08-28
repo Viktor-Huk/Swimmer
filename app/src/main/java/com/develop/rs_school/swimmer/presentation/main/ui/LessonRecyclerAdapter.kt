@@ -1,4 +1,4 @@
-package com.develop.rs_school.swimmer
+package com.develop.rs_school.swimmer.presentation.main.ui
 
 
 import android.annotation.SuppressLint
@@ -10,14 +10,17 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.develop.rs_school.swimmer.R
 import com.develop.rs_school.swimmer.databinding.RecyclerViewRawBinding
-import com.develop.rs_school.swimmer.model.AgendaStatus
-import com.develop.rs_school.swimmer.model.CustomerLessonWithAgenda
+import com.develop.rs_school.swimmer.domain.AgendaStatus
+import com.develop.rs_school.swimmer.domain.CustomerLessonWithAgenda
 import java.text.SimpleDateFormat
 import java.util.*
 
 class LessonRecyclerAdapter(private val itemClickListener: LessonRecyclerItemListener) :
-    ListAdapter<CustomerLessonWithAgenda, LessonRecyclerAdapter.ViewHolder>(LessonDiffUtilCallback()) {
+    ListAdapter<CustomerLessonWithAgenda, LessonRecyclerAdapter.ViewHolder>(
+        LessonDiffUtilCallback()
+    ) {
 
     inner class ViewHolder(private val itemBinding: RecyclerViewRawBinding) :
         RecyclerView.ViewHolder(itemBinding.root) {

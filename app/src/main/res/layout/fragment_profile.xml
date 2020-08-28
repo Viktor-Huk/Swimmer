@@ -4,7 +4,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".ProfileFragment">
+    tools:context=".presentation.main.ui.ProfileFragment">
     <RelativeLayout
         android:id="@+id/user_view_title"
         android:layout_width="match_parent"

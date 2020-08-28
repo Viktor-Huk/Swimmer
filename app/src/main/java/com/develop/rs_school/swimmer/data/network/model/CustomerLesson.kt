@@ -1,4 +1,4 @@
-package com.develop.rs_school.swimmer.model
+package com.develop.rs_school.swimmer.data.network.model
 
 import com.squareup.moshi.Json
 import java.util.*

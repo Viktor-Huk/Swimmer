@@ -1,4 +1,4 @@
-package com.develop.rs_school.swimmer
+package com.develop.rs_school.swimmer.presentation.main.ui
 
 import android.content.Context
 import android.content.Intent
@@ -9,7 +9,10 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.develop.rs_school.swimmer.R
 import com.develop.rs_school.swimmer.databinding.FragmentProfileBinding
+import com.develop.rs_school.swimmer.presentation.login.LoginActivity
+import com.develop.rs_school.swimmer.presentation.main.viewModels.DataViewModel
 
 class ProfileFragment : Fragment() {
 

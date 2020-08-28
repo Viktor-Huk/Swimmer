@@ -1,4 +1,4 @@
-package com.develop.rs_school.swimmer
+package com.develop.rs_school.swimmer.presentation.login
 
 import android.content.Context
 import android.content.Intent
@@ -6,6 +6,8 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.develop.rs_school.swimmer.presentation.main.ui.MainActivity
+import com.develop.rs_school.swimmer.R
 import com.develop.rs_school.swimmer.databinding.ActivityLoginBinding
 import com.develop.rs_school.swimmer.data.network.SwimmerApi.firstAuth
 import com.develop.rs_school.swimmer.data.network.auth

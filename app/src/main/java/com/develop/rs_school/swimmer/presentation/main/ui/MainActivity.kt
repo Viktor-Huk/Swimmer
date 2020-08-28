@@ -1,10 +1,13 @@
-package com.develop.rs_school.swimmer
+package com.develop.rs_school.swimmer.presentation.main.ui
 
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
+import com.develop.rs_school.swimmer.R
+import com.develop.rs_school.swimmer.presentation.main.viewModels.DataViewModel
+import com.develop.rs_school.swimmer.presentation.main.viewModels.DataViewModelFactory
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -21,7 +24,10 @@ class MainActivity : AppCompatActivity() {
 
         val customerId = getSavedSession()
 
-        viewModelFactory = DataViewModelFactory(customerId)
+        viewModelFactory =
+            DataViewModelFactory(
+                customerId
+            )
         dataViewModel = ViewModelProvider(this, viewModelFactory).get(DataViewModel::class.java)
 
         bottom_navigation_view.setIconSize(29f, 29f)
@@ -36,8 +42,14 @@ class MainActivity : AppCompatActivity() {
                 R.id.profile_button -> {
                     if (currentFragment == 2) return@setOnNavigationItemSelectedListener true
                     supportFragmentManager.beginTransaction()
-                        .setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right)
-                        .replace(R.id.fl_content, ProfileFragment())
+                        .setCustomAnimations(
+                            R.anim.slide_in_left,
+                            R.anim.slide_out_right
+                        )
+                        .replace(
+                            R.id.fl_content,
+                            ProfileFragment()
+                        )
                         .commit()
                     currentFragment = 2
                     return@setOnNavigationItemSelectedListener true
@@ -45,8 +57,14 @@ class MainActivity : AppCompatActivity() {
                 R.id.lessons_button -> {
                     if (currentFragment == 1) return@setOnNavigationItemSelectedListener true
                     supportFragmentManager.beginTransaction()
-                        .setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left)
-                        .replace(R.id.fl_content, LessonsFragment())
+                        .setCustomAnimations(
+                            R.anim.slide_in_right,
+                            R.anim.slide_out_left
+                        )
+                        .replace(
+                            R.id.fl_content,
+                            LessonsFragment()
+                        )
                         .commit()
                     currentFragment = 1
                     return@setOnNavigationItemSelectedListener true
@@ -59,7 +77,10 @@ class MainActivity : AppCompatActivity() {
         }
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
-                .replace(R.id.fl_content, LessonsFragment())
+                .replace(
+                    R.id.fl_content,
+                    LessonsFragment()
+                )
                 .commit()
             currentFragment = 1
         }

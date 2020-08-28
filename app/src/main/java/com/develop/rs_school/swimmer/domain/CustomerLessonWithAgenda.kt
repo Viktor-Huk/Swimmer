@@ -1,4 +1,4 @@
-package com.develop.rs_school.swimmer.model
+package com.develop.rs_school.swimmer.domain
 
 import java.util.*
 

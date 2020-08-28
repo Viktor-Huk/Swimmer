@@ -1,9 +1,15 @@
-package com.develop.rs_school.swimmer.model
+package com.develop.rs_school.swimmer.data.network.model
 
 import android.os.Parcelable
 import com.squareup.moshi.Json
 import kotlinx.android.parcel.Parcelize
 import java.util.*
+
+@Parcelize
+data class LessonList(
+    val total: Int,
+    val items: List<Lesson>
+) : Parcelable
 
 @Parcelize
 data class Lesson(
@@ -22,11 +28,4 @@ data class LessonDetailsByCustomer(
     @Json(name = "reason_id") val reason: String?,
     @Json(name = "is_attend") val isAttend: Int,
     @Json(name = "commission") val price: String
-) : Parcelable
-
-
-@Parcelize
-data class LessonList(
-    val total: Int,
-    val items: List<Lesson>
 ) : Parcelable

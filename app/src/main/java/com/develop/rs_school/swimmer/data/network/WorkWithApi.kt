@@ -1,8 +1,8 @@
 package com.develop.rs_school.swimmer.data.network
 
 import android.util.Log
-import com.develop.rs_school.swimmer.model.AgendaStatus
-import com.develop.rs_school.swimmer.model.CustomerLessonWithAgenda
+import com.develop.rs_school.swimmer.domain.AgendaStatus
+import com.develop.rs_school.swimmer.domain.CustomerLessonWithAgenda
 import java.util.*
 
 
@@ -21,12 +21,13 @@ suspend fun getCustomerLessonsWithFullInfo(customerId: String): MutableList<Cust
         else listOf()
     for (item in lessonInCalendarList) {
 
-        val lessonWithStatus = CustomerLessonWithAgenda(
-            id = item.id,
-            type = item.type,
-            date = item.date,
-            duration = item.duration
-        )
+        val lessonWithStatus =
+            CustomerLessonWithAgenda(
+                id = item.id,
+                type = item.type,
+                date = item.date,
+                duration = item.duration
+            )
         if (item.status == "1") {
             if (item.date != null && item.date > Date())
                 lessonWithStatus.agendaStatus = AgendaStatus.PLANNED
