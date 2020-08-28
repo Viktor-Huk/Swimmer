@@ -4,8 +4,8 @@ import androidx.lifecycle.*
 import com.develop.rs_school.swimmer.model.AgendaStatus
 import com.develop.rs_school.swimmer.model.Customer
 import com.develop.rs_school.swimmer.model.CustomerLessonWithAgenda
-import com.develop.rs_school.swimmer.network.SwimmerApi.getCustomersImpl
-import com.develop.rs_school.swimmer.network.getCustomerLessonsWithFullInfo
+import com.develop.rs_school.swimmer.data.network.SwimmerApi.getCustomersImpl
+import com.develop.rs_school.swimmer.data.network.getCustomerLessonsWithFullInfo
 import kotlinx.coroutines.launch
 import java.util.*
 

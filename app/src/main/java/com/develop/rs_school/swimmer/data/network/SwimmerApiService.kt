@@ -1,4 +1,4 @@
-package com.develop.rs_school.swimmer.network
+package com.develop.rs_school.swimmer.data.network
 
 import com.develop.rs_school.swimmer.model.*
 import com.squareup.moshi.Moshi
@@ -12,7 +12,6 @@ import retrofit2.http.Body
 import retrofit2.http.Header
 import retrofit2.http.POST
 import retrofit2.http.Query
-import java.util.*
 
 
 private const val BASE_URL = "https://mevis.s20.online/v2api/"
