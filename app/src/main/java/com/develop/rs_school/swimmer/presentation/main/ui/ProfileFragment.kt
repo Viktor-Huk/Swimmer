@@ -38,14 +38,13 @@ class ProfileFragment : Fragment() {
             binding.emailF.text = it.email
             binding.phoneF.text = it.phone
             binding.balanceF.text = it.balance
-
         })
 
         binding.logoutButton.setOnClickListener {
             deleteSession()
+            model.deleteData()
             openActivity()
         }
-
     }
 
     private fun deleteSession(){

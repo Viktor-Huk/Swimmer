@@ -1,6 +1,7 @@
-package com.develop.rs_school.swimmer.data.network.model
+package com.develop.rs_school.swimmer.data.network.dto
 
 import android.os.Parcelable
+import com.develop.rs_school.swimmer.data.database.DatabaseCustomer
 import com.squareup.moshi.Json
 import kotlinx.android.parcel.Parcelize
 import java.util.*
@@ -23,6 +24,18 @@ data class CustomerList(
     val total: Int,
     val items: List<Customer>
 ) : Parcelable
+
+fun Customer.asDatabaseModel(): DatabaseCustomer{
+    return DatabaseCustomer(
+        id = this.id.toInt(),
+        name = this.name,
+        dob = this.dob,
+        balance = this.balance,
+        paidLesson = this.paid_lesson,
+        phone = this.phone.firstOrNull() ?: "",
+        email = this.email.firstOrNull() ?: ""
+    )
+}
 
 
 

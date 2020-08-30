@@ -3,32 +3,18 @@ package com.develop.rs_school.swimmer.presentation.main.viewModels
 import android.app.Application
 import androidx.lifecycle.*
 import com.develop.rs_school.swimmer.data.database.SwimmerDatabase
-import com.develop.rs_school.swimmer.domain.AgendaStatus
-import com.develop.rs_school.swimmer.data.network.model.Customer
-import com.develop.rs_school.swimmer.domain.CustomerLessonWithAgenda
-import com.develop.rs_school.swimmer.data.network.SwimmerApi.getCustomersImpl
-import com.develop.rs_school.swimmer.data.network.getCustomerLessonsWithFullInfo
 import com.develop.rs_school.swimmer.repository.LessonsRepository
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import java.util.*
+import kotlinx.coroutines.withContext
 
 class DataViewModel(private val customerId: String, app: Application) : ViewModel() {
-
-    //private val _lessons = MutableLiveData<List<CustomerLessonWithAgenda>>()
-    //val lessons: LiveData<List<CustomerLessonWithAgenda>> get() = _lessons
 
     private val database = SwimmerDatabase.getInstance(app)
     private val lessonsRepository = LessonsRepository(database)
 
-//    private val _profile = MutableLiveData<Customer>()
-//    val profile: LiveData<Customer> get() = _profile
-
     init {
-        //updateData()
-        viewModelScope.launch {
-            lessonsRepository.refreshLessons(customerId)
-            lessonsRepository.refreshCustomer(customerId)
-        }
+        updateData()
     }
 
     val lessons = lessonsRepository.lessons
@@ -36,19 +22,14 @@ class DataViewModel(private val customerId: String, app: Application) : ViewMode
 
     fun updateData(){
         viewModelScope.launch {
-            val lessons = getCustomerLessonsWithFullInfo(customerId)
-            //FIXME add 2 type holder after
-//            val currentMoment =
-//                CustomerLessonWithAgenda(
-//                    "",
-//                    "",
-//                    Date(),
-//                    AgendaStatus.NONE
-//                )
-//            lessons.add(currentMoment)
-//            lessons.sortBy { it.date }
-            //_lessons.value = lessons
-            //_profile.value = getCustomersImpl().first { it.id == customerId}
+            lessonsRepository.refreshLessons(customerId)
+            lessonsRepository.refreshCustomer(customerId)
+        }
+    }
+
+    fun deleteData(){
+        viewModelScope.launch {
+            lessonsRepository.clearData()
         }
     }
 }

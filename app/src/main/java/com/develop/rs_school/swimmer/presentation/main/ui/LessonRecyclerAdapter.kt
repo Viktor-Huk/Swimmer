@@ -12,13 +12,13 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.develop.rs_school.swimmer.R
 import com.develop.rs_school.swimmer.databinding.RecyclerViewRawBinding
-import com.develop.rs_school.swimmer.domain.AgendaStatus
-import com.develop.rs_school.swimmer.domain.CustomerLessonWithAgenda
+import com.develop.rs_school.swimmer.AgendaStatus
+import com.develop.rs_school.swimmer.domain.Lesson
 import java.text.SimpleDateFormat
 import java.util.*
 
 class LessonRecyclerAdapter(private val itemClickListener: LessonRecyclerItemListener) :
-    ListAdapter<CustomerLessonWithAgenda, LessonRecyclerAdapter.ViewHolder>(
+    ListAdapter<Lesson, LessonRecyclerAdapter.ViewHolder>(
         LessonDiffUtilCallback()
     ) {
 
@@ -32,7 +32,7 @@ class LessonRecyclerAdapter(private val itemClickListener: LessonRecyclerItemLis
 
         //FIXME colors!!!!!!!!!!!!!!
         @SuppressLint("SimpleDateFormat")
-        fun bind(customerLessonWithAgenda: CustomerLessonWithAgenda) {
+        fun bind(lesson: Lesson) {
             //start view
             itemBinding.weekDay.visibility = View.VISIBLE
             itemBinding.weekDay.paintFlags = itemBinding.weekDay.paintFlags and Paint.STRIKE_THRU_TEXT_FLAG.inv()
@@ -41,7 +41,7 @@ class LessonRecyclerAdapter(private val itemClickListener: LessonRecyclerItemLis
             itemBinding.icon.setImageDrawable(null)
             //itemBinding.date.setTextColor(Color.BLACK)
 
-            customerLessonWithAgenda.date?.let {
+            lesson.date?.let {
                 val weekPattern = SimpleDateFormat("E", Locale("ru"))
                 val datePattern = SimpleDateFormat("dd.MM", Locale("ru"))
 
@@ -49,62 +49,62 @@ class LessonRecyclerAdapter(private val itemClickListener: LessonRecyclerItemLis
                 itemBinding.weekDay.text = weekPattern.format(it).capitalize()
             }
             //FIXME !!!!!!!!!!!!!!!!! fun
-            if(customerLessonWithAgenda.agendaStatus == AgendaStatus.NONE){
+            if(lesson.agendaStatus == AgendaStatus.NONE){
                 itemView.setBackgroundResource(R.drawable.layout_border_white)
                 itemBinding.date.text = "Сейчас"
                 itemBinding.weekDay.visibility = View.GONE
                 itemBinding.image.setImageResource(R.drawable.ion_flag)
                 itemBinding.image.setColorFilter(parseColor("#2E7D32"))
             }
-            if(customerLessonWithAgenda.agendaStatus == AgendaStatus.MISSED_FREE){
+            if(lesson.agendaStatus == AgendaStatus.MISSED_FREE){
                 itemView.setBackgroundResource(R.drawable.layout_border_yellow)
-                selectImageType(itemBinding, customerLessonWithAgenda.type)
+                selectImageType(itemBinding, lesson.type)
                 itemBinding.icon.setImageResource(R.drawable.ic_baseline_close_24)
                 itemBinding.image.setColorFilter(parseColor("#FFA000"))
             }
-            if(customerLessonWithAgenda.agendaStatus == AgendaStatus.CANCELED){
+            if(lesson.agendaStatus == AgendaStatus.CANCELED){
                 itemView.setBackgroundResource(R.drawable.layout_border_gray)
-                selectImageType(itemBinding, customerLessonWithAgenda.type)
+                selectImageType(itemBinding, lesson.type)
                 itemBinding.icon.setImageResource(R.drawable.ic_baseline_remove_circle_outline_24)
                 itemBinding.date.paintFlags = itemBinding.date.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
                 itemBinding.weekDay.paintFlags = itemBinding.weekDay.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
             }
-            if(customerLessonWithAgenda.agendaStatus == AgendaStatus.PLANNED ){
+            if(lesson.agendaStatus == AgendaStatus.PLANNED ){
                 itemBinding.image.setColorFilter(parseColor("#575757"))
                 itemView.setBackgroundResource(R.drawable.layout_border_gray)
-                selectImageType(itemBinding, customerLessonWithAgenda.type)
+                selectImageType(itemBinding, lesson.type)
             }
-            if(customerLessonWithAgenda.agendaStatus == AgendaStatus.FORGOT){
+            if(lesson.agendaStatus == AgendaStatus.FORGOT){
                 itemView.setBackgroundResource(R.drawable.layout_border_gray)
-                selectImageType(itemBinding, customerLessonWithAgenda.type)
+                selectImageType(itemBinding, lesson.type)
                 itemBinding.icon.setImageResource(R.drawable.question)
             }
-            if(customerLessonWithAgenda.agendaStatus == AgendaStatus.MISSED_NOT_PAID){
+            if(lesson.agendaStatus == AgendaStatus.MISSED_NOT_PAID){
                 itemView.setBackgroundResource(R.drawable.layout_border_red)
-                selectImageType(itemBinding, customerLessonWithAgenda.type)
+                selectImageType(itemBinding, lesson.type)
                 itemBinding.icon.setImageResource(R.drawable.ic_baseline_close_24)
                 itemBinding.image.setColorFilter(parseColor("#C62828"))
             }
-            if(customerLessonWithAgenda.agendaStatus == AgendaStatus.MISSED_PAID){
+            if(lesson.agendaStatus == AgendaStatus.MISSED_PAID){
                 itemView.setBackgroundResource(R.drawable.layout_border_yellow)
-                selectImageType(itemBinding, customerLessonWithAgenda.type)
+                selectImageType(itemBinding, lesson.type)
                 itemBinding.icon.setImageResource(R.drawable.ic_baseline_close_24)
                 itemBinding.image.setColorFilter(parseColor("#C62828"))
             }
-            if(customerLessonWithAgenda.agendaStatus == AgendaStatus.PREPAID){
+            if(lesson.agendaStatus == AgendaStatus.PREPAID){
                 itemView.setBackgroundResource(R.drawable.layout_border_green)
-                selectImageType(itemBinding, customerLessonWithAgenda.type)
+                selectImageType(itemBinding, lesson.type)
                 itemBinding.image.setColorFilter(parseColor("#2E7D32"))
             }
-            if(customerLessonWithAgenda.agendaStatus == AgendaStatus.VISIT_PAID){
+            if(lesson.agendaStatus == AgendaStatus.VISIT_PAID){
                 itemView.setBackgroundResource(R.drawable.layout_border_green)
-                selectImageType(itemBinding, customerLessonWithAgenda.type)
+                selectImageType(itemBinding, lesson.type)
                 itemBinding.icon.setImageResource(R.drawable.ic_baseline_done_24)
                 itemBinding.image.setColorFilter(parseColor("#2E7D32"))
             }
-            if(customerLessonWithAgenda.agendaStatus == AgendaStatus.VISIT_NOT_PAID){
+            if(lesson.agendaStatus == AgendaStatus.VISIT_NOT_PAID){
                 itemView.setBackgroundResource(R.drawable.layout_border_red)
-                selectImageType(itemBinding, customerLessonWithAgenda.type)
+                selectImageType(itemBinding, lesson.type)
                 itemBinding.icon.setImageResource(R.drawable.ic_baseline_done_24)
                 itemBinding.image.setColorFilter(parseColor("#C62828"))
             }
@@ -134,16 +134,16 @@ class LessonRecyclerAdapter(private val itemClickListener: LessonRecyclerItemLis
     }
 }
 
-class LessonDiffUtilCallback : DiffUtil.ItemCallback<CustomerLessonWithAgenda>() {
-    override fun areItemsTheSame(oldItem: CustomerLessonWithAgenda, newItem: CustomerLessonWithAgenda): Boolean {
+class LessonDiffUtilCallback : DiffUtil.ItemCallback<Lesson>() {
+    override fun areItemsTheSame(oldItem: Lesson, newItem: Lesson): Boolean {
         return oldItem === newItem
     }
 
-    override fun areContentsTheSame(oldItem: CustomerLessonWithAgenda, newItem: CustomerLessonWithAgenda): Boolean {
+    override fun areContentsTheSame(oldItem: Lesson, newItem: Lesson): Boolean {
         return oldItem.id == newItem.id
     }
 }
 
-class LessonRecyclerItemListener(val clickListener: (customerLessonWithAgenda: CustomerLessonWithAgenda) -> Unit) {
-    fun onClick(customerLessonWithAgenda: CustomerLessonWithAgenda) = clickListener(customerLessonWithAgenda)
+class LessonRecyclerItemListener(val clickListener: (lesson: Lesson) -> Unit) {
+    fun onClick(lesson: Lesson) = clickListener(lesson)
 }

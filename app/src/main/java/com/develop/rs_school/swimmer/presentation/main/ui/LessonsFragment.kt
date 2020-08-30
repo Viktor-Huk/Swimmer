@@ -1,6 +1,7 @@
 package com.develop.rs_school.swimmer.presentation.main.ui
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -36,8 +37,11 @@ class LessonsFragment : Fragment() {
 
         val model = ViewModelProvider(requireActivity()).get(DataViewModel::class.java)
         model.lessons.observe(viewLifecycleOwner, Observer {
-            adapter.submitList(it)
-            binding.swipeRefresh.isRefreshing = false
+            Log.d("1", "updating $it") //FIXME double updating on start problem LAZY ?
+            it?.apply {
+                adapter.submitList(it)
+                binding.swipeRefresh.isRefreshing = false
+            }
         })
 
         binding.swipeRefresh.setOnRefreshListener { model.updateData() }

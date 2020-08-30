@@ -1,6 +1,6 @@
 package com.develop.rs_school.swimmer.data.network
 
-import com.develop.rs_school.swimmer.data.network.model.*
+import com.develop.rs_school.swimmer.data.network.dto.*
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import kotlinx.coroutines.Dispatchers
@@ -40,7 +40,7 @@ interface SwimmerApiService {
         @Query(value = "id") id: String,
         @Query(value = "date1") dateFrom: String,//01.01.2020
         @Query(value = "date2") dateTo: String
-    ): Response<List<CustomerCalendarItem>>
+    ): Response<List<CustomerCalendar>>
 
 }
 
@@ -92,7 +92,7 @@ object SwimmerApi {
         customerId: String,
         dateFrom: String = "01.01.2020",
         dateTo: String = "31.12.2020"
-    ): List<CustomerCalendarItem> {
+    ): List<CustomerCalendar> {
         return withContext(Dispatchers.IO) {
             val response = retrofitService.getCustomerCalendar(token, customerId, dateFrom, dateTo)
             when {
@@ -107,7 +107,7 @@ object SwimmerApi {
         }
     }
 
-    private suspend fun getLessonsImpl(status: Int = lessonStatusForHistory): List<Lesson> {
+    suspend fun getLessonsImpl(status: Int = lessonStatusForHistory): List<Lesson> {
         return withContext(Dispatchers.IO) {
             val response = retrofitService.getLessons(token, LessonStatusObject(status.toString()))
             when {
@@ -122,23 +122,4 @@ object SwimmerApi {
         }
     }
 
-    suspend fun getCustomerLesson(customerId: String): List<CustomerLesson> {
-        val allLessonsContainsDetails = getLessonsImpl(lessonStatusForHistory)
-
-        return allLessonsContainsDetails.filter { lesson ->
-            lesson.lessonDetails.find { it.customerId == customerId } != null
-        }.map {
-            val detail = it.lessonDetails.first { d -> d.customerId == customerId }
-            CustomerLesson(
-                isAttend = detail.isAttend,
-                customerId = detail.customerId,
-                reason = detail.reason,
-                price = detail.price,
-                status = it.status,
-                type = it.type,
-                date = it.date,
-                id = it.id
-            )
-        }
-    }
 }

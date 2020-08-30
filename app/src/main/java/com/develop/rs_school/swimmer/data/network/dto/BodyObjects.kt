@@ -1,4 +1,4 @@
-package com.develop.rs_school.swimmer.data.network.model
+package com.develop.rs_school.swimmer.data.network.dto
 
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
