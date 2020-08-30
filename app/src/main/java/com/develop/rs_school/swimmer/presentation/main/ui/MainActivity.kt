@@ -26,7 +26,8 @@ class MainActivity : AppCompatActivity() {
 
         viewModelFactory =
             DataViewModelFactory(
-                customerId
+                customerId,
+                application
             )
         dataViewModel = ViewModelProvider(this, viewModelFactory).get(DataViewModel::class.java)
 

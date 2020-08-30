@@ -35,8 +35,8 @@ class ProfileFragment : Fragment() {
             binding.tvName.text = it.name
             binding.dob.text = it.dob
             binding.paiedVisits.text = it.paid_lesson.toString()
-            binding.emailF.text = it.email.firstOrNull()
-            binding.phoneF.text = it.phone.firstOrNull()
+            binding.emailF.text = it.email
+            binding.phoneF.text = it.phone
             binding.balanceF.text = it.balance
 
         })

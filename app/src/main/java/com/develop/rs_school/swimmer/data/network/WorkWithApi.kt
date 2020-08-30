@@ -25,8 +25,7 @@ suspend fun getCustomerLessonsWithFullInfo(customerId: String): MutableList<Cust
             CustomerLessonWithAgenda(
                 id = item.id,
                 type = item.type,
-                date = item.date,
-                duration = item.duration
+                date = item.date
             )
         if (item.status == "1") {
             if (item.date != null && item.date > Date())
@@ -61,6 +60,18 @@ suspend fun getCustomerLessonsWithFullInfo(customerId: String): MutableList<Cust
 
         resultList.add(lessonWithStatus)
     }
+
+    //FIXME
+    val currentMoment =
+    CustomerLessonWithAgenda(
+        "",
+        "",
+        Date(),
+        AgendaStatus.NONE
+    )
+    resultList.add(currentMoment)
+    resultList.sortBy { it.date }
+
     return resultList
 }
 
