@@ -3,6 +3,7 @@ package com.develop.rs_school.swimmer.presentation.main.viewModels
 import android.app.Application
 import androidx.lifecycle.*
 import com.develop.rs_school.swimmer.data.database.SwimmerDatabase
+import com.develop.rs_school.swimmer.repository.DataRepository
 import com.develop.rs_school.swimmer.repository.LessonsRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -11,14 +12,16 @@ import kotlinx.coroutines.withContext
 class DataViewModel(private val customerId: String, app: Application) : ViewModel() {
 
     private val database = SwimmerDatabase.getInstance(app)
-    private val lessonsRepository = LessonsRepository(database)
+    private val lessonsRepository = DataRepository.getRepository(app, customerId)//LessonsRepository(database)
+
+    private val dataRepository = DataRepository.getRepository(app, customerId)
 
     init {
         updateData()
     }
 
-    val lessons = lessonsRepository.lessons
-    val profile = lessonsRepository.getCustomer(customerId)
+    val lessons = lessonsRepository.lessons2
+    val profile = lessonsRepository.getCustomer2(customerId)
 
     fun updateData(){
         viewModelScope.launch {

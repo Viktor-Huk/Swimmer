@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.develop.rs_school.swimmer.data.Result
 import com.develop.rs_school.swimmer.databinding.FragmentLessonsBinding
 import com.develop.rs_school.swimmer.presentation.main.viewModels.DataViewModel
 
@@ -39,7 +40,8 @@ class LessonsFragment : Fragment() {
         model.lessons.observe(viewLifecycleOwner, Observer {
             Log.d("1", "updating $it") //FIXME double updating on start problem LAZY ?
             it?.apply {
-                adapter.submitList(it)
+                val t = if(it is Result.Success) it.data else listOf()
+                adapter.submitList(t)
                 binding.swipeRefresh.isRefreshing = false
             }
         })

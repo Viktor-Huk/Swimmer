@@ -37,5 +37,17 @@ fun Customer.asDatabaseModel(): DatabaseCustomer{
     )
 }
 
+fun Customer.asDomainModel(): com.develop.rs_school.swimmer.domain.Customer{
+    return com.develop.rs_school.swimmer.domain.Customer(
+        id = this.id.toInt(),
+        name = this.name,
+        dob = this.dob,
+        balance = this.balance,
+        paid_lesson = this.paid_lesson,
+        phone = this.phone.firstOrNull() ?: "",
+        email = this.email.firstOrNull() ?: ""
+    )
+}
+
 
 

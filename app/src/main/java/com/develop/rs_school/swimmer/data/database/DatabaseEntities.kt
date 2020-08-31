@@ -30,24 +30,6 @@ data class DatabaseLesson(
     val agendaStatus: AgendaStatus
 )
 
-class Converters {
-    @TypeConverter
-    fun fromTimestamp(value: Long?): Date? {
-        return value?.let { Date(it) }
-    }
-
-    @TypeConverter
-    fun dateToTimestamp(date: Date?): Long? {
-        return date?.time
-    }
-
-    @TypeConverter
-    fun toAgenda(value: Int) = enumValues<AgendaStatus>()[value]
-
-    @TypeConverter
-    fun fromAgenda(value: AgendaStatus) = value.ordinal
-}
-
 fun DatabaseCustomer.asDomainModel(): Customer{
     return Customer(
         id = this.id,
@@ -55,6 +37,18 @@ fun DatabaseCustomer.asDomainModel(): Customer{
         dob = this.dob,
         balance = this.balance,
         paid_lesson = this.paidLesson,
+        phone = this.phone,
+        email = this.email
+    )
+}
+
+fun Customer.asDatabaseModel(): DatabaseCustomer{
+    return DatabaseCustomer(
+        id = this.id,
+        name = this.name,
+        dob = this.dob,
+        balance = this.balance,
+        paidLesson = this.paid_lesson,
         phone = this.phone,
         email = this.email
     )
@@ -70,4 +64,16 @@ fun List<DatabaseLesson>.asDomainModel(): List<Lesson>{
             agendaStatus = it.agendaStatus
         )
     }
+}
+
+fun List<Lesson>.asDatabaseModel(): Array<DatabaseLesson>{
+    return map {
+        DatabaseLesson(
+            id = it.id,
+            type = it.type,
+            status = it.status,
+            date = it.date,
+            agendaStatus = it.agendaStatus
+        )
+    }.toTypedArray()
 }

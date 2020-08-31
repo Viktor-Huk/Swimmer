@@ -4,7 +4,10 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverter
 import androidx.room.TypeConverters
+import com.develop.rs_school.swimmer.AgendaStatus
+import java.util.*
 
 @Database(
     entities = [DatabaseCustomer::class, DatabaseLesson::class],
@@ -38,4 +41,22 @@ abstract class SwimmerDatabase : RoomDatabase() {
             }
         }
     }
+}
+
+class Converters {
+    @TypeConverter
+    fun fromTimestamp(value: Long?): Date? {
+        return value?.let { Date(it) }
+    }
+
+    @TypeConverter
+    fun dateToTimestamp(date: Date?): Long? {
+        return date?.time
+    }
+
+    @TypeConverter
+    fun toAgenda(value: Int) = enumValues<AgendaStatus>()[value]
+
+    @TypeConverter
+    fun fromAgenda(value: AgendaStatus) = value.ordinal
 }
