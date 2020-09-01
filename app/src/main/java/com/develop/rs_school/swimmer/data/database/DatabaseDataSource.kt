@@ -8,12 +8,14 @@ import com.develop.rs_school.swimmer.domain.Customer
 import com.develop.rs_school.swimmer.domain.Lesson
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 class DatabaseDataSource internal constructor(
     private val lessonDao: LessonDao,
     private val customerDao: CustomerDao,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ): DataSource{
+
     override fun observeLessons(): LiveData<Result<List<Lesson>>> {
         return lessonDao.getLessons().map {
             Result.Success(it.asDomainModel())
@@ -24,31 +26,32 @@ class DatabaseDataSource internal constructor(
         TODO("Not yet implemented")
     }
 
-    //withContext(ioDispatcher)
-    override fun saveLessons(lessons: List<Lesson>) {
+    override suspend fun saveLessons(lessons: List<Lesson>) = withContext(ioDispatcher){
         lessonDao.insertAll(*lessons.asDatabaseModel())
     }
 
-    //withContext(ioDispatcher)
-    override fun deleteLessons() {
+    override suspend fun deleteLessons()  = withContext(ioDispatcher){
         lessonDao.deleteAll()
     }
 
     override fun observeCustomer(customerId: Int): LiveData<Result<Customer>> {
-        return customerDao.getCustomer(customerId).map { Result.Success(it.asDomainModel()) }
+        return customerDao.getCustomer(customerId).map {
+            if (it != null)
+                Result.Success(it.asDomainModel())
+            else
+                Result.Error(Exception("Customer not found!"))
+        }
     }
 
     override suspend fun getCustomer(customerId: Int): Result<Customer> {
         TODO("Not yet implemented")
     }
 
-    //withContext(ioDispatcher)
-    override fun saveCustomer(customer: Customer) {
+    override suspend fun saveCustomer(customer: Customer)  = withContext(ioDispatcher){
         customerDao.insertCustomer(customer.asDatabaseModel())
     }
 
-    //withContext(ioDispatcher)
-    override fun deleteCustomers() {
+    override suspend fun deleteCustomers()  = withContext(ioDispatcher){
         customerDao.deleteAll()
     }
 

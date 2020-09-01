@@ -3,6 +3,7 @@ package com.develop.rs_school.swimmer.data.network
 import android.util.Log
 import com.develop.rs_school.swimmer.AgendaStatus
 import com.develop.rs_school.swimmer.data.database.DatabaseLesson
+import com.develop.rs_school.swimmer.domain.Lesson
 import java.util.*
 
 suspend fun getCustomerLesson(customerId: String): List<CustomerLesson> {
@@ -144,4 +145,17 @@ fun MutableList<CustomerLessonWithAgenda>.asDatabaseModel(): Array<DatabaseLesso
             agendaStatus = it.agendaStatus
         )
     }.toTypedArray()
+}
+
+//FIXME it is == getCustomerLessonsWithFullInfo ? above
+fun MutableList<CustomerLessonWithAgenda>.asDomainModel(): List<Lesson> {
+    return this.map {
+        Lesson(
+            id = it.id,
+            type = it.type,
+            status = it.status,
+            date = it.date,
+            agendaStatus = it.agendaStatus
+        )
+    }
 }

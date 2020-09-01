@@ -14,7 +14,7 @@ import com.develop.rs_school.swimmer.data.Result
 import com.develop.rs_school.swimmer.databinding.FragmentProfileBinding
 import com.develop.rs_school.swimmer.domain.Customer
 import com.develop.rs_school.swimmer.presentation.login.LoginActivity
-import com.develop.rs_school.swimmer.presentation.main.viewModels.DataViewModel
+import com.develop.rs_school.swimmer.presentation.main.viewModels.MainViewModel
 
 class ProfileFragment : Fragment() {
 
@@ -32,16 +32,15 @@ class ProfileFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val model = ViewModelProvider(requireActivity()).get(DataViewModel::class.java)
+        val model = ViewModelProvider(requireActivity()).get(MainViewModel::class.java)
         model.profile.observe(viewLifecycleOwner, Observer {
             if(it != null){
-                val t = if(it is Result.Success) it.data else Customer(1, "", "", "", 1, "", "")
-            binding.tvName.text = t.name
-            binding.dob.text = t.dob
-            binding.paiedVisits.text = t.paid_lesson.toString()
-            binding.emailF.text = t.email
-            binding.phoneF.text = t.phone
-            binding.balanceF.text = t.balance
+                binding.tvName.text = it.name
+                binding.dob.text = it.dob
+                binding.paiedVisits.text = it.paid_lesson.toString()
+                binding.emailF.text = it.email
+                binding.phoneF.text = it.phone
+                binding.balanceF.text = it.balance
             }
         })
 

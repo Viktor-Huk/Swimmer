@@ -6,13 +6,13 @@ import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.develop.rs_school.swimmer.R
-import com.develop.rs_school.swimmer.presentation.main.viewModels.DataViewModel
+import com.develop.rs_school.swimmer.presentation.main.viewModels.MainViewModel
 import com.develop.rs_school.swimmer.presentation.main.viewModels.DataViewModelFactory
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
-    lateinit var dataViewModel: DataViewModel
+    lateinit var mainViewModel: MainViewModel
     lateinit var viewModelFactory: DataViewModelFactory
 
     //FIXME sorry)
@@ -29,7 +29,7 @@ class MainActivity : AppCompatActivity() {
                 customerId,
                 application
             )
-        dataViewModel = ViewModelProvider(this, viewModelFactory).get(DataViewModel::class.java)
+        mainViewModel = ViewModelProvider(this, viewModelFactory).get(MainViewModel::class.java)
 
         bottom_navigation_view.setIconSize(29f, 29f)
             .setTextVisibility(false)

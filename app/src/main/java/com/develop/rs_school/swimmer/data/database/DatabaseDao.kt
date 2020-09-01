@@ -12,10 +12,10 @@ interface CustomerDao{
     fun getCustomer(customerId : Int): LiveData<DatabaseCustomer>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertCustomer(customer: DatabaseCustomer)
+    suspend fun insertCustomer(customer: DatabaseCustomer)
 
     @Query("DELETE FROM customer")
-    fun deleteAll()
+    suspend fun deleteAll()
 }
 
 @Dao
@@ -24,8 +24,8 @@ interface LessonDao{
     fun getLessons(): LiveData<List<DatabaseLesson>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertAll(vararg lessons: DatabaseLesson)
+    suspend fun insertAll(vararg lessons: DatabaseLesson)
 
     @Query("DELETE FROM lesson")
-    fun deleteAll()
+    suspend fun deleteAll()
 }
