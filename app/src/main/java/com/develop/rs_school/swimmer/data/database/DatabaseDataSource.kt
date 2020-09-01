@@ -22,7 +22,7 @@ class DatabaseDataSource internal constructor(
         }
     }
 
-    override suspend fun getLessons(): Result<List<Lesson>> {
+    override suspend fun getLessons(customerId: String): Result<List<Lesson>> {
         TODO("Not yet implemented")
     }
 

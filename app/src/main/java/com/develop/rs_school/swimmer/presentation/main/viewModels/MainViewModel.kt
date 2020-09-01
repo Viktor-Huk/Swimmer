@@ -2,35 +2,49 @@ package com.develop.rs_school.swimmer.presentation.main.viewModels
 
 import android.app.Application
 import androidx.lifecycle.*
+import com.develop.rs_school.swimmer.SingleLiveEvent
 import com.develop.rs_school.swimmer.data.Result
 import com.develop.rs_school.swimmer.repository.DataRepository
 import kotlinx.coroutines.launch
 
 class MainViewModel(private val customerId: String, app: Application) : ViewModel() {
 
-    //private val database = SwimmerDatabase.getInstance(app)
-    private val lessonsRepository = DataRepository.getRepository(app, customerId)//LessonsRepository(database)
-    //private val dataRepository = DataRepository.getRepository(app, customerId)
+    private val dataRepository = DataRepository.getRepository(app)
+
+    private val _dataLoading = MutableLiveData<Boolean>()
+    val dataLoading: LiveData<Boolean> = _dataLoading
+
+    private val _showError = SingleLiveEvent<Boolean>()
+    val showError: SingleLiveEvent<Boolean>
+        get() = _showError
 
     init {
         updateData()
     }
 
-    val lessons = lessonsRepository.lessons
-    val profile = lessonsRepository.getCustomer(customerId).map {
+    val lessons = dataRepository.lessons
+    val profile = dataRepository.getCustomer(customerId).map {
         if(it is Result.Success) it.data else null
     }
 
     fun updateData(){
+        _dataLoading.value = true
         viewModelScope.launch {
-            lessonsRepository.refreshLessons(customerId)
-            lessonsRepository.refreshCustomer(customerId)
+            try {
+                dataRepository.refreshLessons(customerId)
+                dataRepository.refreshCustomer(customerId)
+                _dataLoading.value = false
+            }
+            catch (e: Exception){
+                _showError.value = true
+                _dataLoading.value = false
+            }
         }
     }
 
     fun deleteData(){
         viewModelScope.launch {
-            lessonsRepository.clearData()
+            dataRepository.clearData()
         }
     }
 }

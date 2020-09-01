@@ -38,7 +38,8 @@ class LoginActivity : AppCompatActivity() {
             finish()
         }
 
-        uiScope.launch {firstAuth()}
+        //FIXME
+        //uiScope.launch {firstAuth()}
 
         val slots = UnderscoreDigitSlotsParser().parseSlots(getString(R.string.phoneNumberMask))
         val formatWatcher: FormatWatcher = MaskFormatWatcher(MaskImpl.createTerminated(slots))

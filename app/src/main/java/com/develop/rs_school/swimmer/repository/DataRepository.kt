@@ -13,57 +13,54 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-//FIXME CustomerID
-class DataRepository private constructor(application: Application, customerId: String) {
-
-    private val networkDataSource: DataSource
+//FIXME DI
+class DataRepository(
+    private val networkDataSource: DataSource,
     private val databaseDataSource: DataSource
-    private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
+) {
 
     companion object {
         @Volatile
         private var INSTANCE: DataRepository? = null
 
-        fun getRepository(app: Application,customerId: String): DataRepository {
+        fun getRepository(app: Application): DataRepository {
             return INSTANCE ?: synchronized(this) {
-                DataRepository(app, customerId).also {
+                DataRepository(
+                    NetworkDataSource(),
+                    DatabaseDataSource(
+                        SwimmerDatabase.getInstance(app).lessonDatabaseDao,//FIXME DI
+                        SwimmerDatabase.getInstance(app).customerDatabaseDao
+                    )
+                ).also {
                     INSTANCE = it
                 }
             }
         }
     }
 
-    init {
-        val database = SwimmerDatabase.getInstance(application)
-        networkDataSource = NetworkDataSource(customerId)
-        databaseDataSource = DatabaseDataSource(database.lessonDatabaseDao, database.customerDatabaseDao)
-    }
-
-
     suspend fun refreshLessons(customerId: String) {
-        withContext(Dispatchers.IO) {
-            val l = networkDataSource.getLessons()
-            if(l is Result.Success)
-                databaseDataSource.saveLessons(l.data)
-        }
+        val l = networkDataSource.getLessons(customerId)
+        if (l is Result.Success)
+            databaseDataSource.saveLessons(l.data)
+        if (l is Result.Error)
+            throw l.exception
     }
 
     val lessons: LiveData<Result<List<Lesson>>> = databaseDataSource.observeLessons()
 
     suspend fun refreshCustomer(customerId: String) {
-        withContext(Dispatchers.IO) {
-            val c = networkDataSource.getCustomer(customerId.toInt())
-            if(c is Result.Success)
-                databaseDataSource.saveCustomer(c.data)
-        }
+        val c = networkDataSource.getCustomer(customerId.toInt())
+        if (c is Result.Success)
+            databaseDataSource.saveCustomer(c.data)
+        if (c is Result.Error)
+            throw c.exception
     }
 
-    fun getCustomer(customerId: String): LiveData<Result<Customer>> = databaseDataSource.observeCustomer(customerId.toInt())
+    fun getCustomer(customerId: String): LiveData<Result<Customer>> =
+        databaseDataSource.observeCustomer(customerId.toInt())
 
-    suspend fun clearData(){
-        //withContext(Dispatchers.IO) {
-            databaseDataSource.deleteCustomers()
-            databaseDataSource.deleteLessons()
-        //}
+    suspend fun clearData() {
+        databaseDataSource.deleteCustomers()
+        databaseDataSource.deleteLessons()
     }
 }
