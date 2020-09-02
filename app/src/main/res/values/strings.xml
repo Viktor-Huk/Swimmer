@@ -34,4 +34,6 @@
     <string name="phoneTitle">Телефон</string>
     <string name="BalanceMoneyTitle">Баланс</string>
     <string name="phoneNumberMask">+375(__)___-__-__</string>
+    <string name="profile_image_desc">Profile image</string>
+    <string name="profile_image_background_desc">Profile image background</string>
 </resources>

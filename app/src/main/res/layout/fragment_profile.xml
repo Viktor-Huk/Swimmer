@@ -1,203 +1,225 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fillViewport="true"
     tools:context=".presentation.main.ui.ProfileFragment">
 
-
-    <RelativeLayout
-        android:id="@+id/user_view_title"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/grad"
-        android:paddingBottom="20dp"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="-102dp">
+        android:layout_height="wrap_content">
 
         <RelativeLayout
-            android:id="@+id/imgUser"
-            android:layout_width="wrap_content"
+            android:id="@+id/profile_image_layout"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/circle_border">
+            android:background="@drawable/grad"
+            android:paddingBottom="@dimen/activity_margin"
+            app:layout_constraintTop_toTopOf="parent" >
 
-            <ImageView
-                android:layout_width="120dp"
-                android:layout_height="120dp"
-                android:layout_marginStart="9dp"
-                android:layout_marginTop="9dp"
-                android:layout_marginEnd="9dp"
-                android:layout_marginBottom="9dp"
-                android:adjustViewBounds="true"
-                android:background="@drawable/circle"
-                android:padding="3dp"
-                android:scaleType="centerInside"
-                android:src="@drawable/ic_account_big" />
+            <FrameLayout
+                android:id="@+id/profile_image_frame"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/activity_margin"
+                android:background="@drawable/circle_border">
 
+                <ImageView
+                    android:layout_width="@dimen/profile_image_size"
+                    android:layout_height="@dimen/profile_image_size"
+                    android:layout_marginStart="@dimen/activity_medium_margin"
+                    android:layout_marginTop="@dimen/activity_medium_margin"
+                    android:layout_marginEnd="@dimen/activity_medium_margin"
+                    android:layout_marginBottom="@dimen/activity_medium_margin"
+                    android:adjustViewBounds="true"
+                    android:background="@drawable/circle"
+                    android:padding="@dimen/activity_small_margin"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/ic_account_big"
+                    android:contentDescription="@string/profile_image_background_desc" />
+
+            </FrameLayout>
+
+            <TextView
+                android:id="@+id/profile_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/profile_image_frame"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/activity_margin"
+                android:fontFamily="sans-serif-light"
+                android:text="@string/username"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textSize="32sp" />
+
+            <TextView
+                android:id="@+id/dob"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/profile_name"
+                android:layout_centerHorizontal="true"
+                android:fontFamily="sans-serif"
+                tools:text="some date of birth"
+                android:textAllCaps="true"
+                android:textColor="@color/address"
+                android:textSize="14sp" />
+
+            <ImageButton
+                android:id="@+id/logout_button"
+                android:layout_width="@dimen/profile_exit_size"
+                android:layout_height="@dimen/profile_exit_size"
+                android:layout_alignParentEnd="true"
+                android:layout_gravity="center"
+                android:layout_marginStart="@dimen/activity_margin"
+                android:layout_marginTop="@dimen/activity_margin"
+                android:layout_marginEnd="@dimen/activity_margin"
+                android:background="@drawable/ic_baseline_exit_to_app_24"
+                android:contentDescription="@string/profile_image_desc" />
         </RelativeLayout>
 
-        <TextView
-            android:id="@+id/tv_name"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/paid_days_layout"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/imgUser"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="15sp"
-            android:fontFamily="sans-serif-light"
-            android:text="@string/username"
-            android:textAlignment="center"
-            android:textColor="@color/white"
-            android:textSize="32sp" />
-
-        <TextView
-            android:id="@+id/dob"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/tv_name"
-            android:layout_centerHorizontal="true"
-            android:fontFamily="sans-serif"
-            android:text="some date of birth"
-            android:textAllCaps="true"
-            android:textColor="@color/address"
-            android:textSize="14sp" />
-
-        <ImageButton
-            android:id="@+id/logout_button"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_alignParentEnd="true"
             android:layout_gravity="center"
-            android:layout_marginStart="20dp"
-            android:layout_marginLeft="15dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="20dp"
-            android:background="@drawable/ic_baseline_exit_to_app_24" />
-    </RelativeLayout>
+            android:background="@drawable/grad"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:paddingTop="@dimen/activity_small_margin"
+            android:paddingBottom="@dimen/activity_small_margin"
+            app:layout_constraintTop_toBottomOf="@+id/profile_image_layout">
 
-    <LinearLayout
-        android:id="@+id/payed_days"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_weight="1"
-        android:background="@drawable/grad"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:paddingTop="5dp"
-        android:paddingBottom="5dp"
-        app:layout_constraintTop_toBottomOf="@+id/user_view_title"
-        tools:layout_editor_absoluteX="28dp">
+            <TextView
+                android:id="@+id/paid_days"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-light"
+                android:textColor="@color/white"
+                android:textSize="25sp"
+                tools:text="5" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-light"
+                android:text="@string/BalanceTitle"
+                android:textAllCaps="true"
+                android:textColor="@color/white"
+                android:textSize="14sp" />
+
+        </LinearLayout>
 
         <TextView
-            android:id="@+id/paied_visits"
+            android:id="@+id/email_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/emailTitle"
+            android:textColor="@color/primaryDarkColor"
+            android:textSize="@dimen/text_label_size"
+            android:layout_marginTop="@dimen/activity_margin"
+            android:layout_marginStart="@dimen/activity_medium_margin"
+            app:layout_constraintBottom_toTopOf="@+id/email"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/paid_days_layout"
+            app:layout_constraintVertical_chainStyle="packed" />
+
+        <TextView
+            android:id="@+id/email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/activity_medium_margin"
+            android:layout_marginTop="@dimen/activity_small_margin"
+            android:fontFamily="sans-serif-light"
+            android:textColor="@color/black_color"
+            android:textSize="@dimen/text_data_size"
+            app:layout_constraintBottom_toTopOf="@+id/border1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/email_title"
+            tools:text="user@mail.ru" />
+
+        <View
+            android:id="@+id/border1"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/border_width"
+            android:background="@color/silver"
+            app:layout_constraintBottom_toTopOf="@+id/phone_title"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/email" />
+
+
+        <TextView
+            android:id="@+id/phone_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/phoneTitle"
+            android:textColor="@color/primaryDarkColor"
+            android:textSize="@dimen/text_label_size"
+            android:layout_marginTop="@dimen/activity_margin"
+            android:layout_marginStart="@dimen/activity_medium_margin"
+            app:layout_constraintBottom_toTopOf="@+id/phone"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/border1" />
+
+        <TextView
+            android:id="@+id/phone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif-light"
-            android:textColor="@color/white"
-            android:textSize="25sp"
-            tools:text="5" />
+            android:textColor="@color/black_color"
+            android:textSize="@dimen/text_data_size"
+            android:layout_marginTop="@dimen/activity_small_margin"
+            android:layout_marginStart="@dimen/activity_medium_margin"
+            app:layout_constraintBottom_toTopOf="@+id/border2"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/phone_title"
+            tools:text="+375 777 77 77" />
+
+        <View
+            android:id="@+id/border2"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/border_width"
+            android:background="@color/silver"
+            app:layout_constraintBottom_toTopOf="@+id/balance_title"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/phone" />
+
 
         <TextView
+            android:id="@+id/balance_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/BalanceMoneyTitle"
+            android:textColor="@color/primaryDarkColor"
+            android:textSize="@dimen/text_label_size"
+            android:layout_marginTop="@dimen/activity_margin"
+            android:layout_marginStart="@dimen/activity_medium_margin"
+            app:layout_constraintBottom_toTopOf="@+id/balance"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/border2" />
+
+        <TextView
+            android:id="@+id/balance"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif-light"
-            android:text="@string/BalanceTitle"
-            android:textAllCaps="true"
-            android:textColor="@color/white"
-            android:textSize="14sp" />
+            android:textColor="@color/black_color"
+            android:textSize="@dimen/text_data_size"
+            android:layout_marginTop="@dimen/activity_small_margin"
+            android:layout_marginStart="@dimen/activity_medium_margin"
+            app:layout_constraintBottom_toTopOf="@+id/border3"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/balance_title"
+            tools:text="100500" />
 
-    </LinearLayout>
-
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/emailTitle"
-        android:textColor="@color/primaryDarkColor"
-        android:textSize="@dimen/text_label_size"
-        app:layout_constraintBottom_toTopOf="@+id/email_f"
-        app:layout_constraintTop_toBottomOf="@+id/payed_days"
-        app:layout_constraintVertical_chainStyle="packed" />
-
-    <TextView
-        android:id="@+id/email_f"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="sans-serif-light"
-        android:textColor="@color/black_color"
-        android:textSize="@dimen/text_data_size"
-        app:layout_constraintBottom_toTopOf="@+id/view2"
-        app:layout_constraintTop_toBottomOf="@+id/textView"
-        tools:text="user@mail.ru" />
-
-    <View
-        android:id="@+id/view2"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/silver"
-        app:layout_constraintBottom_toTopOf="@+id/phone_field"
-        app:layout_constraintTop_toBottomOf="@+id/email_f" />
-
-
-    <TextView
-        android:id="@+id/phone_field"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/phoneTitle"
-        android:textColor="@color/primaryDarkColor"
-        android:textSize="@dimen/text_label_size"
-        app:layout_constraintBottom_toTopOf="@+id/phone_f"
-        app:layout_constraintTop_toBottomOf="@+id/view2" />
-
-    <TextView
-        android:id="@+id/phone_f"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="sans-serif-light"
-        android:textColor="@color/black_color"
-        android:textSize="@dimen/text_data_size"
-        app:layout_constraintBottom_toTopOf="@+id/view3"
-        app:layout_constraintTop_toBottomOf="@+id/phone_field"
-        tools:text="+375 777 77 77" />
-
-    <View
-        android:id="@+id/view3"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/silver"
-        app:layout_constraintBottom_toTopOf="@+id/balance"
-        app:layout_constraintTop_toBottomOf="@+id/phone_f" />
-
-
-    <TextView
-        android:id="@+id/balance"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/BalanceMoneyTitle"
-        android:textColor="@color/primaryDarkColor"
-        android:textSize="@dimen/text_label_size"
-        app:layout_constraintBottom_toTopOf="@+id/balance_f"
-        app:layout_constraintTop_toBottomOf="@+id/view3" />
-
-    <TextView
-        android:id="@+id/balance_f"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="sans-serif-light"
-        android:textColor="@color/black_color"
-        android:textSize="@dimen/text_data_size"
-        app:layout_constraintBottom_toTopOf="@+id/view4"
-        app:layout_constraintTop_toBottomOf="@+id/balance"
-        tools:text="100500" />
-
-    <View
-        android:id="@+id/view4"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/silver"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/balance_f" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <View
+            android:id="@+id/border3"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/border_width"
+            android:background="@color/silver"
+            app:layout_constraintTop_toBottomOf="@+id/balance" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

@@ -9,9 +9,8 @@
     <ImageView
         android:layout_width="104dp"
         android:layout_height="30dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:background="#FFFFFF"
+        android:layout_marginStart="@dimen/activity_medium_margin"
+        android:layout_marginTop="@dimen/activity_medium_margin"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/logo_blue" />
@@ -28,12 +27,13 @@
             android:id="@+id/lesson_recycler"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="@dimen/activity_margin"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
             app:spanCount="4"
             tools:itemCount="8"
             tools:listitem="@layout/recycler_view_raw"
-            android:paddingLeft="15dp"/>
+            android:paddingStart="@dimen/activity_margin"
+            android:paddingEnd="@dimen/activity_margin"/>
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     <TextView
@@ -47,5 +47,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:paddingBottom="15dp"/>
+        android:paddingBottom="@dimen/activity_margin"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

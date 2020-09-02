@@ -10,9 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.develop.rs_school.swimmer.R
-import com.develop.rs_school.swimmer.data.Result
 import com.develop.rs_school.swimmer.databinding.FragmentProfileBinding
-import com.develop.rs_school.swimmer.domain.Customer
 import com.develop.rs_school.swimmer.presentation.login.LoginActivity
 import com.develop.rs_school.swimmer.presentation.main.viewModels.MainViewModel
 
@@ -35,12 +33,12 @@ class ProfileFragment : Fragment() {
         val model = ViewModelProvider(requireActivity()).get(MainViewModel::class.java)
         model.profile.observe(viewLifecycleOwner, Observer {
             if(it != null){
-                binding.tvName.text = it.name
+                binding.profileName.text = it.name
                 binding.dob.text = it.dob
-                binding.paiedVisits.text = it.paid_lesson.toString()
-                binding.emailF.text = it.email
-                binding.phoneF.text = it.phone
-                binding.balanceF.text = it.balance
+                binding.paidDays.text = it.paid_lesson.toString()
+                binding.email.text = it.email
+                binding.phone.text = it.phone
+                binding.balance.text = it.balance
             }
         })
 

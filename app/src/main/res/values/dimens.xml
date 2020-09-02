@@ -3,4 +3,12 @@
     <dimen name="login_msg_size">16sp</dimen>
     <dimen name="text_data_size">18sp</dimen>
     <dimen name="text_label_size">13sp</dimen>
+
+    <dimen name="profile_image_size">120dp</dimen>
+    <dimen name="profile_exit_size">40dp</dimen>
+
+    <dimen name="activity_margin">16dp</dimen>
+    <dimen name="activity_medium_margin">8dp</dimen>
+    <dimen name="activity_small_margin">4dp</dimen>
+    <dimen name="border_width">1dp</dimen>
 </resources>
