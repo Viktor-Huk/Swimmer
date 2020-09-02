@@ -15,7 +15,8 @@
             android:layout_margin="5dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:src="@drawable/ic_baseline_done_24" />
+            tools:src="@drawable/ic_baseline_done_24"
+            android:contentDescription="@string/status_lesson_icon_desc" />
 
         <ImageView
             android:id="@+id/image"
@@ -28,7 +29,8 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_chainStyle="packed"
-            tools:src="@drawable/person_grey" />
+            tools:src="@drawable/person_grey"
+            android:contentDescription="@string/image_lesson_desc" />
 
         <TextView
             android:id="@+id/week_day"

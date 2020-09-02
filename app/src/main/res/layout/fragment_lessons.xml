@@ -13,7 +13,8 @@
         android:layout_marginTop="@dimen/activity_medium_margin"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/logo_blue" />
+        app:srcCompat="@drawable/logo_blue"
+        android:contentDescription="@string/app_logo_image_desc" />
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipe_refresh"

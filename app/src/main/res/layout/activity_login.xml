@@ -16,7 +16,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/logo_man_only">
+        app:srcCompat="@drawable/logo_man_only"
+        android:contentDescription="@string/app_logo_image_desc">
     </ImageView>
 
     <TextView
@@ -24,7 +25,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="@dimen/activity_margin"
         android:text="@string/signin_message"
         android:textColor="@color/white"
         android:textSize="@dimen/login_msg_size"
@@ -38,7 +39,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_margin="8dp"
+        android:layout_margin="@dimen/activity_medium_margin"
         app:cardBackgroundColor="@color/white"
         app:cardCornerRadius="24dp"
         app:cardElevation="0dp"
@@ -55,13 +56,13 @@
             android:layout_gravity="center"
             android:background="@android:color/transparent"
             android:drawableStart="@drawable/ic_phone"
-            android:drawableLeft="@drawable/ic_phone"
             android:drawablePadding="12dp"
             android:hint="@string/hint_username"
             android:imeOptions="actionDone"
             android:minWidth="320dp"
             android:minHeight="50dp"
-            android:paddingLeft="10dp"
+            android:paddingStart="@dimen/activity_medium_margin"
+            android:paddingEnd="@dimen/activity_medium_margin"
             android:inputType="phone"
             android:singleLine="true" />
     </androidx.cardview.widget.CardView>
