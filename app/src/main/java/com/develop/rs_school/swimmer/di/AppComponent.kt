@@ -1,4 +1,5 @@
 package com.develop.rs_school.swimmer.di
+
 import android.content.Context
 import com.develop.rs_school.swimmer.presentation.login.LoginActivity
 import dagger.BindsInstance
@@ -7,7 +8,7 @@ import javax.inject.Singleton
 
 // Definition of a Dagger component
 @Singleton
-@Component(modules = [DataSourceModule::class, SessionSourceModule::class, AppSubcomponents::class])
+@Component(modules = [DataSourceModule::class, SessionSourceModule::class, AppSubcomponents::class, ViewModelBuilderModule::class])
 interface AppComponent {
 
     // Factory to create instances of the AppComponent
@@ -20,6 +21,5 @@ interface AppComponent {
     // Classes that can be injected by this Component
     fun inject(activity: LoginActivity)
 
-    // Expose RegistrationComponent factory from the graph
     fun mainActivityComponent(): MainComponent.Factory
 }

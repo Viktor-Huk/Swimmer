@@ -1,21 +1,16 @@
 package com.develop.rs_school.swimmer.presentation.main.ui
 
-import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
-import com.develop.rs_school.swimmer.SwimmerApp
+import com.develop.rs_school.swimmer.R
 import com.develop.rs_school.swimmer.data.Result
 import com.develop.rs_school.swimmer.databinding.FragmentLessonsBinding
-import com.develop.rs_school.swimmer.presentation.main.viewModels.MainViewModel
 import com.google.android.material.snackbar.Snackbar
-import javax.inject.Inject
 
 class LessonsFragment : Fragment() {
 
@@ -35,24 +30,16 @@ class LessonsFragment : Fragment() {
         return binding.root
     }
 
-    @Inject
-    lateinit var mainViewModel: MainViewModel
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        (requireActivity() as MainActivity).mainComponent.inject(this)
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         binding.lessonRecycler.adapter = adapter
 
-        //val model = ViewModelProvider(requireActivity()).get(MainViewModel::class.java)
+        val mainViewModel = (requireActivity() as MainActivity).mainViewModel
         mainViewModel.lessons.observe(viewLifecycleOwner, Observer {
-            Log.d("1", "updating $it") //FIXME double updating on start problem LAZY ?
+            Log.d("1", "updating $it")
             it?.apply {
-                val t = if(it is Result.Success) it.data else listOf()
+                val t = if(it is Result.Success) it.data else listOf() //TODO to VM
                 adapter.submitList(t)
             }
         })
@@ -62,12 +49,12 @@ class LessonsFragment : Fragment() {
                 binding.swipeRefresh.isRefreshing = it
         })
 
-        //FIXME make hidden bar
+        //FIXME make hidden bar under recycler
         mainViewModel.showError.observe(viewLifecycleOwner, Observer {
             if(it != null)
                 Snackbar.make(
                     binding.root,
-                    "Network error, local data displayed",
+                    getString(R.string.error_network_message),
                     Snackbar.LENGTH_SHORT
                 ).show()
         })

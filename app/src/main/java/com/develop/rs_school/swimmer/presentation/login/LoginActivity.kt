@@ -1,6 +1,5 @@
 package com.develop.rs_school.swimmer.presentation.login
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
@@ -9,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.develop.rs_school.swimmer.presentation.main.ui.MainActivity
 import com.develop.rs_school.swimmer.R
 import com.develop.rs_school.swimmer.SwimmerApp
+import com.develop.rs_school.swimmer.data.Result
 import com.develop.rs_school.swimmer.data.SessionSource
 import com.develop.rs_school.swimmer.databinding.ActivityLoginBinding
 import com.develop.rs_school.swimmer.data.network.auth
@@ -20,6 +20,8 @@ import ru.tinkoff.decoro.MaskImpl
 import ru.tinkoff.decoro.parser.UnderscoreDigitSlotsParser
 import ru.tinkoff.decoro.watchers.FormatWatcher
 import ru.tinkoff.decoro.watchers.MaskFormatWatcher
+import java.net.UnknownHostException
+import java.util.NoSuchElementException
 import javax.inject.Inject
 
 
@@ -45,7 +47,7 @@ class LoginActivity : AppCompatActivity() {
             finish()
         }
 
-        //FIXME
+        //FIXME check internet and get token here
         //uiScope.launch {firstAuth()}
 
         val slots = UnderscoreDigitSlotsParser().parseSlots(getString(R.string.phoneNumberMask))
@@ -54,15 +56,19 @@ class LoginActivity : AppCompatActivity() {
 
         binding.buttonSignin.setOnClickListener {
             uiScope.launch {
-                val authApiStatus = auth(binding.textInput.text.toString())
-                if(authApiStatus != ""){
-                    val mainActivityIntent = Intent(this@LoginActivity, MainActivity::class.java)
-                    createSession(authApiStatus)
-                    startActivity(mainActivityIntent)
-                    finish()
-                }
-                else{
-                    Toast.makeText(this@LoginActivity, "Incorrect data. Try again!", Toast.LENGTH_LONG).show()
+                when (val authApiStatus = auth(binding.textInput.text.toString())) {
+                    is Result.Success -> {
+                        val mainActivityIntent = Intent(this@LoginActivity, MainActivity::class.java)
+                        createSession(authApiStatus.data)
+                        startActivity(mainActivityIntent)
+                        finish()
+                    }
+                    is Result.Error -> {
+                        if(authApiStatus.exception is NoSuchElementException)
+                            Toast.makeText(this@LoginActivity, getString(R.string.error_login_message), Toast.LENGTH_LONG).show()
+                        if(authApiStatus.exception is UnknownHostException)
+                            Toast.makeText(this@LoginActivity, getString(R.string.error_network_message), Toast.LENGTH_LONG).show()
+                    }
                 }
             }
         }

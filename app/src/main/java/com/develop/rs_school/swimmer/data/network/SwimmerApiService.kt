@@ -68,8 +68,7 @@ object SwimmerApi {
 
     suspend fun firstAuth() {
         withContext(Dispatchers.IO) {
-            val auth = AuthObject()
-            token = retrofitService.getAuthToken(auth).token
+            getAuthTokenImpl()
         }
     }
 
@@ -90,7 +89,7 @@ object SwimmerApi {
 
     suspend fun getCustomerCalendarImpl(
         customerId: String,
-        dateFrom: String = "01.01.2020",
+        dateFrom: String = "01.01.2020",//FIXME
         dateTo: String = "31.12.2020"
     ): List<CustomerCalendar> {
         return withContext(Dispatchers.IO) {

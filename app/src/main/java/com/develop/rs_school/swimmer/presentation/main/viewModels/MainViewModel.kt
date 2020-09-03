@@ -6,13 +6,12 @@ import com.develop.rs_school.swimmer.R
 import com.develop.rs_school.swimmer.SingleLiveEvent
 import com.develop.rs_school.swimmer.data.Result
 import com.develop.rs_school.swimmer.data.SessionSource
-import com.develop.rs_school.swimmer.di.ActivityScope
+//import com.develop.rs_school.swimmer.di.ActivityScope
 import com.develop.rs_school.swimmer.repository.DataRepository
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 import javax.inject.Singleton
 
-@ActivityScope
 class MainViewModel @Inject constructor(private val dataRepository: DataRepository, context: Context, var sessionSource: SessionSource) : ViewModel() {//FIXME context
 
     private val _dataLoading = MutableLiveData<Boolean>()
@@ -22,10 +21,9 @@ class MainViewModel @Inject constructor(private val dataRepository: DataReposito
     val showError: SingleLiveEvent<Boolean>
         get() = _showError
 
-    private var customerId: String
+    private var customerId: String = sessionSource.getSession()
 
     init {
-        customerId = sessionSource.getSession()
         updateData()
     }
 
@@ -40,10 +38,11 @@ class MainViewModel @Inject constructor(private val dataRepository: DataReposito
             try {
                 dataRepository.refreshLessons(customerId)
                 dataRepository.refreshCustomer(customerId)
-                _dataLoading.value = false
             }
             catch (e: Exception){
                 _showError.value = true
+            }
+            finally {
                 _dataLoading.value = false
             }
         }
@@ -59,14 +58,3 @@ class MainViewModel @Inject constructor(private val dataRepository: DataReposito
         sessionSource.deleteSession()
     }
 }
-
-/*
-class DataViewModelFactory @Inject constructor(private val dataRepository: DataRepository) : ViewModelProvider.Factory {
-    @Suppress("UNCHECKED_CAST")
-    override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(MainViewModel::class.java)) {
-            return MainViewModel(dataRepository) as T
-        }
-        throw IllegalArgumentException("Unknown ViewModel class")
-    }
-}*/

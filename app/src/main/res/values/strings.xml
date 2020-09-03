@@ -39,4 +39,6 @@
     <string name="app_logo_image_desc">app logo image</string>
     <string name="status_lesson_icon_desc">status lesson icon</string>
     <string name="image_lesson_desc">image lesson</string>
+    <string name="error_login_message">Incorrect login data. Try again!</string>
+    <string name="error_network_message">Network error, local data displayed</string>
 </resources>

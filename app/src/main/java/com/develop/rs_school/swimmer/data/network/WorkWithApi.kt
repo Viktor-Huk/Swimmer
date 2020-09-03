@@ -2,8 +2,11 @@ package com.develop.rs_school.swimmer.data.network
 
 import android.util.Log
 import com.develop.rs_school.swimmer.AgendaStatus
+import com.develop.rs_school.swimmer.data.Result
 import com.develop.rs_school.swimmer.data.database.DatabaseLesson
+import com.develop.rs_school.swimmer.data.network.dto.asDomainModel
 import com.develop.rs_school.swimmer.domain.Lesson
+import java.net.UnknownHostException
 import java.util.*
 
 suspend fun getCustomerLesson(customerId: String): List<CustomerLesson> {
@@ -96,15 +99,18 @@ suspend fun getCustomerLessonsWithFullInfo(customerId: String): MutableList<Cust
     return resultList
 }
 
-suspend fun auth(authData: String): String {
-    SwimmerApi.firstAuth()
+suspend fun auth(authData: String): Result<String> {
     return try {
+        SwimmerApi.firstAuth()
         val res = SwimmerApi.getCustomersImpl().first { it.phone.contains(authData) }
         Log.d("1", res.name)
-        res.id
+        Result.Success(res.id)
     } catch (e: NoSuchElementException) {
         Log.d("1", "authError for $authData")
-        ""
+        Result.Error(e)
+    } catch (e: UnknownHostException) {
+        Log.d("1", e.toString())
+        Result.Error(e)
     }
 }
 

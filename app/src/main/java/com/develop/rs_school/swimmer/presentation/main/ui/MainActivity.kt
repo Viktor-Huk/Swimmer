@@ -1,51 +1,32 @@
 package com.develop.rs_school.swimmer.presentation.main.ui
 
-import android.content.Context
 import android.os.Bundle
 import android.util.Log
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
 import com.develop.rs_school.swimmer.R
 import com.develop.rs_school.swimmer.SwimmerApp
-import com.develop.rs_school.swimmer.data.SessionSource
-import com.develop.rs_school.swimmer.di.MainComponent
 import com.develop.rs_school.swimmer.presentation.main.viewModels.MainViewModel
-//import com.develop.rs_school.swimmer.presentation.main.viewModels.DataViewModelFactory
-import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_main.bottom_navigation_view
 import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {
 
-
-    //@Inject
-    //lateinit var viewModelFactory: DataViewModelFactory
     @Inject
-    lateinit var mainViewModel: MainViewModel
+    lateinit var viewModelFactory: ViewModelProvider.Factory
 
-    lateinit var mainComponent: MainComponent
-
-//
-//    @Inject
-//    lateinit var viewModelFactory: ViewModelProvider.Factory
-//
-//    private val viewModel by viewModels<MainViewModel> { viewModelFactory }
+    val mainViewModel by viewModels<MainViewModel> { viewModelFactory }
 
     //FIXME sorry)
     private var currentFragment = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        // Ask Dagger to inject our dependencies
-        mainComponent = (application as SwimmerApp).appComponent.mainActivityComponent().create()
-        mainComponent.inject(this)
+
+        (application as SwimmerApp).appComponent.mainActivityComponent().create().inject(this)
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-//        viewModelFactory =
-//            DataViewModelFactory(
-//                customerId,
-//                application
-//            )
-//        mainViewModel = ViewModelProvider(this, viewModelFactory).get(MainViewModel::class.java)
 
         bottom_navigation_view.setIconSize(29f, 29f)
             .setTextVisibility(false)

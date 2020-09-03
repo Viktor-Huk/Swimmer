@@ -6,8 +6,8 @@ import com.develop.rs_school.swimmer.presentation.main.ui.ProfileFragment
 import dagger.Subcomponent
 
 // Definition of a Dagger subcomponent
-@ActivityScope
-@Subcomponent
+//@ActivityScope
+@Subcomponent(modules = [MainModule::class])
 interface MainComponent {
 
     @Subcomponent.Factory
