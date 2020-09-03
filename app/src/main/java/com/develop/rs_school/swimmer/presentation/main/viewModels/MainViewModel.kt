@@ -1,15 +1,19 @@
 package com.develop.rs_school.swimmer.presentation.main.viewModels
 
 import android.app.Application
+import android.content.Context
 import androidx.lifecycle.*
+import com.develop.rs_school.swimmer.R
 import com.develop.rs_school.swimmer.SingleLiveEvent
 import com.develop.rs_school.swimmer.data.Result
+import com.develop.rs_school.swimmer.domain.Customer
 import com.develop.rs_school.swimmer.repository.DataRepository
 import kotlinx.coroutines.launch
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class MainViewModel(private val customerId: String, app: Application) : ViewModel() {
-
-    private val dataRepository = DataRepository.getRepository(app)
+@Singleton
+class MainViewModel @Inject constructor(private val dataRepository: DataRepository, context: Context) : ViewModel() {//FIXME context
 
     private val _dataLoading = MutableLiveData<Boolean>()
     val dataLoading: LiveData<Boolean> = _dataLoading
@@ -18,7 +22,10 @@ class MainViewModel(private val customerId: String, app: Application) : ViewMode
     val showError: SingleLiveEvent<Boolean>
         get() = _showError
 
+    private var customerId: String
+
     init {
+        customerId = context.getSharedPreferences(context.getString(R.string.app_pref), Context.MODE_PRIVATE).getString(context.getString(R.string.sessionId), "") ?: ""
         updateData()
     }
 
@@ -49,13 +56,13 @@ class MainViewModel(private val customerId: String, app: Application) : ViewMode
     }
 }
 
-
-class DataViewModelFactory(private val customerId: String, val app: Application) : ViewModelProvider.Factory {
+/*
+class DataViewModelFactory @Inject constructor(private val dataRepository: DataRepository) : ViewModelProvider.Factory {
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(MainViewModel::class.java)) {
-            return MainViewModel(customerId, app) as T
+            return MainViewModel(dataRepository) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }
-}
+}*/

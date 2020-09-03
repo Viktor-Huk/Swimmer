@@ -7,18 +7,20 @@ import com.develop.rs_school.swimmer.data.Result
 import com.develop.rs_school.swimmer.data.database.DatabaseDataSource
 import com.develop.rs_school.swimmer.data.database.SwimmerDatabase
 import com.develop.rs_school.swimmer.data.network.NetworkDataSource
+import com.develop.rs_school.swimmer.di.StorageModule
 import com.develop.rs_school.swimmer.domain.Customer
 import com.develop.rs_school.swimmer.domain.Lesson
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
 //FIXME DI
-class DataRepository(
-    private val networkDataSource: DataSource,
-    private val databaseDataSource: DataSource
+class DataRepository @Inject constructor(
+    @StorageModule.RemoteDataSource private val networkDataSource: DataSource,
+    @StorageModule.LocalDataSource private val databaseDataSource: DataSource
 ) {
-
+/*
     companion object {
         @Volatile
         private var INSTANCE: DataRepository? = null
@@ -37,7 +39,7 @@ class DataRepository(
             }
         }
     }
-
+*/
     suspend fun refreshLessons(customerId: String) {
         val l = networkDataSource.getLessons(customerId)
         if (l is Result.Success)

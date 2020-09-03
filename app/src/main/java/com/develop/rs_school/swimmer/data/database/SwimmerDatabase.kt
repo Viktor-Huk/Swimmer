@@ -19,7 +19,7 @@ abstract class SwimmerDatabase : RoomDatabase() {
 
     abstract val customerDatabaseDao: CustomerDao
     abstract val lessonDatabaseDao: LessonDao
-
+/*
     companion object {
         @Volatile
         private var INSTANCE: SwimmerDatabase? = null
@@ -40,7 +40,7 @@ abstract class SwimmerDatabase : RoomDatabase() {
                 return instance
             }
         }
-    }
+    }*/
 }
 
 class Converters {
