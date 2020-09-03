@@ -40,7 +40,7 @@ class LessonsFragment : Fragment() {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        (requireActivity().application as SwimmerApp).appComponent.inject(this)
+        (requireActivity() as MainActivity).mainComponent.inject(this)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

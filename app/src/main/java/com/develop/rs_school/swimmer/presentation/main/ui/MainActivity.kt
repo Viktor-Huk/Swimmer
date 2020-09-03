@@ -4,9 +4,10 @@ import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProvider
 import com.develop.rs_school.swimmer.R
 import com.develop.rs_school.swimmer.SwimmerApp
+import com.develop.rs_school.swimmer.data.SessionSource
+import com.develop.rs_school.swimmer.di.MainComponent
 import com.develop.rs_school.swimmer.presentation.main.viewModels.MainViewModel
 //import com.develop.rs_school.swimmer.presentation.main.viewModels.DataViewModelFactory
 import kotlinx.android.synthetic.main.activity_main.*
@@ -20,6 +21,8 @@ class MainActivity : AppCompatActivity() {
     @Inject
     lateinit var mainViewModel: MainViewModel
 
+    lateinit var mainComponent: MainComponent
+
 //
 //    @Inject
 //    lateinit var viewModelFactory: ViewModelProvider.Factory
@@ -31,12 +34,11 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         // Ask Dagger to inject our dependencies
-        (application as SwimmerApp).appComponent.inject(this)
+        mainComponent = (application as SwimmerApp).appComponent.mainActivityComponent().create()
+        mainComponent.inject(this)
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-        val customerId = getSavedSession()
 
 //        viewModelFactory =
 //            DataViewModelFactory(
@@ -99,11 +101,6 @@ class MainActivity : AppCompatActivity() {
                 .commit()
             currentFragment = 1
         }
-    }
-
-    private fun getSavedSession(): String {
-        val sharedPref = getSharedPreferences(getString(R.string.app_pref), Context.MODE_PRIVATE)
-        return sharedPref.getString(getString(R.string.sessionId), "2376") ?: "2376"
     }
 
     //override fun onBackPressed() {}

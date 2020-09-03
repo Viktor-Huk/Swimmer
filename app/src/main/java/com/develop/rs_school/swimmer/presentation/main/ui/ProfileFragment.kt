@@ -8,7 +8,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import com.develop.rs_school.swimmer.R
 import com.develop.rs_school.swimmer.SwimmerApp
 import com.develop.rs_school.swimmer.databinding.FragmentProfileBinding
@@ -26,7 +25,7 @@ class ProfileFragment : Fragment() {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        (requireActivity().application as SwimmerApp).appComponent.inject(this)
+        (requireActivity() as MainActivity).mainComponent.inject(this)
     }
 
     override fun onCreateView(
@@ -51,22 +50,14 @@ class ProfileFragment : Fragment() {
             }
         })
 
+        //FIXME  vm.logout clicked -> in vm delete all and event go to login
         binding.logoutButton.setOnClickListener {
-            deleteSession()
+            mainViewModel.deleteSession()
             mainViewModel.deleteData()
             openActivity()
         }
     }
 
-    private fun deleteSession(){
-        val sharedPref = requireActivity().getSharedPreferences(getString(R.string.app_pref), Context.MODE_PRIVATE)
-        sharedPref?.let{
-            with (sharedPref.edit()) {
-                remove(getString(R.string.sessionId))
-                commit()
-            }
-        }
-    }
     private fun openActivity() {
         startActivity(
             Intent(

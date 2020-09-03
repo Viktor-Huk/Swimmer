@@ -1,24 +1,17 @@
 package com.develop.rs_school.swimmer.repository
 
-import android.app.Application
 import androidx.lifecycle.LiveData
 import com.develop.rs_school.swimmer.data.DataSource
 import com.develop.rs_school.swimmer.data.Result
-import com.develop.rs_school.swimmer.data.database.DatabaseDataSource
-import com.develop.rs_school.swimmer.data.database.SwimmerDatabase
-import com.develop.rs_school.swimmer.data.network.NetworkDataSource
-import com.develop.rs_school.swimmer.di.StorageModule
+import com.develop.rs_school.swimmer.di.DataSourceModule
 import com.develop.rs_school.swimmer.domain.Customer
 import com.develop.rs_school.swimmer.domain.Lesson
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 //FIXME DI
 class DataRepository @Inject constructor(
-    @StorageModule.RemoteDataSource private val networkDataSource: DataSource,
-    @StorageModule.LocalDataSource private val databaseDataSource: DataSource
+    @DataSourceModule.RemoteDataSource private val networkDataSource: DataSource,
+    @DataSourceModule.LocalDataSource private val databaseDataSource: DataSource
 ) {
 /*
     companion object {

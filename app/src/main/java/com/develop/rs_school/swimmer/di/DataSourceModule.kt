@@ -17,7 +17,7 @@ import javax.inject.Singleton
 
 // Tells Dagger this is a Dagger module
 @Module
-object StorageModule {
+object DataSourceModule {
 
     @Qualifier
     @Retention(AnnotationRetention.RUNTIME)

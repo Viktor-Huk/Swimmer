@@ -27,7 +27,7 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="caption_lessons">Мои занятия</string>
-    <string name="sessionId">CustomerId</string>
+    <string name="session_id_pref">CustomerId</string>
     <string name="app_pref">APP_PREFERENCES</string>
     <string name="BalanceTitle">Общий баланс занятий</string>
     <string name="emailTitle">E-mail</string>

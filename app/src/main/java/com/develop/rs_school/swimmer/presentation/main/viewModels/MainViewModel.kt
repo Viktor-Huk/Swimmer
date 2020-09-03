@@ -1,19 +1,19 @@
 package com.develop.rs_school.swimmer.presentation.main.viewModels
 
-import android.app.Application
 import android.content.Context
 import androidx.lifecycle.*
 import com.develop.rs_school.swimmer.R
 import com.develop.rs_school.swimmer.SingleLiveEvent
 import com.develop.rs_school.swimmer.data.Result
-import com.develop.rs_school.swimmer.domain.Customer
+import com.develop.rs_school.swimmer.data.SessionSource
+import com.develop.rs_school.swimmer.di.ActivityScope
 import com.develop.rs_school.swimmer.repository.DataRepository
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 import javax.inject.Singleton
 
-@Singleton
-class MainViewModel @Inject constructor(private val dataRepository: DataRepository, context: Context) : ViewModel() {//FIXME context
+@ActivityScope
+class MainViewModel @Inject constructor(private val dataRepository: DataRepository, context: Context, var sessionSource: SessionSource) : ViewModel() {//FIXME context
 
     private val _dataLoading = MutableLiveData<Boolean>()
     val dataLoading: LiveData<Boolean> = _dataLoading
@@ -25,7 +25,7 @@ class MainViewModel @Inject constructor(private val dataRepository: DataReposito
     private var customerId: String
 
     init {
-        customerId = context.getSharedPreferences(context.getString(R.string.app_pref), Context.MODE_PRIVATE).getString(context.getString(R.string.sessionId), "") ?: ""
+        customerId = sessionSource.getSession()
         updateData()
     }
 
@@ -53,6 +53,10 @@ class MainViewModel @Inject constructor(private val dataRepository: DataReposito
         viewModelScope.launch {
             dataRepository.clearData()
         }
+    }
+
+    fun deleteSession(){
+        sessionSource.deleteSession()
     }
 }
 

@@ -8,8 +8,9 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.develop.rs_school.swimmer.presentation.main.ui.MainActivity
 import com.develop.rs_school.swimmer.R
+import com.develop.rs_school.swimmer.SwimmerApp
+import com.develop.rs_school.swimmer.data.SessionSource
 import com.develop.rs_school.swimmer.databinding.ActivityLoginBinding
-import com.develop.rs_school.swimmer.data.network.SwimmerApi.firstAuth
 import com.develop.rs_school.swimmer.data.network.auth
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -19,6 +20,7 @@ import ru.tinkoff.decoro.MaskImpl
 import ru.tinkoff.decoro.parser.UnderscoreDigitSlotsParser
 import ru.tinkoff.decoro.watchers.FormatWatcher
 import ru.tinkoff.decoro.watchers.MaskFormatWatcher
+import javax.inject.Inject
 
 
 class LoginActivity : AppCompatActivity() {
@@ -26,14 +28,19 @@ class LoginActivity : AppCompatActivity() {
     private var coroutineJob = Job()
     private val uiScope = CoroutineScope(Dispatchers.Main + coroutineJob)
 
+    @Inject
+    lateinit var sessionSource: SessionSource
+
     private lateinit var binding: ActivityLoginBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        (application as SwimmerApp).appComponent.inject(this)
+
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        if(getSavedSession()!=null){
+        if(getSavedSession()!=""){
             startActivity(Intent(this@LoginActivity, MainActivity::class.java))
             finish()
         }
@@ -76,17 +83,10 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun createSession(session: String){
-        val sharedPref = getSharedPreferences(getString(R.string.app_pref), Context.MODE_PRIVATE)
-        sharedPref?.let{
-            with (sharedPref.edit()) {
-                putString(getString(R.string.sessionId), session)
-                commit()
-            }
-        }
+        sessionSource.saveSession(session)
     }
-    private fun getSavedSession(): String? {
-        val sharedPref = getSharedPreferences(getString(R.string.app_pref), Context.MODE_PRIVATE)
-        return sharedPref.getString(getString(R.string.sessionId), null)
+    private fun getSavedSession(): String {
+        return sessionSource.getSession()
     }
 
     override fun onDestroy() {
