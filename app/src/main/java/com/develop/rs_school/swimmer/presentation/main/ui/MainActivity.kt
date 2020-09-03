@@ -6,30 +6,44 @@ import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.develop.rs_school.swimmer.R
+import com.develop.rs_school.swimmer.SwimmerApp
 import com.develop.rs_school.swimmer.presentation.main.viewModels.MainViewModel
-import com.develop.rs_school.swimmer.presentation.main.viewModels.DataViewModelFactory
+//import com.develop.rs_school.swimmer.presentation.main.viewModels.DataViewModelFactory
 import kotlinx.android.synthetic.main.activity_main.*
+import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {
 
+
+    //@Inject
+    //lateinit var viewModelFactory: DataViewModelFactory
+    @Inject
     lateinit var mainViewModel: MainViewModel
-    lateinit var viewModelFactory: DataViewModelFactory
+
+//
+//    @Inject
+//    lateinit var viewModelFactory: ViewModelProvider.Factory
+//
+//    private val viewModel by viewModels<MainViewModel> { viewModelFactory }
 
     //FIXME sorry)
     private var currentFragment = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        // Ask Dagger to inject our dependencies
+        (application as SwimmerApp).appComponent.inject(this)
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         val customerId = getSavedSession()
 
-        viewModelFactory =
-            DataViewModelFactory(
-                customerId,
-                application
-            )
-        mainViewModel = ViewModelProvider(this, viewModelFactory).get(MainViewModel::class.java)
+//        viewModelFactory =
+//            DataViewModelFactory(
+//                customerId,
+//                application
+//            )
+//        mainViewModel = ViewModelProvider(this, viewModelFactory).get(MainViewModel::class.java)
 
         bottom_navigation_view.setIconSize(29f, 29f)
             .setTextVisibility(false)
