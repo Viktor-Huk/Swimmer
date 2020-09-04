@@ -1,7 +1,6 @@
 package com.develop.rs_school.swimmer.presentation.main.ui
 
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
@@ -9,10 +8,8 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.NavigationUI
 import com.develop.rs_school.swimmer.R
 import com.develop.rs_school.swimmer.SwimmerApp
-import com.develop.rs_school.swimmer.databinding.ActivityLoginBinding
 import com.develop.rs_school.swimmer.databinding.ActivityMainBinding
 import com.develop.rs_school.swimmer.presentation.main.viewModels.MainViewModel
-import kotlinx.android.synthetic.main.activity_main.bottom_navigation_view
 import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {

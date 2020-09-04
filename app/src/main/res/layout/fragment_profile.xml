@@ -51,7 +51,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="@dimen/activity_margin"
                 android:fontFamily="sans-serif-light"
-                android:text="@string/username"
+                tools:text="Username"
                 android:textAlignment="center"
                 android:textColor="@color/white"
                 android:textSize="32sp" />

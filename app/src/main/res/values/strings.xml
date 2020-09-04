@@ -1,31 +1,9 @@
 <resources>
     <string name="app_name">Swimmer</string>
-    <string name="signin_message">Type phone number to sign in</string>
-    <string name="hint_username">User phone number</string>
-    <string name="button_sign_in">Sign in</string>
-    <string name="username">Username</string>
-    <string name="dummy_button">Dummy Button</string>
-    <string name="dummy_content">DUMMY\nCONTENT</string>
-    <!-- Preference Titles -->
-    <string name="messages_header">Messages</string>
-    <string name="sync_header">Sync</string>
+    <string name="sign_in_message">Введите номер телефона чтобы войти</string>
+    <string name="hint_username">Номер телефона</string>
+    <string name="button_sign_in">Войти</string>
 
-    <!-- Messages Preferences -->
-    <string name="signature_title">Your signature</string>
-    <string name="reply_title">Default reply action</string>
-
-    <!-- Sync Preferences -->
-    <string name="sync_title">Sync email periodically</string>
-    <string name="attachment_title">Download incoming attachments</string>
-    <string name="attachment_summary_on">Automatically download attachments for incoming emails
-    </string>
-    <string name="attachment_summary_off">Only download attachments when manually requested</string>
-
-    <!--logout_button fragment-->
-    <string name="logout_msg">Tap to logout</string>
-    <string name="logout_button">Logout</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="caption_lessons">Мои занятия</string>
     <string name="session_id_pref">CustomerId</string>
     <string name="app_pref">APP_PREFERENCES</string>
@@ -46,7 +24,7 @@
     <string name="social_links">Соц сети <a href="https://www.facebook.com/mevis.swim/">Facebook</a> <a href="https://vk.com/mevis.swim">ВКонтакте</a> <a href="https://www.instagram.com/mevis.swim">Instagram</a></string>
     <string name="youtube_link">Канал на <a href="https://www.youtube.com/c/mevisone">YouTube</a></string>
     <string name="mail_link">Написать письмо mevis-1@mail.ru</string>
-    <string name="phone_link">Позвонить нам +375(44)588-77-66</string>
+    <string name="phone_link">Позвонить нам +375(44)588–77–66</string>
     <string name="site_link">Сайт школы http://www.swimmer.by/</string>
     <string name="about_school_title">О школе</string>
 </resources>

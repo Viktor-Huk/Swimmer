@@ -1,18 +1,18 @@
 package com.develop.rs_school.swimmer.presentation.main.viewModels
 
-import android.content.Context
-import androidx.lifecycle.*
-import com.develop.rs_school.swimmer.R
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.map
+import androidx.lifecycle.viewModelScope
 import com.develop.rs_school.swimmer.SingleLiveEvent
 import com.develop.rs_school.swimmer.data.Result
 import com.develop.rs_school.swimmer.data.SessionSource
-//import com.develop.rs_school.swimmer.di.ActivityScope
 import com.develop.rs_school.swimmer.repository.DataRepository
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-import javax.inject.Singleton
 
-class MainViewModel @Inject constructor(private val dataRepository: DataRepository, context: Context, var sessionSource: SessionSource) : ViewModel() {//FIXME context
+class MainViewModel @Inject constructor(private val dataRepository: DataRepository, private var sessionSource: SessionSource) : ViewModel() {
 
     private val _dataLoading = MutableLiveData<Boolean>()
     val dataLoading: LiveData<Boolean> = _dataLoading

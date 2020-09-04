@@ -8,31 +8,11 @@ import com.develop.rs_school.swimmer.domain.Customer
 import com.develop.rs_school.swimmer.domain.Lesson
 import javax.inject.Inject
 
-//FIXME DI
 class DataRepository @Inject constructor(
     @DataSourceModule.RemoteDataSource private val networkDataSource: DataSource,
     @DataSourceModule.LocalDataSource private val databaseDataSource: DataSource
 ) {
-/*
-    companion object {
-        @Volatile
-        private var INSTANCE: DataRepository? = null
 
-        fun getRepository(app: Application): DataRepository {
-            return INSTANCE ?: synchronized(this) {
-                DataRepository(
-                    NetworkDataSource(),
-                    DatabaseDataSource(
-                        SwimmerDatabase.getInstance(app).lessonDatabaseDao,//FIXME DI
-                        SwimmerDatabase.getInstance(app).customerDatabaseDao
-                    )
-                ).also {
-                    INSTANCE = it
-                }
-            }
-        }
-    }
-*/
     suspend fun refreshLessons(customerId: String) {
         val l = networkDataSource.getLessons(customerId)
         if (l is Result.Success)

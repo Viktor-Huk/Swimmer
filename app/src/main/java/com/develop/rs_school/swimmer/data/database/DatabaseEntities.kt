@@ -2,7 +2,6 @@ package com.develop.rs_school.swimmer.data.database
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import androidx.room.TypeConverter
 import com.develop.rs_school.swimmer.AgendaStatus
 import com.develop.rs_school.swimmer.domain.Customer
 import com.develop.rs_school.swimmer.domain.Lesson
