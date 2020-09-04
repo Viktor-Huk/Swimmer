@@ -11,4 +11,6 @@
     <dimen name="activity_medium_margin">8dp</dimen>
     <dimen name="activity_small_margin">4dp</dimen>
     <dimen name="border_width">1dp</dimen>
+    <dimen name="logo_width">104dp</dimen>
+    <dimen name="logo_height">30dp</dimen>
 </resources>

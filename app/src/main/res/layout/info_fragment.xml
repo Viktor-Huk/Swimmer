@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".presentation.main.ui.LessonsFragment">
+    tools:context=".presentation.main.ui.InfoFragment">
 
     <ImageView
         android:layout_width="@dimen/logo_width"
@@ -16,33 +16,12 @@
         app:srcCompat="@drawable/logo_blue"
         android:contentDescription="@string/app_logo_image_desc" />
 
-    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-        android:id="@+id/swipe_refresh"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/caption">
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/lesson_recycler"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="@dimen/activity_margin"
-            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-            app:spanCount="4"
-            tools:itemCount="8"
-            tools:listitem="@layout/recycler_view_raw"
-            android:paddingStart="@dimen/activity_margin"
-            android:paddingEnd="@dimen/activity_margin"/>
-    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
-
     <TextView
         android:id="@+id/caption"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
-        android:text="@string/caption_lessons"
+        android:text="О школе"
         android:textAppearance="?attr/textAppearanceHeadline5"
         android:textColor="@color/material_on_primary_emphasis_high_type"
         app:layout_constraintEnd_toEndOf="parent"

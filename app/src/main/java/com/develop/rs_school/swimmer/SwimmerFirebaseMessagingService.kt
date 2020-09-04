@@ -22,7 +22,6 @@ class SwimmerFirebaseMessagingService: FirebaseMessagingService() {
             sendNotification(it)
         }
     }
-
     /**
      * Create and show a simple notification containing the received FCM message.
      *

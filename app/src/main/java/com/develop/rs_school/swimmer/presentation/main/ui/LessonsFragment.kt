@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.navigation.findNavController
 import com.develop.rs_school.swimmer.R
 import com.develop.rs_school.swimmer.data.Result
 import com.develop.rs_school.swimmer.databinding.FragmentLessonsBinding
