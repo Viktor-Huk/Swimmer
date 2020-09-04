@@ -7,6 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.NavHostFragment.findNavController
+import androidx.navigation.fragment.findNavController
+import com.develop.rs_school.swimmer.R
 import com.develop.rs_school.swimmer.databinding.FragmentProfileBinding
 import com.develop.rs_school.swimmer.presentation.login.LoginActivity
 
@@ -43,7 +46,9 @@ class ProfileFragment : Fragment() {
         binding.logoutButton.setOnClickListener {
             mainViewModel.deleteSession()
             mainViewModel.deleteData()
-            openActivity()
+            //openActivity()
+            //FIXME
+            findNavController().navigate(R.id.action_profileFragment_to_loginActivity)
         }
     }
 
