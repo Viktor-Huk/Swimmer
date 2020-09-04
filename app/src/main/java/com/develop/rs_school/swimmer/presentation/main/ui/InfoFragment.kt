@@ -2,6 +2,7 @@ package com.develop.rs_school.swimmer.presentation.main.ui
 
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
+import android.text.method.LinkMovementMethod
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -30,6 +31,9 @@ class InfoFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProvider(this).get(InfoViewModel::class.java)
+
+        binding.social.movementMethod = LinkMovementMethod.getInstance()
+        binding.youtubeChannel.movementMethod = LinkMovementMethod.getInstance()
     }
 
     override fun onDestroyView() {

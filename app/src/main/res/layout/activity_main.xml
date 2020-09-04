@@ -17,14 +17,18 @@
         app:defaultNavHost="true"
         />
 
-    <com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx
+    <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
+        style="@style/Widget.MaterialComponents.BottomNavigationView.PrimarySurface"
+        app:itemIconSize="26dp"
+        app:itemIconTint="@color/orange"
+        app:labelVisibilityMode="selected"
         android:elevation="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:menu="@menu/bottom_navigation_bar" />
+        app:menu="@menu/main_activity_menu" />
 </LinearLayout>

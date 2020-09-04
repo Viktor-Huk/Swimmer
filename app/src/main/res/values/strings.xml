@@ -42,4 +42,11 @@
     <string name="error_login_message">Incorrect login data. Try again!</string>
     <string name="error_network_message">Network error, local data displayed</string>
     <string name="default_notification_channel_id">default_channel</string>
+    <string name="swimmer_desc">Европейский плавательный клуб MEVIS - лидер в обучении плаванию взрослых "с нуля" групповым методом. Филиалы в Москве, С.-Петербурге, Минске, Любеке, Барселоне. Собственная патентованная методика и опыт работы с 1999г.</string>
+    <string name="social_links">Соц сети <a href="https://www.facebook.com/mevis.swim/">Facebook</a> <a href="https://vk.com/mevis.swim">ВКонтакте</a> <a href="https://www.instagram.com/mevis.swim">Instagram</a></string>
+    <string name="youtube_link">Канал на <a href="https://www.youtube.com/c/mevisone">YouTube</a></string>
+    <string name="mail_link">Написать письмо mevis-1@mail.ru</string>
+    <string name="phone_link">Позвонить нам +375(44)588-77-66</string>
+    <string name="site_link">Сайт школы http://www.swimmer.by/</string>
+    <string name="about_school_title">О школе</string>
 </resources>

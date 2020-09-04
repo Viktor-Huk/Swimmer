@@ -30,13 +30,6 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.bottomNavigationView.setIconSize(29f, 29f)
-            .setTextVisibility(false)
-            .enableAnimation(true)
-        for (i in 0 until bottom_navigation_view.menu.size()) {
-            bottom_navigation_view.setIconTintList(i, null)
-        }
-
         NavigationUI.setupWithNavController(binding.bottomNavigationView, findNavController(R.id.myNavHostFragment))
     }
 }
