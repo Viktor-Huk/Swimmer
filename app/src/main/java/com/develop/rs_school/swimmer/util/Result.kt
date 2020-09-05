@@ -1,4 +1,4 @@
-package com.develop.rs_school.swimmer.data
+package com.develop.rs_school.swimmer.util
 
 /*
  * Copyright (C) 2019 The Android Open Source Project

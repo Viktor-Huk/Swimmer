@@ -1,11 +1,8 @@
 package com.develop.rs_school.swimmer.data.network
 
-import android.util.Log
-import com.develop.rs_school.swimmer.AgendaStatus
-import com.develop.rs_school.swimmer.data.Result
+import com.develop.rs_school.swimmer.util.AgendaStatus
 import com.develop.rs_school.swimmer.data.database.DatabaseLesson
 import com.develop.rs_school.swimmer.domain.Lesson
-import java.net.UnknownHostException
 import java.util.*
 
 suspend fun getCustomerLesson(customerId: String): List<CustomerLesson> {

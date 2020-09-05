@@ -1,6 +1,6 @@
 package com.develop.rs_school.swimmer.domain
 
-import com.develop.rs_school.swimmer.AgendaStatus
+import com.develop.rs_school.swimmer.util.AgendaStatus
 import java.util.*
 
 data class Lesson(

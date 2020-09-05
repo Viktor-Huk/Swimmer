@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.develop.rs_school.swimmer.R
 import com.develop.rs_school.swimmer.databinding.RecyclerViewRawBinding
-import com.develop.rs_school.swimmer.AgendaStatus
+import com.develop.rs_school.swimmer.util.AgendaStatus
 import com.develop.rs_school.swimmer.domain.Lesson
 import java.text.SimpleDateFormat
 import java.util.*

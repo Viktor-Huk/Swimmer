@@ -1,7 +1,6 @@
 package com.develop.rs_school.swimmer.data.network.dto
 
 import android.os.Parcelable
-import com.develop.rs_school.swimmer.AgendaStatus
 import com.squareup.moshi.Json
 import kotlinx.android.parcel.Parcelize
 import java.util.*

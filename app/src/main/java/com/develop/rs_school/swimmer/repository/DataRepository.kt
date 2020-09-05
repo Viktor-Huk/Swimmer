@@ -2,7 +2,7 @@ package com.develop.rs_school.swimmer.repository
 
 import androidx.lifecycle.LiveData
 import com.develop.rs_school.swimmer.data.DataSource
-import com.develop.rs_school.swimmer.data.Result
+import com.develop.rs_school.swimmer.util.Result
 import com.develop.rs_school.swimmer.di.DataSourceModule
 import com.develop.rs_school.swimmer.domain.Customer
 import com.develop.rs_school.swimmer.domain.Lesson

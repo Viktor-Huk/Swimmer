@@ -7,9 +7,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.develop.rs_school.swimmer.SingleLiveEvent
 import com.develop.rs_school.swimmer.data.AuthSource
-import com.develop.rs_school.swimmer.data.Result
+import com.develop.rs_school.swimmer.util.Result
 import com.develop.rs_school.swimmer.data.SessionSource
-import com.develop.rs_school.swimmer.gePhoneNumber
+import com.develop.rs_school.swimmer.util.gePhoneNumber
 import kotlinx.coroutines.launch
 import java.net.UnknownHostException
 import java.util.*

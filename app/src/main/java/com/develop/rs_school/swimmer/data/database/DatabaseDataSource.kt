@@ -3,7 +3,7 @@ package com.develop.rs_school.swimmer.data.database
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.map
 import com.develop.rs_school.swimmer.data.DataSource
-import com.develop.rs_school.swimmer.data.Result
+import com.develop.rs_school.swimmer.util.Result
 import com.develop.rs_school.swimmer.domain.Customer
 import com.develop.rs_school.swimmer.domain.Lesson
 import kotlinx.coroutines.CoroutineDispatcher
