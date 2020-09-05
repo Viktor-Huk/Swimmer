@@ -6,7 +6,7 @@
     <string name="button_get_code">Далее</string>
 
     <string name="caption_lessons">Мои занятия</string>
-    <string name="session_id_pref">CustomerId</string>
+    <string name="session_id_pref">CustomerIdInt</string>
     <string name="app_pref">APP_PREFERENCES</string>
     <string name="BalanceTitle">Общий баланс занятий</string>
     <string name="emailTitle">E-mail</string>

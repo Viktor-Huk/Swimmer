@@ -39,7 +39,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_margin="@dimen/activity_medium_margin"
-        app:cardBackgroundColor="@color/white"
         app:cardCornerRadius="24dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -61,7 +60,7 @@
             android:paddingStart="@dimen/activity_medium_margin"
             android:paddingEnd="@dimen/activity_medium_margin"
             android:singleLine="true"
-            android:textColor="@color/black_color" />
+            android:textColor="?android:attr/textColorPrimary" />
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
@@ -71,7 +70,7 @@
         android:layout_gravity="center"
         android:layout_margin="@dimen/activity_medium_margin"
         android:visibility="gone"
-        app:cardBackgroundColor="@color/white"
+        tools:visibility="visible"
         app:cardCornerRadius="24dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -90,12 +89,13 @@
             android:paddingStart="@dimen/activity_medium_margin"
             android:paddingEnd="@dimen/activity_medium_margin"
             android:singleLine="true"
-            android:textColor="@color/black_color" />
+            android:textColor="?android:attr/textColorPrimary" />
     </androidx.cardview.widget.CardView>
 
     <Button
         android:id="@+id/button_sign_in"
         style="@style/sign_in_button_style"
+        app:backgroundTint="@color/orange"
         android:layout_width="320dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"

@@ -58,6 +58,7 @@ class LoginActivity : AppCompatActivity() {
                     binding.buttonSignIn.text = getString(R.string.button_sign_in)
                     binding.textInput.isEnabled = false
                 } else {
+                    binding.textInputCode.setText("")
                     binding.inputCardViewCode.visibility = View.GONE
                     binding.buttonSignIn.text = getString(R.string.button_get_code)
                     binding.textInput.isEnabled = true

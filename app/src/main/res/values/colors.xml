@@ -12,13 +12,11 @@
     <color name="secondaryTextColor">#ffffff</color>
 
     <color name="black_color">#000000</color>
+
     <color name="white">#FFFFFF</color>
     <color name="colorTextInputBackground">#F7F7F7</color>
     <color name="md_cyan_700">#0097A7</color>
-    <color name="address">#2F7092</color>
     <color name="solidCircle">#AAFFFFFF</color>
-    <color name="gradEnd">#67EFC8</color>
-    <color name="gradStart">#63C9FF</color>
     <color name="circleBorder">#50FFFFFF</color>
     <color name="silver">#C0C0C0</color>
     <color name="black_overlay">#66000000</color>
@@ -26,4 +24,6 @@
     <color name="md_amber_700">#FFA000</color>
     <color name="ic_launcher_background">#63C9FF</color>
     <color name="tmp">#007ac1</color>
+
+    <color name="bottom_navigation_bar">#ffffff</color>
 </resources>
