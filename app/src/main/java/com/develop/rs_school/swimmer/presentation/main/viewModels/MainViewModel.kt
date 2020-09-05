@@ -25,7 +25,7 @@ class MainViewModel @Inject constructor(private val dataRepository: DataReposito
     val goToLogin: SingleLiveEvent<Boolean>
         get() = _goToLogin
 
-    private var customerId: String = sessionSource.getSession()
+    private var customerId: Int = sessionSource.getSession()
 
     init {
         updateData()

@@ -14,7 +14,7 @@ class NetworkDataSource(): DataSource {
         TODO("Not yet implemented")
     }
 
-    override suspend fun getLessons(customerId: String): Result<List<Lesson>> =
+    override suspend fun getLessons(customerId: Int): Result<List<Lesson>> =
         withContext(Dispatchers.IO) {
             try{
                 val networkLessons = getCustomerLessonsWithFullInfo(customerId)
@@ -42,7 +42,7 @@ class NetworkDataSource(): DataSource {
     override suspend fun getCustomer(customerId: Int): Result<Customer> =
         withContext(Dispatchers.IO) {
             try{
-                return@withContext Result.Success(SwimmerApi.getCustomersImpl().first { it.id == customerId.toString() }.asDomainModel())
+                return@withContext Result.Success(SwimmerApi.getCustomersImpl().first { it.id == customerId }.asDomainModel())
             }
             catch (e: Exception){
                 return@withContext Result.Error(e)

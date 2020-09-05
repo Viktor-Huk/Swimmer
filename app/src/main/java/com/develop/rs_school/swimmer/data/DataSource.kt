@@ -6,7 +6,7 @@ import com.develop.rs_school.swimmer.domain.Lesson
 
 interface DataSource {
     fun observeLessons(): LiveData<Result<List<Lesson>>>
-    suspend fun getLessons(customerId: String): Result<List<Lesson>>
+    suspend fun getLessons(customerId: Int): Result<List<Lesson>>
     suspend fun saveLessons(lessons: List<Lesson>)
     suspend fun deleteLessons()
 

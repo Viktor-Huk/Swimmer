@@ -16,6 +16,7 @@ interface MainComponent {
     }
 
     fun inject(activity: MainActivity)
+    //FIXME delete this lines
     fun inject(fragment: LessonsFragment)
     fun inject(fragment: ProfileFragment)
 }

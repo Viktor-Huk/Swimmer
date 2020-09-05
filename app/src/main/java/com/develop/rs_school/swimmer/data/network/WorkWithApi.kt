@@ -4,7 +4,6 @@ import android.util.Log
 import com.develop.rs_school.swimmer.AgendaStatus
 import com.develop.rs_school.swimmer.data.Result
 import com.develop.rs_school.swimmer.data.database.DatabaseLesson
-import com.develop.rs_school.swimmer.data.network.dto.asDomainModel
 import com.develop.rs_school.swimmer.domain.Lesson
 import java.net.UnknownHostException
 import java.util.*
@@ -29,12 +28,12 @@ suspend fun getCustomerLesson(customerId: String): List<CustomerLesson> {
     }
 }
 
-suspend fun getCustomerLessonsWithFullInfo(customerId: String): MutableList<CustomerLessonWithAgenda> {
+suspend fun getCustomerLessonsWithFullInfo(customerId: Int): MutableList<CustomerLessonWithAgenda> {
 
     val customer = SwimmerApi.getCustomersImpl().first { it.id == customerId }
     //TODO parallel ?
-    val lessonInCalendarList = SwimmerApi.getCustomerCalendarImpl(customerId).sortedBy { it.date }
-    val lessonList = getCustomerLesson(customerId).sortedByDescending { it.date }
+    val lessonInCalendarList = SwimmerApi.getCustomerCalendarImpl(customerId.toString()).sortedBy { it.date }
+    val lessonList = getCustomerLesson(customerId.toString()).sortedByDescending { it.date }
 
     val resultList = mutableListOf<CustomerLessonWithAgenda>()
     var paidLessonInFuture = customer.paid_lesson
@@ -99,7 +98,7 @@ suspend fun getCustomerLessonsWithFullInfo(customerId: String): MutableList<Cust
     return resultList
 }
 
-suspend fun auth(authData: String): Result<String> {
+suspend fun auth(authData: String): Result<Int> {
     return try {
         SwimmerApi.firstAuth()
         val res = SwimmerApi.getCustomersImpl().first { it.phone.contains(authData) }

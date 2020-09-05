@@ -1,8 +1,6 @@
 package com.develop.rs_school.swimmer.data.network
 
-import com.develop.rs_school.swimmer.data.Result
 import com.develop.rs_school.swimmer.data.network.dto.Sms
-import com.develop.rs_school.swimmer.data.network.dto.asDomainModel
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import kotlinx.coroutines.Dispatchers
@@ -13,11 +11,11 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Query
 
-
+// 4ae46c60456d2ce63c72461e4ff81c42
 interface SmsApiService {
     @GET("sendQuickSMS")
     suspend fun sendSms(
-        @Query(value = "token") token: String = "5cfa8865baae84b79f9e3aa08397982a",
+        @Query(value = "token") token: String = "4ae46c60456d2ce63c72461e4ff81c42",
         @Query(value = "message") message: String,
         @Query(value = "phone") phone: String
     ): Response<Sms>
@@ -46,11 +44,11 @@ object SmsApi {
                     when {
                         //respBody == null ->  "some error"
                         respBody?.smsStatus != null -> "success"
-                        respBody?.error != null ->  respBody.error
+                        respBody?.error != null -> respBody.error
                         else -> "some error"
                     }
                 }
-                else -> response.code().toString()
+                else -> "some error " + response.code().toString()
             }
         }
     }

@@ -36,16 +36,16 @@ class LoginViewModel @Inject constructor(private var sessionSource: SessionSourc
 
     private lateinit var _smsCode: String
 
-    private fun saveSession(session: String) {
+    private fun saveSession(session: Int) {
         sessionSource.saveSession(session)
     }
 
-    private fun getSession(): String {
+    private fun getSession(): Int {
         return sessionSource.getSession()
     }
 
     init {
-        if (getSession() != "") {
+        if (getSession() != 0) {
             _goToProfile.value = true
         }
     }

@@ -23,7 +23,7 @@ class DatabaseDataSource @Inject internal constructor(
         }
     }
 
-    override suspend fun getLessons(customerId: String): Result<List<Lesson>> {
+    override suspend fun getLessons(customerId: Int): Result<List<Lesson>> {
         TODO("Not yet implemented")
     }
 

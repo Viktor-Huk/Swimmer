@@ -8,7 +8,7 @@ import java.util.*
 
 @Parcelize
 data class Customer(
-    val id: String,
+    val id: Int,
     val name: String,
     val dob: String,
     val balance: String, // сколько осталось денег
@@ -27,7 +27,7 @@ data class CustomerList(
 
 fun Customer.asDatabaseModel(): DatabaseCustomer{
     return DatabaseCustomer(
-        id = this.id.toInt(),
+        id = this.id,
         name = this.name,
         dob = this.dob,
         balance = this.balance,
@@ -39,7 +39,7 @@ fun Customer.asDatabaseModel(): DatabaseCustomer{
 
 fun Customer.asDomainModel(): com.develop.rs_school.swimmer.domain.Customer{
     return com.develop.rs_school.swimmer.domain.Customer(
-        id = this.id.toInt(),
+        id = this.id,
         name = this.name,
         dob = this.dob,
         balance = this.balance,

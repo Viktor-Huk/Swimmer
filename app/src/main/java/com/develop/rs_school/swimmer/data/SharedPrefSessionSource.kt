@@ -8,13 +8,13 @@ class SharedPrefSessionSource @Inject constructor(val context: Context): Session
 
     private val sharedPreferences = context.getSharedPreferences(context.getString(R.string.app_pref), Context.MODE_PRIVATE)
 
-    override fun getSession(): String {
-        return sharedPreferences.getString(context.getString(R.string.session_id_pref), "") ?: ""
+    override fun getSession(): Int {
+        return sharedPreferences.getInt(context.getString(R.string.session_id_pref), 0)
     }
 
-    override fun saveSession(session: String) {
+    override fun saveSession(session: Int) {
         with(sharedPreferences.edit()) {
-            putString(context.getString(R.string.session_id_pref), session)
+            putInt(context.getString(R.string.session_id_pref), session)
             apply()
         }
     }

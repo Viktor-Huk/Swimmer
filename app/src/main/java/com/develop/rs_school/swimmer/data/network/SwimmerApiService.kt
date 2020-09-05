@@ -1,6 +1,13 @@
 package com.develop.rs_school.swimmer.data.network
 
-import com.develop.rs_school.swimmer.data.network.dto.*
+import com.develop.rs_school.swimmer.data.network.dto.AuthObject
+import com.develop.rs_school.swimmer.data.network.dto.Customer
+import com.develop.rs_school.swimmer.data.network.dto.CustomerCalendar
+import com.develop.rs_school.swimmer.data.network.dto.CustomerList
+import com.develop.rs_school.swimmer.data.network.dto.Lesson
+import com.develop.rs_school.swimmer.data.network.dto.LessonList
+import com.develop.rs_school.swimmer.data.network.dto.LessonStatusObject
+import com.develop.rs_school.swimmer.data.network.dto.TokenObject
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import kotlinx.coroutines.Dispatchers
@@ -9,7 +16,6 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.Body
-import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.POST
 import retrofit2.http.Query
