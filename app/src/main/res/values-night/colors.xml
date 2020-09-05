@@ -3,4 +3,6 @@
     <color name="primaryColor">#e76a27</color>
     <color name="primaryDarkColor">#121212</color>
     <color name="primaryLightColor">#424242</color>
+
+    <color name="bottom_navigation_bar">#121212</color>
 </resources>

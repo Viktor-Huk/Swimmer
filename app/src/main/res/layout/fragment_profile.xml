@@ -65,7 +65,7 @@
                 android:fontFamily="sans-serif"
                 tools:text="some date of birth"
                 android:textAllCaps="true"
-                android:textColor="@color/address"
+                android:textColor="?android:attr/textColorPrimary"
                 android:textSize="14sp" />
 
             <ImageButton
