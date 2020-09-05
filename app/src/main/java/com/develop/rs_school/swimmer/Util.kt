@@ -13,3 +13,8 @@ enum class AgendaStatus {
     CANCELED
     //, PAUSE don't use
 }
+
+fun gePhoneNumber(phone: String) : String {
+    val filtered = "()+-"
+    return phone.filterNot { filtered.indexOf(it) > -1 }
+}

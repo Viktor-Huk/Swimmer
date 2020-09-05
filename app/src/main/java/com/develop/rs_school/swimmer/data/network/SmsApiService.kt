@@ -1,6 +1,8 @@
 package com.develop.rs_school.swimmer.data.network
 
+import com.develop.rs_school.swimmer.data.Result
 import com.develop.rs_school.swimmer.data.network.dto.Sms
+import com.develop.rs_school.swimmer.data.network.dto.asDomainModel
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import kotlinx.coroutines.Dispatchers
@@ -42,9 +44,9 @@ object SmsApi {
                 response.isSuccessful -> {
                     val respBody = response.body()
                     when {
-                        respBody == null ->  "error null body"
-                        respBody.smsStatus != null -> respBody.smsStatus
-                        respBody.error != null ->  respBody.error
+                        //respBody == null ->  "some error"
+                        respBody?.smsStatus != null -> "success"
+                        respBody?.error != null ->  respBody.error
                         else -> "some error"
                     }
                 }

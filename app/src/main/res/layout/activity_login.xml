@@ -44,7 +44,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/image_logo">
+        app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/text_input"
@@ -54,26 +54,55 @@
             android:drawableStart="@drawable/ic_phone"
             android:drawablePadding="12dp"
             android:hint="@string/hint_username"
-            android:textColor="@color/black_color"
             android:imeOptions="actionDone"
+            android:inputType="phone"
             android:minWidth="320dp"
             android:minHeight="50dp"
             android:paddingStart="@dimen/activity_medium_margin"
             android:paddingEnd="@dimen/activity_medium_margin"
-            android:inputType="phone"
-            android:singleLine="true" />
+            android:singleLine="true"
+            android:textColor="@color/black_color" />
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/input_card_view_code"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="@dimen/activity_medium_margin"
+        android:visibility="gone"
+        app:cardBackgroundColor="@color/white"
+        app:cardCornerRadius="24dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/input_card_view">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/text_input_code"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:hint="@string/hint_code"
+            android:imeOptions="actionDone"
+            android:inputType="numberDecimal"
+            android:minWidth="50dp"
+            android:minHeight="50dp"
+            android:paddingStart="@dimen/activity_medium_margin"
+            android:paddingEnd="@dimen/activity_medium_margin"
+            android:singleLine="true"
+            android:textColor="@color/black_color" />
     </androidx.cardview.widget.CardView>
 
     <Button
         android:id="@+id/button_sign_in"
+        style="@style/sign_in_button_style"
         android:layout_width="320dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="64dp"
-        android:text="@string/button_sign_in"
+        android:text="@string/button_get_code"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/input_card_view"
-        style="@style/sign_in_button_style"/>
+        app:layout_constraintTop_toBottomOf="@+id/input_card_view_code" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

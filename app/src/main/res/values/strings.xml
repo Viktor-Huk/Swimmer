@@ -3,6 +3,7 @@
     <string name="sign_in_message">Введите номер телефона чтобы войти</string>
     <string name="hint_username">Номер телефона</string>
     <string name="button_sign_in">Войти</string>
+    <string name="button_get_code">Далее</string>
 
     <string name="caption_lessons">Мои занятия</string>
     <string name="session_id_pref">CustomerId</string>
@@ -27,4 +28,5 @@
     <string name="phone_link">Позвонить нам +375(44)588–77–66</string>
     <string name="site_link">Сайт школы http://www.swimmer.by/</string>
     <string name="about_school_title">О школе</string>
+    <string name="hint_code">Введите полученный sms код</string>
 </resources>

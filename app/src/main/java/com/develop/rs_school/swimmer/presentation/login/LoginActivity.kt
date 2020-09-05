@@ -23,7 +23,7 @@ class LoginActivity : AppCompatActivity() {
 
     @Inject
     lateinit var loginViewModelFactory: ViewModelProvider.Factory
-    val loginViewModel by viewModels<LoginViewModel> { loginViewModelFactory }
+    private val loginViewModel by viewModels<LoginViewModel> { loginViewModelFactory }
 
     private lateinit var binding: ActivityLoginBinding
 
@@ -51,12 +51,32 @@ class LoginActivity : AppCompatActivity() {
                 ).show()
         })
 
+        loginViewModel.showCodeBar.observe(this, Observer {
+            it?.let {
+                if (it) {
+                    binding.inputCardViewCode.visibility = View.VISIBLE
+                    binding.buttonSignIn.text = getString(R.string.button_sign_in)
+                    binding.textInput.isEnabled = false
+                } else {
+                    binding.inputCardViewCode.visibility = View.GONE
+                    binding.buttonSignIn.text = getString(R.string.button_get_code)
+                    binding.textInput.isEnabled = true
+                }
+            }
+        })
+
         val slots = UnderscoreDigitSlotsParser().parseSlots(getString(R.string.phoneNumberMask))
         val formatWatcher: FormatWatcher = MaskFormatWatcher(MaskImpl.createTerminated(slots))
         formatWatcher.installOn(binding.textInput)
 
         binding.buttonSignIn.setOnClickListener {
-            loginViewModel.loginAttempt(binding.textInput.text.toString())
+            if (binding.buttonSignIn.text == getString(R.string.button_sign_in))
+                loginViewModel.loginAttempt(
+                    binding.textInput.text.toString(),
+                    binding.textInputCode.text.toString()
+                )
+            if (binding.buttonSignIn.text == getString(R.string.button_get_code))
+                loginViewModel.sendCodeInSms(binding.textInput.text.toString())
         }
 
     }
