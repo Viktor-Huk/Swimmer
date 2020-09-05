@@ -98,21 +98,6 @@ suspend fun getCustomerLessonsWithFullInfo(customerId: Int): MutableList<Custome
     return resultList
 }
 
-suspend fun auth(authData: String): Result<Int> {
-    return try {
-        SwimmerApi.firstAuth()
-        val res = SwimmerApi.getCustomersImpl().first { it.phone.contains(authData) }
-        Log.d("1", res.name)
-        Result.Success(res.id)
-    } catch (e: NoSuchElementException) {
-        Log.d("1", "authError for $authData")
-        Result.Error(e)
-    } catch (e: UnknownHostException) {
-        Log.d("1", e.toString())
-        Result.Error(e)
-    }
-}
-
 //TODO move to other file
 //FIXME !!!!!!!!!!!!!!!!!!!!!!!!!!!
 data class CustomerLesson(

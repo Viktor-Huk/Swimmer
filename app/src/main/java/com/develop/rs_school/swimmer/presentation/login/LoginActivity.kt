@@ -70,13 +70,13 @@ class LoginActivity : AppCompatActivity() {
         formatWatcher.installOn(binding.textInput)
 
         binding.buttonSignIn.setOnClickListener {
-            if (binding.buttonSignIn.text == getString(R.string.button_sign_in))
-                loginViewModel.loginAttempt(
+            when (binding.buttonSignIn.text) {
+                getString(R.string.button_sign_in) -> loginViewModel.loginAttempt(
                     binding.textInput.text.toString(),
                     binding.textInputCode.text.toString()
                 )
-            if (binding.buttonSignIn.text == getString(R.string.button_get_code))
-                loginViewModel.sendCodeInSms(binding.textInput.text.toString())
+                getString(R.string.button_get_code) -> loginViewModel.sendCodeInSms(binding.textInput.text.toString())
+            }
         }
 
     }

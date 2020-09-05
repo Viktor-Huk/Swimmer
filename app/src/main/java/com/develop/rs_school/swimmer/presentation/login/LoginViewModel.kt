@@ -6,10 +6,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.develop.rs_school.swimmer.SingleLiveEvent
+import com.develop.rs_school.swimmer.data.AuthSource
 import com.develop.rs_school.swimmer.data.Result
 import com.develop.rs_school.swimmer.data.SessionSource
-import com.develop.rs_school.swimmer.data.network.SmsApi
-import com.develop.rs_school.swimmer.data.network.auth
 import com.develop.rs_school.swimmer.gePhoneNumber
 import kotlinx.coroutines.launch
 import java.net.UnknownHostException
@@ -17,7 +16,7 @@ import java.util.*
 import javax.inject.Inject
 import kotlin.random.Random.Default.nextInt
 
-class LoginViewModel @Inject constructor(private var sessionSource: SessionSource) : ViewModel() {
+class LoginViewModel @Inject constructor(private var sessionSource: SessionSource, private var authSource: AuthSource) : ViewModel() {
 
     private val _showError = SingleLiveEvent<Boolean>()
     val showError: SingleLiveEvent<Boolean>
@@ -54,7 +53,7 @@ class LoginViewModel @Inject constructor(private var sessionSource: SessionSourc
         _smsCode = nextInt(1000, 9999).toString()
         viewModelScope.launch {
             try {
-                val smsStatus = SmsApi.sendSmsImpl(_smsCode, gePhoneNumber(phone))
+                val smsStatus = authSource.sendSms(_smsCode, gePhoneNumber(phone))
                 Log.d("1", smsStatus)
                 if (smsStatus == "success")
                     _showCodeBar.value = true
@@ -70,14 +69,13 @@ class LoginViewModel @Inject constructor(private var sessionSource: SessionSourc
     }
 
     fun loginAttempt(phone: String, code: String) {
-
         if (!smsCodeCheck(code)) {
             _errorString = "Sms code invalid"
             _showError.value = true
             _showCodeBar.value = false
         } else
             viewModelScope.launch {
-                when (val authApiStatus = auth(phone)) {
+                when (val authApiStatus = authSource.authorize(phone)) {
                     is Result.Success -> {
                         saveSession(authApiStatus.data)
                         _goToProfile.value = true
