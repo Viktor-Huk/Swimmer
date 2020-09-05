@@ -7,15 +7,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.navigation.findNavController
 import com.develop.rs_school.swimmer.R
-import com.develop.rs_school.swimmer.data.Result
 import com.develop.rs_school.swimmer.databinding.FragmentLessonsBinding
 import com.google.android.material.snackbar.Snackbar
 
 class LessonsFragment : Fragment() {
 
-    private var _binding : FragmentLessonsBinding? = null
+    private var _binding: FragmentLessonsBinding? = null
     private val binding get() = requireNotNull(_binding)
 
     private val adapter =
@@ -37,22 +35,21 @@ class LessonsFragment : Fragment() {
         binding.lessonRecycler.adapter = adapter
 
         val mainViewModel = (requireActivity() as MainActivity).mainViewModel
+
         mainViewModel.lessons.observe(viewLifecycleOwner, Observer {
             Log.d("1", "updating $it")
             it?.apply {
-                val t = if(it is Result.Success) it.data else listOf() //TODO to VM
-                adapter.submitList(t)
+                adapter.submitList(it)
             }
         })
 
         mainViewModel.dataLoading.observe(viewLifecycleOwner, Observer {
-            if(it != null)
+            if (it != null)
                 binding.swipeRefresh.isRefreshing = it
         })
 
-        //FIXME make hidden bar under recycler
         mainViewModel.showError.observe(viewLifecycleOwner, Observer {
-            if(it != null)
+            if (it != null)
                 Snackbar.make(
                     binding.root,
                     getString(R.string.error_network_message),

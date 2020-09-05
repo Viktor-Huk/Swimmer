@@ -23,7 +23,7 @@
         android:layout_marginTop="32dp"
         android:text="@string/caption_lessons"
         android:textAppearance="?attr/textAppearanceHeadline5"
-        android:textColor="@color/material_on_primary_emphasis_high_type"
+        android:textColor="?android:attr/textColorPrimary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"

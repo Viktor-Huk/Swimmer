@@ -21,13 +21,18 @@ class MainViewModel @Inject constructor(private val dataRepository: DataReposito
     val showError: SingleLiveEvent<Boolean>
         get() = _showError
 
+    private val _goToLogin = SingleLiveEvent<Boolean>()
+    val goToLogin: SingleLiveEvent<Boolean>
+        get() = _goToLogin
+
     private var customerId: String = sessionSource.getSession()
 
     init {
         updateData()
     }
 
-    val lessons = dataRepository.lessons
+    val lessons = dataRepository.lessons.map { if (it is Result.Success) it.data else listOf()}
+
     val profile = dataRepository.getCustomer(customerId).map {
         if(it is Result.Success) it.data else null
     }
@@ -48,13 +53,19 @@ class MainViewModel @Inject constructor(private val dataRepository: DataReposito
         }
     }
 
-    fun deleteData(){
+    fun logout(){
+        deleteData()
+        deleteSession()
+        _goToLogin.value = true
+    }
+
+    private fun deleteData(){
         viewModelScope.launch {
             dataRepository.clearData()
         }
     }
 
-    fun deleteSession(){
+    private fun deleteSession(){
         sessionSource.deleteSession()
     }
 }

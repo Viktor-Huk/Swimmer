@@ -14,24 +14,10 @@
         android:id="@+id/profileFragment"
         android:name="com.develop.rs_school.swimmer.presentation.main.ui.ProfileFragment"
         android:label="fragment_profile"
-        tools:layout="@layout/fragment_profile" >
-        <action
-            android:id="@+id/action_profileFragment_to_loginActivity"
-            app:destination="@id/loginActivity"
-            app:popUpTo="@id/loginActivity"
-            app:popUpToInclusive="true" />
-        <action
-            android:id="@+id/action_profileFragment_to_infoFragment"
-            app:destination="@id/infoFragment" />
-    </fragment>
+        tools:layout="@layout/fragment_profile" />
     <fragment
         android:id="@+id/infoFragment"
         android:name="com.develop.rs_school.swimmer.presentation.main.ui.InfoFragment"
         android:label="info_fragment"
         tools:layout="@layout/info_fragment" />
-    <activity
-        android:id="@+id/loginActivity"
-        android:name="com.develop.rs_school.swimmer.presentation.login.LoginActivity"
-        android:label="activity_login"
-        tools:layout="@layout/activity_login" />
 </navigation>

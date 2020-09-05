@@ -20,19 +20,17 @@
             android:name="com.google.firebase.messaging.default_notification_color"
             android:resource="@color/orange" />
 
-        <activity android:name=".presentation.main.ui.MainActivity" />
-        <activity
-            android:name=".presentation.login.LoginActivity"
-            android:launchMode="singleTask">
+        <activity android:name=".presentation.login.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".presentation.main.ui.MainActivity" />
 
         <service
-            android:name="SwimmerFirebaseMessagingService"
+            android:name=".SwimmerFirebaseMessagingService"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />

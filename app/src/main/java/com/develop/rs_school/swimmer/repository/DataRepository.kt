@@ -14,21 +14,21 @@ class DataRepository @Inject constructor(
 ) {
 
     suspend fun refreshLessons(customerId: String) {
-        val l = networkDataSource.getLessons(customerId)
-        if (l is Result.Success)
-            databaseDataSource.saveLessons(l.data)
-        if (l is Result.Error)
-            throw l.exception
+        val lessons = networkDataSource.getLessons(customerId)
+        if (lessons is Result.Success)
+            databaseDataSource.saveLessons(lessons.data)
+        if (lessons is Result.Error)
+            throw lessons.exception
     }
 
     val lessons: LiveData<Result<List<Lesson>>> = databaseDataSource.observeLessons()
 
     suspend fun refreshCustomer(customerId: String) {
-        val c = networkDataSource.getCustomer(customerId.toInt())
-        if (c is Result.Success)
-            databaseDataSource.saveCustomer(c.data)
-        if (c is Result.Error)
-            throw c.exception
+        val customer = networkDataSource.getCustomer(customerId.toInt())
+        if (customer is Result.Success)
+            databaseDataSource.saveCustomer(customer.data)
+        if (customer is Result.Error)
+            throw customer.exception
     }
 
     fun getCustomer(customerId: String): LiveData<Result<Customer>> =

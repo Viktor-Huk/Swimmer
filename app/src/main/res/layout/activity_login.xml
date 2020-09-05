@@ -28,7 +28,6 @@
         android:layout_marginBottom="@dimen/activity_margin"
         android:text="@string/sign_in_message"
         android:textColor="@color/white"
-        android:textSize="@dimen/login_msg_size"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/input_card_view"
         app:layout_constraintEnd_toEndOf="@id/image_logo"
@@ -42,22 +41,20 @@
         android:layout_margin="@dimen/activity_medium_margin"
         app:cardBackgroundColor="@color/white"
         app:cardCornerRadius="24dp"
-        app:cardElevation="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/image_logo">
 
         <com.google.android.material.textfield.TextInputEditText
-            style="@style/TextInputEditText"
             android:id="@+id/text_input"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
             android:background="@android:color/transparent"
             android:drawableStart="@drawable/ic_phone"
             android:drawablePadding="12dp"
             android:hint="@string/hint_username"
+            android:textColor="@color/black_color"
             android:imeOptions="actionDone"
             android:minWidth="320dp"
             android:minHeight="50dp"
@@ -68,17 +65,15 @@
     </androidx.cardview.widget.CardView>
 
     <Button
-        android:id="@+id/button_signin"
+        android:id="@+id/button_sign_in"
         android:layout_width="320dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="56dp"
+        android:layout_marginTop="64dp"
         android:text="@string/button_sign_in"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/input_card_view"
-        android:backgroundTint="@color/orange"
         style="@style/sign_in_button_style"/>
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -7,9 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.navigation.fragment.NavHostFragment.findNavController
-import androidx.navigation.fragment.findNavController
-import com.develop.rs_school.swimmer.R
 import com.develop.rs_school.swimmer.databinding.FragmentProfileBinding
 import com.develop.rs_school.swimmer.presentation.login.LoginActivity
 
@@ -42,17 +39,17 @@ class ProfileFragment : Fragment() {
             }
         })
 
-        //FIXME  vm.logout clicked -> in vm delete all and event go to login
+        mainViewModel.goToLogin.observe(viewLifecycleOwner, Observer {
+            if (it != null)
+                goToLogin()
+        })
+
         binding.logoutButton.setOnClickListener {
-            mainViewModel.deleteSession()
-            mainViewModel.deleteData()
-            //openActivity()
-            //FIXME
-            findNavController().navigate(R.id.action_profileFragment_to_loginActivity)
+            mainViewModel.logout()
         }
     }
 
-    private fun openActivity() {
+    private fun goToLogin() {
         startActivity(
             Intent(
                 context,
