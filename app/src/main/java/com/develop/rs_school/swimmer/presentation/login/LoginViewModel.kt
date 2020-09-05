@@ -9,12 +9,10 @@ import com.develop.rs_school.swimmer.SingleLiveEvent
 import com.develop.rs_school.swimmer.data.AuthSource
 import com.develop.rs_school.swimmer.util.Result
 import com.develop.rs_school.swimmer.data.SessionSource
-import com.develop.rs_school.swimmer.util.gePhoneNumber
 import kotlinx.coroutines.launch
 import java.net.UnknownHostException
 import java.util.*
 import javax.inject.Inject
-import kotlin.random.Random.Default.nextInt
 
 class LoginViewModel @Inject constructor(private var sessionSource: SessionSource, private var authSource: AuthSource) : ViewModel() {
 
@@ -50,10 +48,10 @@ class LoginViewModel @Inject constructor(private var sessionSource: SessionSourc
     }
 
     fun sendCodeInSms(phone: String) {
-        _smsCode = nextInt(1000, 9999).toString()
+        _smsCode = "1234"//FIXME debug nextInt(1000, 9999).toString()
         viewModelScope.launch {
             try {
-                val smsStatus = authSource.sendSms(_smsCode, gePhoneNumber(phone))
+                val smsStatus = "success"//FIXME debug authSource.sendSms(_smsCode, getPhoneNumber(phone))
                 Log.d("1", smsStatus)
                 if (smsStatus == "success")
                     _showCodeBar.value = true
@@ -75,7 +73,8 @@ class LoginViewModel @Inject constructor(private var sessionSource: SessionSourc
             _showCodeBar.value = false
         } else
             viewModelScope.launch {
-                when (val authApiStatus = authSource.authorize(phone)) {
+                //val t : Result<Int> = Result.Success(2376)
+                when (val authApiStatus = authSource.authorize(phone)) {//FIXME debug authSource.authorize(phone) {
                     is Result.Success -> {
                         saveSession(authApiStatus.data)
                         _goToProfile.value = true

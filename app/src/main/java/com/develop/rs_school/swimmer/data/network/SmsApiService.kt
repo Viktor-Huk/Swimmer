@@ -14,7 +14,7 @@ import retrofit2.http.Query
 interface SmsApiService {
     @GET("sendQuickSMS")
     suspend fun sendSms(
-        @Query(value = "token") token: String = "63f9545e42d52a25f8ee413c32d7a435",
+        @Query(value = "token") token: String = "63f9545e42d52a25f8ee413c32d7a435", //FIXME
         @Query(value = "message") message: String,
         @Query(value = "phone") phone: String
     ): Response<Sms>

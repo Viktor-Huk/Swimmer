@@ -14,7 +14,7 @@ enum class AgendaStatus {
     //, PAUSE don't use
 }
 
-fun gePhoneNumber(phone: String) : String {
+fun getPhoneNumber(phone: String) : String {
     val filtered = "()+-"
     return phone.filterNot { filtered.indexOf(it) > -1 }
 }
