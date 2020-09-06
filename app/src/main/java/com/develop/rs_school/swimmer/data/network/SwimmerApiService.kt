@@ -22,7 +22,9 @@ import retrofit2.http.Query
 
 
 //private const val BASE_URL = "https://mevis.s20.online/v2api/"
-private const val BASE_URL = "http://10.0.2.2:8080/v2api/"
+//remote server http://3.137.145.255:8080/v2api/
+//local server http://10.0.2.2:8080/v2api/
+private const val BASE_URL = "http://3.137.145.255:8080/v2api/"
 private const val BRANCH_ID = "2"
 private var phoneNumb = ""
 
