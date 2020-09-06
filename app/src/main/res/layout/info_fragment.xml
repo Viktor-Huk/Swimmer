@@ -36,20 +36,22 @@
 
         <TextView
             android:id="@+id/school_desc"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/activity_medium_margin"
+            android:layout_marginEnd="@dimen/activity_medium_margin"
             android:text="@string/swimmer_desc"
             android:textAppearance="?attr/textAppearanceSubtitle2"
             android:textColor="?android:attr/textColorPrimary"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/caption" />
 
         <TextView
             android:id="@+id/site"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="@dimen/activity_margin"
             android:text="@string/site_link"
             android:autoLink="web"
             app:layout_constraintStart_toStartOf="@+id/school_desc"
@@ -59,7 +61,7 @@
             android:id="@+id/phone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="@dimen/activity_margin"
             android:text="@string/phone_link"
             android:autoLink="phone"
             app:layout_constraintStart_toStartOf="@+id/site"
@@ -69,7 +71,7 @@
             android:id="@+id/email"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="@dimen/activity_margin"
             android:text="@string/mail_link"
             android:autoLink="email"
             app:layout_constraintStart_toStartOf="@+id/phone"
@@ -79,7 +81,7 @@
             android:id="@+id/social"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="@dimen/activity_margin"
             android:text="@string/social_links"
             app:layout_constraintStart_toStartOf="@+id/email"
             app:layout_constraintTop_toBottomOf="@+id/email" />
@@ -88,7 +90,7 @@
             android:id="@+id/youtube_channel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="@dimen/activity_margin"
             android:text="@string/youtube_link"
             app:layout_constraintStart_toStartOf="@+id/social"
             app:layout_constraintTop_toBottomOf="@+id/social" />

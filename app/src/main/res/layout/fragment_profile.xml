@@ -50,7 +50,6 @@
                 android:layout_below="@+id/profile_image_frame"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="@dimen/activity_margin"
-                android:fontFamily="sans-serif-light"
                 tools:text="Username"
                 android:textAlignment="center"
                 android:textColor="@color/white"
@@ -62,11 +61,10 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/profile_name"
                 android:layout_centerHorizontal="true"
-                android:fontFamily="sans-serif"
                 tools:text="some date of birth"
                 android:textAllCaps="true"
                 android:textColor="?android:attr/textColorPrimary"
-                android:textSize="14sp" />
+                android:textSize="@dimen/text_label_size" />
 
             <ImageButton
                 android:id="@+id/logout_button"
@@ -109,7 +107,7 @@
                 android:text="@string/BalanceTitle"
                 android:textAllCaps="true"
                 android:textColor="@color/white"
-                android:textSize="14sp" />
+                android:textSize="@dimen/text_label_size" />
 
         </LinearLayout>
 

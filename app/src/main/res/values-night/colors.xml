@@ -5,4 +5,9 @@
     <color name="primaryLightColor">#424242</color>
 
     <color name="bottom_navigation_bar">#121212</color>
+    <color name="agenda_white">#E0E0E0</color>
+    <color name="agenda_grey">#9E9E9E</color>
+    <color name="agenda_yellow">#FFF590</color>
+    <color name="agenda_green">#81C784</color>
+    <color name="agenda_red">#EF9A9A</color>
 </resources>

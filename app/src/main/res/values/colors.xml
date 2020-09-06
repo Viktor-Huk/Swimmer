@@ -26,4 +26,10 @@
     <color name="tmp">#007ac1</color>
 
     <color name="bottom_navigation_bar">#ffffff</color>
+    <color name="agenda_white">#F6F0F0</color>
+    <color name="agenda_grey">#c0c0c0</color>
+    <color name="agenda_yellow">#FFEE58</color>
+    <color name="agenda_green">#00FF7F</color>
+    <color name="agenda_red">#E57373</color>
+
 </resources>
