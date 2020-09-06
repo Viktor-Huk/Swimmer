@@ -6,7 +6,7 @@ import com.develop.rs_school.swimmer.presentation.main.ui.ProfileFragment
 import dagger.Subcomponent
 
 // Definition of a Dagger subcomponent
-//@ActivityScope
+// @ActivityScope
 @Subcomponent(modules = [MainModule::class])
 interface MainComponent {
 
@@ -16,7 +16,7 @@ interface MainComponent {
     }
 
     fun inject(activity: MainActivity)
-    //FIXME delete this lines
+    // FIXME delete this lines
     fun inject(fragment: LessonsFragment)
     fun inject(fragment: ProfileFragment)
 }

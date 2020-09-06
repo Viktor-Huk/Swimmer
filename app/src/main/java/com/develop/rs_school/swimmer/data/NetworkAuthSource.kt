@@ -1,14 +1,14 @@
 package com.develop.rs_school.swimmer.data
 
 import android.util.Log
-import com.develop.rs_school.swimmer.util.Result
 import com.develop.rs_school.swimmer.data.network.SmsApi.sendSmsImpl
 import com.develop.rs_school.swimmer.data.network.SwimmerApi
+import com.develop.rs_school.swimmer.util.Result
 import java.net.UnknownHostException
-import java.util.NoSuchElementException
+import java.util.*
 import javax.inject.Inject
 
-class NetworkAuthSource @Inject constructor(): AuthSource{
+class NetworkAuthSource @Inject constructor() : AuthSource {
     override suspend fun authorize(authData: String): Result<Int> {
         return try {
             SwimmerApi.firstAuth()

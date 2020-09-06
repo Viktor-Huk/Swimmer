@@ -4,9 +4,10 @@ import android.content.Context
 import com.develop.rs_school.swimmer.R
 import javax.inject.Inject
 
-class SharedPrefSessionSource @Inject constructor(val context: Context): SessionSource{
+class SharedPrefSessionSource @Inject constructor(val context: Context) : SessionSource {
 
-    private val sharedPreferences = context.getSharedPreferences(context.getString(R.string.app_pref), Context.MODE_PRIVATE)
+    private val sharedPreferences =
+        context.getSharedPreferences(context.getString(R.string.app_pref), Context.MODE_PRIVATE)
 
     override fun getSession(): Int {
         return sharedPreferences.getInt(context.getString(R.string.session_id_pref), 0)
@@ -20,7 +21,7 @@ class SharedPrefSessionSource @Inject constructor(val context: Context): Session
     }
 
     override fun deleteSession() {
-        with (sharedPreferences.edit()) {
+        with(sharedPreferences.edit()) {
             remove(context.getString(R.string.session_id_pref))
             commit()
         }

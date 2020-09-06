@@ -8,7 +8,7 @@ import java.util.*
 @Parcelize
 data class CustomerCalendar(
     val id: String,
-    val type: String, // 1-6 Индивидуальный Групповой Пробный Отработка Индивид.2 Инд+ - от этого разная иконка
+    val type: String, // 1-6 Индивидуальный Групповой Пробный Отработка Индивид.2 Инд+ - иконка
     val status: String, // 1 - запланировано, 3 - проведено, 2 - отменено
     @Json(name = "start") val date: Date?,
     val duration: String?

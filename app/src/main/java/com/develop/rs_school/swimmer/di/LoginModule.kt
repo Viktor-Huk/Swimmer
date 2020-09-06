@@ -2,7 +2,6 @@ package com.develop.rs_school.swimmer.di
 
 import androidx.lifecycle.ViewModel
 import com.develop.rs_school.swimmer.presentation.login.LoginViewModel
-import com.develop.rs_school.swimmer.presentation.main.viewModels.MainViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap

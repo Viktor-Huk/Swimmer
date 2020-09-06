@@ -3,9 +3,7 @@ package com.develop.rs_school.swimmer.di
 import android.content.Context
 import androidx.room.Room
 import com.develop.rs_school.swimmer.data.DataSource
-import com.develop.rs_school.swimmer.data.database.CustomerDao
 import com.develop.rs_school.swimmer.data.database.DatabaseDataSource
-import com.develop.rs_school.swimmer.data.database.LessonDao
 import com.develop.rs_school.swimmer.data.database.SwimmerDatabase
 import com.develop.rs_school.swimmer.data.network.NetworkDataSource
 import dagger.Module
@@ -31,10 +29,17 @@ object DataSourceModule {
     @Singleton
     @Provides
     @LocalDataSource
-    fun provideLocalStorage(database: SwimmerDatabase, ioDispatcher: CoroutineDispatcher): DataSource {
+    fun provideLocalStorage(
+        database: SwimmerDatabase,
+        ioDispatcher: CoroutineDispatcher
+    ): DataSource {
         // Whenever Dagger needs to provide an instance of type Storage,
         // this code (the one inside the @Provides method) will be run.
-        return DatabaseDataSource(database.lessonDatabaseDao, database.customerDatabaseDao, ioDispatcher)
+        return DatabaseDataSource(
+            database.lessonDatabaseDao,
+            database.customerDatabaseDao,
+            ioDispatcher
+        )
     }
 
     @JvmStatic

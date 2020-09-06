@@ -1,11 +1,10 @@
 package com.develop.rs_school.swimmer.data.network
 
-import com.develop.rs_school.swimmer.util.AgendaStatus
-import com.develop.rs_school.swimmer.data.database.DatabaseLesson
 import com.develop.rs_school.swimmer.domain.Lesson
+import com.develop.rs_school.swimmer.util.AgendaStatus
 import java.util.*
 
-suspend fun getCustomerLesson(customerId: String): List<CustomerLesson> {
+suspend fun SwimmerApi.getCustomerLesson(customerId: String): List<CustomerLesson> {
     val allLessonsContainsDetails = SwimmerApi.getLessonsImpl()
 
     return allLessonsContainsDetails.filter { lesson ->
@@ -25,15 +24,16 @@ suspend fun getCustomerLesson(customerId: String): List<CustomerLesson> {
     }
 }
 
-suspend fun getCustomerLessonsWithFullInfo(customerId: Int): MutableList<CustomerLessonWithAgenda> {
+suspend fun SwimmerApi.getCustomerLessonsWithFullInfo(customerId: Int): MutableList<CustomerLessonWithAgenda> {
 
     val customer = SwimmerApi.getCustomersImpl().first { it.id == customerId }
-    //TODO parallel ?
-    val lessonInCalendarList = SwimmerApi.getCustomerCalendarImpl(customerId.toString()).sortedBy { it.date }
+
+    val lessonInCalendarList =
+        SwimmerApi.getCustomerCalendarImpl(customerId.toString()).sortedBy { it.date }
     val lessonList = getCustomerLesson(customerId.toString()).sortedByDescending { it.date }
 
     val resultList = mutableListOf<CustomerLessonWithAgenda>()
-    var paidLessonInFuture = customer.paid_lesson
+    var paidLessonInFuture = customer.paidLesson
     val notPaidLessonIdsInHistory =
         if (paidLessonInFuture < 0)
             lessonList.map { it.id }.subList(0, -paidLessonInFuture)
@@ -52,7 +52,7 @@ suspend fun getCustomerLessonsWithFullInfo(customerId: Int): MutableList<Custome
                 lessonWithStatus.agendaStatus = AgendaStatus.PLANNED
             else
                 lessonWithStatus.agendaStatus = AgendaStatus.FORGOT
-            //TODO hack
+            // TODO hack
             if (lessonWithStatus.agendaStatus == AgendaStatus.PLANNED && paidLessonInFuture > 0) {
                 lessonWithStatus.agendaStatus = AgendaStatus.PREPAID
                 paidLessonInFuture--
@@ -81,7 +81,7 @@ suspend fun getCustomerLessonsWithFullInfo(customerId: Int): MutableList<Custome
         resultList.add(lessonWithStatus)
     }
 
-    //FIXME
+    // FIXME
     val currentMoment =
         CustomerLessonWithAgenda(
             "",
@@ -95,8 +95,8 @@ suspend fun getCustomerLessonsWithFullInfo(customerId: Int): MutableList<Custome
     return resultList
 }
 
-//TODO move to other file
-//FIXME !!!!!!!!!!!!!!!!!!!!!!!!!!!
+// TODO move to other file
+// FIXME !!!!!!!!!!!!!!!!!!!!!!!!!!!
 data class CustomerLesson(
     val id: String,
     val type: String,
@@ -113,28 +113,10 @@ data class CustomerLessonWithAgenda(
     val type: String, // 1-6 Индивидуальный Групповой Пробный Отработка Индивид.2 Инд+ - от этого разная иконка
     val status: String, // 1 - запланировано, 3 - проведено, 2 - отменено
     val date: Date?,
-    //val duration: String?,
-    //val customerId: String,
-    //val reason: String? = null, // причина пропуска - от этого зависит стиль айтема в табличке с занятиями
-    //val isAttend: Int? = null, // был или пропустил занятие
-    //val price: String? = null,
     var agendaStatus: AgendaStatus = AgendaStatus.NONE
 )
 
-//FIXME it is == getCustomerLessonsWithFullInfo ? above
-fun MutableList<CustomerLessonWithAgenda>.asDatabaseModel(): Array<DatabaseLesson> {
-    return this.map {
-        DatabaseLesson(
-            id = it.id,
-            type = it.type,
-            status = it.status,
-            date = it.date,
-            agendaStatus = it.agendaStatus
-        )
-    }.toTypedArray()
-}
-
-//FIXME it is == getCustomerLessonsWithFullInfo ? above
+// FIXME it is == getCustomerLessonsWithFullInfo ? above
 fun MutableList<CustomerLessonWithAgenda>.asDomainModel(): List<Lesson> {
     return this.map {
         Lesson(

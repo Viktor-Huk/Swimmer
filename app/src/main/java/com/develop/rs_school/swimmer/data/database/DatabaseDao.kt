@@ -7,9 +7,9 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 
 @Dao
-interface CustomerDao{
+interface CustomerDao {
     @Query("select * from customer where id = :customerId")
-    fun getCustomer(customerId : Int): LiveData<DatabaseCustomer>
+    fun getCustomer(customerId: Int): LiveData<DatabaseCustomer>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertCustomer(customer: DatabaseCustomer)
@@ -19,7 +19,7 @@ interface CustomerDao{
 }
 
 @Dao
-interface LessonDao{
+interface LessonDao {
     @Query("select * from lesson")
     fun getLessons(): LiveData<List<DatabaseLesson>>
 

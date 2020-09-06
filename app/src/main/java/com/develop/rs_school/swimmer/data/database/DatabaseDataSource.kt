@@ -3,9 +3,9 @@ package com.develop.rs_school.swimmer.data.database
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.map
 import com.develop.rs_school.swimmer.data.DataSource
-import com.develop.rs_school.swimmer.util.Result
 import com.develop.rs_school.swimmer.domain.Customer
 import com.develop.rs_school.swimmer.domain.Lesson
+import com.develop.rs_school.swimmer.util.Result
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -15,7 +15,7 @@ class DatabaseDataSource @Inject internal constructor(
     private val lessonDao: LessonDao,
     private val customerDao: CustomerDao,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
-): DataSource{
+) : DataSource {
 
     override fun observeLessons(): LiveData<Result<List<Lesson>>> {
         return lessonDao.getLessons().map {
@@ -27,11 +27,11 @@ class DatabaseDataSource @Inject internal constructor(
         TODO("Not yet implemented")
     }
 
-    override suspend fun saveLessons(lessons: List<Lesson>) = withContext(ioDispatcher){
+    override suspend fun saveLessons(lessons: List<Lesson>) = withContext(ioDispatcher) {
         lessonDao.insertAll(*lessons.asDatabaseModel())
     }
 
-    override suspend fun deleteLessons()  = withContext(ioDispatcher){
+    override suspend fun deleteLessons() = withContext(ioDispatcher) {
         lessonDao.deleteAll()
     }
 
@@ -48,12 +48,11 @@ class DatabaseDataSource @Inject internal constructor(
         TODO("Not yet implemented")
     }
 
-    override suspend fun saveCustomer(customer: Customer)  = withContext(ioDispatcher){
+    override suspend fun saveCustomer(customer: Customer) = withContext(ioDispatcher) {
         customerDao.insertCustomer(customer.asDatabaseModel())
     }
 
-    override suspend fun deleteCustomers()  = withContext(ioDispatcher){
+    override suspend fun deleteCustomers() = withContext(ioDispatcher) {
         customerDao.deleteAll()
     }
-
 }

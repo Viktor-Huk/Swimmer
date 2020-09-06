@@ -11,10 +11,10 @@ enum class AgendaStatus {
     MISSED_PAID,
     FORGOT,
     CANCELED
-    //, PAUSE don't use
+    // , PAUSE don't use
 }
 
-fun getPhoneNumber(phone: String) : String {
+fun getPhoneNumber(phone: String): String {
     val filtered = "()+-"
     return phone.filterNot { filtered.indexOf(it) > -1 }
 }

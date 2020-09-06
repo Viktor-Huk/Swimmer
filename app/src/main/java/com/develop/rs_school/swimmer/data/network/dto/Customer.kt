@@ -12,12 +12,11 @@ data class Customer(
     val name: String,
     val dob: String,
     val balance: String, // сколько осталось денег
-    @Json(name = "paid_count") val paid_lesson: Int, // сколько осталось посещений при таком балансе и занятиях
+    @Json(name = "paid_count") val paidLesson: Int, // сколько осталось посещений при таком балансе и занятиях
     @Json(name = "paid_till") val paidDate: Date?,
     val phone: List<String>,
     val email: List<String>
 ) : Parcelable
-
 
 @Parcelize
 data class CustomerList(
@@ -25,29 +24,26 @@ data class CustomerList(
     val items: List<Customer>
 ) : Parcelable
 
-fun Customer.asDatabaseModel(): DatabaseCustomer{
+fun Customer.asDatabaseModel(): DatabaseCustomer {
     return DatabaseCustomer(
         id = this.id,
         name = this.name,
         dob = this.dob,
         balance = this.balance,
-        paidLesson = this.paid_lesson,
+        paidLesson = this.paidLesson,
         phone = this.phone.firstOrNull() ?: "",
         email = this.email.firstOrNull() ?: ""
     )
 }
 
-fun Customer.asDomainModel(): com.develop.rs_school.swimmer.domain.Customer{
+fun Customer.asDomainModel(): com.develop.rs_school.swimmer.domain.Customer {
     return com.develop.rs_school.swimmer.domain.Customer(
         id = this.id,
         name = this.name,
         dob = this.dob,
         balance = this.balance,
-        paid_lesson = this.paid_lesson,
+        paidLesson = this.paidLesson,
         phone = this.phone.firstOrNull() ?: "",
         email = this.email.firstOrNull() ?: ""
     )
 }
-
-
-

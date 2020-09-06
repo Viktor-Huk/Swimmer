@@ -16,7 +16,8 @@ class ProfileFragment : Fragment() {
     private val binding get() = requireNotNull(_binding)
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentProfileBinding.inflate(inflater, container, false)
@@ -32,7 +33,7 @@ class ProfileFragment : Fragment() {
             if (it != null) {
                 binding.profileName.text = it.name
                 binding.dob.text = it.dob
-                binding.paidDays.text = it.paid_lesson.toString()
+                binding.paidDays.text = it.paidLesson.toString()
                 binding.email.text = it.email
                 binding.phone.text = it.phone
                 binding.balance.text = it.balance

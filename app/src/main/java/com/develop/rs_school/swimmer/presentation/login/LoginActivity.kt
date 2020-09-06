@@ -18,7 +18,6 @@ import ru.tinkoff.decoro.watchers.FormatWatcher
 import ru.tinkoff.decoro.watchers.MaskFormatWatcher
 import javax.inject.Inject
 
-
 class LoginActivity : AppCompatActivity() {
 
     @Inject
@@ -79,7 +78,6 @@ class LoginActivity : AppCompatActivity() {
                 getString(R.string.button_get_code) -> loginViewModel.sendCodeInSms(binding.textInput.text.toString())
             }
         }
-
     }
 
     override fun onWindowFocusChanged(hasFocus: Boolean) {
@@ -87,7 +85,7 @@ class LoginActivity : AppCompatActivity() {
         if (hasFocus) hideSystemUI()
     }
 
-    //FIXME see rssFeed project
+    // FIXME see rssFeed project
     private fun hideSystemUI() {
         window.decorView.systemUiVisibility = (View.SYSTEM_UI_FLAG_IMMERSIVE
                 or View.SYSTEM_UI_FLAG_LAYOUT_STABLE

@@ -18,7 +18,8 @@ class InfoFragment : Fragment() {
     private val binding get() = requireNotNull(_binding)
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         _binding = InfoFragmentBinding.inflate(inflater, container, false)
