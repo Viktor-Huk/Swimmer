@@ -1,15 +1,13 @@
 package com.develop.rs_school.swimmer.data
 
 import android.util.Log
-import com.develop.rs_school.swimmer.data.network.SmsApi.sendSmsImpl
 import com.develop.rs_school.swimmer.data.network.SwimmerApi
 import com.develop.rs_school.swimmer.util.Result
 import java.net.UnknownHostException
 import java.util.*
 import javax.inject.Inject
-import kotlin.random.Random.Default.nextInt
 
-class NetworkAuthSource @Inject constructor() : AuthSource {
+class NetworkWithoutSmsAuthSource @Inject constructor() : AuthSource {
     override suspend fun authorize(authData: String): Result<Int> {
         return try {
             SwimmerApi.firstAuth()
@@ -25,12 +23,7 @@ class NetworkAuthSource @Inject constructor() : AuthSource {
         }
     }
 
-    override suspend fun sendSms(phone: String): String {
-        code = nextInt(1000, 9999).toString()
-        return sendSmsImpl(code, phone)
-    }
+    override suspend fun sendSms(phone: String) = "success"
 
-    private var code = "1234"
-
-    override fun smsCodeCheck(code: String) = this.code == code
+    override fun smsCodeCheck(code: String) = true
 }

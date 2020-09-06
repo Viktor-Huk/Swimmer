@@ -8,17 +8,17 @@ import androidx.lifecycle.viewModelScope
 import com.develop.rs_school.swimmer.SingleLiveEvent
 import com.develop.rs_school.swimmer.data.AuthSource
 import com.develop.rs_school.swimmer.data.SessionSource
+import com.develop.rs_school.swimmer.di.AuthSourceModule
 import com.develop.rs_school.swimmer.util.Result
 import com.develop.rs_school.swimmer.util.getPhoneNumber
 import kotlinx.coroutines.launch
 import java.net.UnknownHostException
 import java.util.*
 import javax.inject.Inject
-import kotlin.random.Random.Default.nextInt
 
 class LoginViewModel @Inject constructor(
     private var sessionSource: SessionSource,
-    private var authSource: AuthSource
+    @AuthSourceModule.NetworkWithoutSms private var authSource: AuthSource
 ) : ViewModel() {
 
     private val _showError = SingleLiveEvent<Boolean>()
@@ -36,8 +36,6 @@ class LoginViewModel @Inject constructor(
     val errorString: String
         get() = _errorString
 
-    private lateinit var _smsCode: String
-
     private fun saveSession(session: Int) {
         sessionSource.saveSession(session)
     }
@@ -53,11 +51,9 @@ class LoginViewModel @Inject constructor(
     }
 
     fun sendCodeInSms(phone: String) {
-        _smsCode = nextInt(1000, 9999).toString()
         viewModelScope.launch {
             try {
-                val smsStatus = authSource.sendSms(_smsCode, getPhoneNumber(phone))
-                //"success"  FIXME debug authSource.sendSms(_smsCode, getPhoneNumber(phone))
+                val smsStatus = authSource.sendSms(getPhoneNumber(phone))
                 Log.d("1", smsStatus)
                 if (smsStatus == "success")
                     _showCodeBar.value = true
@@ -100,5 +96,5 @@ class LoginViewModel @Inject constructor(
             }
     }
 
-    private fun smsCodeCheck(code: String) = code == _smsCode
+    private fun smsCodeCheck(code: String) = authSource.smsCodeCheck(code)
 }
