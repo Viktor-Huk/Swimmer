@@ -21,7 +21,8 @@ data class DatabaseCustomer(
 
 @Entity(tableName = "lesson")
 data class DatabaseLesson(
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true) //FIXME FIX very bad API!!!!!!!!!!!!!!!!!!!!!
+    val databaseId: Int = 0,
     val id: String,
     val type: String,
     val status: String,
