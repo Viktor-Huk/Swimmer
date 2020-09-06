@@ -51,22 +51,34 @@ class LoginViewModel @Inject constructor(
     }
 
     fun sendCodeInSms(phone: String) {
-        viewModelScope.launch {
-            try {
-                val smsStatus = authSource.sendSms(getPhoneNumber(phone))
-                Log.d("1", smsStatus)
-                if (smsStatus == "success")
-                    _showCodeBar.value = true
-                else {
-                    _errorString = smsStatus
+        if(validatePhone(phone))
+            viewModelScope.launch {
+                try {
+                    val smsStatus = authSource.sendSms(getPhoneNumber(phone))
+                    Log.d("1", smsStatus)
+                    if (smsStatus == "success")
+                        _showCodeBar.value = true
+                    else {
+                        _errorString = smsStatus
+                        _showError.value = true
+                    }
+                } catch (e: Exception) {
+                    _errorString = "Network error"
                     _showError.value = true
                 }
-            } catch (e: Exception) {
-                _errorString = "Network error"
-                _showError.value = true
             }
+        else{
+            _errorString = "Phone number format error"
+            _showError.value = true
         }
     }
+
+    private companion object {
+        private const val belPhoneLength = 17
+        private const val codeLength = 4
+    }
+    private fun validatePhone(phone: String) = phone.length == belPhoneLength
+    private fun validateSmsCode(code: String) = code.length == codeLength
 
     fun loginAttempt(phone: String, code: String) {
         if (!smsCodeCheck(code)) {
@@ -96,5 +108,5 @@ class LoginViewModel @Inject constructor(
             }
     }
 
-    private fun smsCodeCheck(code: String) = authSource.smsCodeCheck(code)
+    private fun smsCodeCheck(code: String) = authSource.smsCodeCheck(code) && validateSmsCode(code)
 }

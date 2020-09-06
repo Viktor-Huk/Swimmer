@@ -3,6 +3,7 @@ package com.develop.rs_school.swimmer.presentation.login
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
@@ -32,6 +33,9 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        installFormatWatcher(getString(R.string.phoneNumberMask), binding.textInput)
+        installFormatWatcher("____", binding.textInputCode)
 
         loginViewModel.goToProfile.observe(this, Observer {
             if (it != null) {
@@ -65,10 +69,6 @@ class LoginActivity : AppCompatActivity() {
             }
         })
 
-        val slots = UnderscoreDigitSlotsParser().parseSlots(getString(R.string.phoneNumberMask))
-        val formatWatcher: FormatWatcher = MaskFormatWatcher(MaskImpl.createTerminated(slots))
-        formatWatcher.installOn(binding.textInput)
-
         binding.buttonSignIn.setOnClickListener {
             when (binding.buttonSignIn.text) {
                 getString(R.string.button_sign_in) -> loginViewModel.loginAttempt(
@@ -78,6 +78,12 @@ class LoginActivity : AppCompatActivity() {
                 getString(R.string.button_get_code) -> loginViewModel.sendCodeInSms(binding.textInput.text.toString())
             }
         }
+    }
+
+    private fun installFormatWatcher(mask: String, inputView: TextView) {
+        val slots = UnderscoreDigitSlotsParser().parseSlots(mask)
+        val formatWatcher: FormatWatcher = MaskFormatWatcher(MaskImpl.createTerminated(slots))
+        formatWatcher.installOn(inputView)
     }
 
     override fun onWindowFocusChanged(hasFocus: Boolean) {
