@@ -78,6 +78,15 @@ class LessonRecyclerAdapter(private val itemClickListener: LessonRecyclerItemLis
                     itemBinding.weekDay.paintFlags =
                         itemBinding.weekDay.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
                 }
+                AgendaStatus.PAUSE -> {
+                    itemView.setBackgroundResource(R.drawable.layout_border_gray)
+                    selectImageType(itemBinding, lesson.type)
+                    itemBinding.icon.setImageResource(R.drawable.ic_baseline_pause_24)
+                    itemBinding.date.paintFlags =
+                        itemBinding.date.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
+                    itemBinding.weekDay.paintFlags =
+                        itemBinding.weekDay.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
+                }
                  AgendaStatus.PLANNED -> {
                     itemBinding.image.setColorFilter(parseColor(PLANED_COLOR))
                     itemView.setBackgroundResource(R.drawable.layout_border_gray)
@@ -121,14 +130,14 @@ class LessonRecyclerAdapter(private val itemClickListener: LessonRecyclerItemLis
         }
     }
 
-    private fun selectImageType(itemBinding: RecyclerViewRawBinding, status: String) {
-        when (status) {
+    private fun selectImageType(itemBinding: RecyclerViewRawBinding, type: String) {
+        when (type) {
             "1" -> itemBinding.image.setImageResource(R.drawable.person_grey)
             "2" -> itemBinding.image.setImageResource(R.drawable.person_stalker)
             "3" -> itemBinding.image.setImageResource(R.drawable.asterisk)
             "4" -> itemBinding.image.setImageResource(R.drawable.paperplanenew)
             "5" -> itemBinding.image.setImageResource(R.drawable.md_contacts)
-            "6" -> itemBinding.image.setImageResource(R.drawable.asterisk)
+            "6" -> itemBinding.image.setImageResource(R.drawable.people)
         }
     }
 

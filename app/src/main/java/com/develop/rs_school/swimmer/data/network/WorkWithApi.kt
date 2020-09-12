@@ -2,6 +2,7 @@ package com.develop.rs_school.swimmer.data.network
 
 import com.develop.rs_school.swimmer.domain.Lesson
 import com.develop.rs_school.swimmer.util.AgendaStatus
+import com.develop.rs_school.swimmer.util.getDate
 import java.util.*
 
 suspend fun SwimmerApi.getCustomerLesson(customerId: String): List<CustomerLesson> {
@@ -48,7 +49,7 @@ suspend fun SwimmerApi.getCustomerLessonsWithFullInfo(customerId: Int): MutableL
                 date = item.date
             )
         if (item.status == "1") {
-            if (item.date != null && item.date > Date())
+            if (item.date != null && item.date > getDate())
                 lessonWithStatus.agendaStatus = AgendaStatus.PLANNED
             else
                 lessonWithStatus.agendaStatus = AgendaStatus.FORGOT
@@ -86,7 +87,7 @@ suspend fun SwimmerApi.getCustomerLessonsWithFullInfo(customerId: Int): MutableL
         CustomerLessonWithAgenda(
             "",
             "", "",
-            Date(),
+            getDate(),
             AgendaStatus.NONE
         )
     resultList.add(currentMoment)
