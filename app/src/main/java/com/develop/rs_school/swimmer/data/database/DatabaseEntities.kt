@@ -21,8 +21,9 @@ data class DatabaseCustomer(
 
 @Entity(tableName = "lesson")
 data class DatabaseLesson(
-    @PrimaryKey
-    val id: String,
+    @PrimaryKey(autoGenerate = true)
+    val entityId: Int = 0,
+    val id: String, // FIXME in API id is not unique!
     val type: String,
     val status: String,
     val date: Date?,

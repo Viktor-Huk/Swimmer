@@ -8,6 +8,8 @@ import com.develop.rs_school.swimmer.data.network.dto.Lesson
 import com.develop.rs_school.swimmer.data.network.dto.LessonList
 import com.develop.rs_school.swimmer.data.network.dto.LessonStatusObject
 import com.develop.rs_school.swimmer.data.network.dto.TokenObject
+import com.develop.rs_school.swimmer.util.getDateDotFormat
+import com.develop.rs_school.swimmer.util.getDateWithOffset
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import kotlinx.coroutines.Dispatchers
@@ -19,6 +21,7 @@ import retrofit2.http.Body
 import retrofit2.http.Header
 import retrofit2.http.POST
 import retrofit2.http.Query
+import java.util.*
 
 private const val BASE_URL = "https://mevis.s20.online/v2api/"
 private const val BRANCH_ID = "2"
@@ -44,8 +47,8 @@ interface SwimmerApiService {
     suspend fun getCustomerCalendar(
         @Header("X-ALFACRM-TOKEN") token: String,
         @Query(value = "id") id: String,
-        @Query(value = "date1") dateFrom: String, // 01.01.2020
-        @Query(value = "date2") dateTo: String
+        @Query(value = "date1") dateFrom: Date,
+        @Query(value = "date2") dateTo: Date
     ): Response<List<CustomerCalendar>>
 }
 
@@ -95,8 +98,8 @@ object SwimmerApi {
 
     suspend fun getCustomerCalendarImpl(
         customerId: String,
-        dateFrom: String = "01.01.2020", // FIXME
-        dateTo: String = "31.12.2020"
+        dateFrom: Date = getDateDotFormat(getDateWithOffset(-182)),
+        dateTo: Date = getDateDotFormat(getDateWithOffset(182))
     ): List<CustomerCalendar> {
         return withContext(Dispatchers.IO) {
             val response = retrofitService.getCustomerCalendar(token, customerId, dateFrom, dateTo)
