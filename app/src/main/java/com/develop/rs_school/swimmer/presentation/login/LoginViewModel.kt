@@ -87,9 +87,8 @@ class LoginViewModel @Inject constructor(
             _showCodeBar.value = false
         } else
             viewModelScope.launch {
-                // FIXME val t : Result<Int> = Result.Success(2376)
                 when (val authApiStatus =
-                    authSource.authorize(phone)) { // FIXME debug authSource.authorize(phone) {
+                    authSource.authorize(phone)) {
                     is Result.Success -> {
                         saveSession(authApiStatus.data)
                         _goToProfile.value = true

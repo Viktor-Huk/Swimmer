@@ -20,6 +20,9 @@ class NetworkWithoutSmsAuthSource @Inject constructor() : AuthSource {
         } catch (e: UnknownHostException) {
             Log.d("1", e.toString())
             Result.Error(e)
+        } catch (e: Exception) {
+            Log.d("1", e.toString())
+            Result.Error(e)
         }
     }
 
