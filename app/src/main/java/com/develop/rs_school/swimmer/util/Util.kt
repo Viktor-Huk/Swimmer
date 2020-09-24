@@ -3,6 +3,7 @@ package com.develop.rs_school.swimmer.util
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
+import java.util.Locale
 
 fun getPhoneNumber(phone: String): String {
     val filtered = "()+-"
@@ -24,4 +25,14 @@ fun getDateWithOffset(offset: Int, date: Date = Date()): Date {
     cal.time = date
     cal.add(Calendar.DATE, offset)
     return cal.time
+}
+
+fun getCapitalizingDayOfWeek(date: Date): String {
+    val weekPattern = SimpleDateFormat("E")
+    return weekPattern.format(date).capitalize()
+}
+
+fun getDateDDMM(date: Date): String {
+    val datePattern = SimpleDateFormat("dd.MM", Locale("ru"))
+    return datePattern.format(date)
 }
