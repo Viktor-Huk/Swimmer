@@ -1,8 +1,6 @@
 package com.develop.rs_school.swimmer.di
 
-import com.develop.rs_school.swimmer.presentation.main.ui.LessonsFragment
 import com.develop.rs_school.swimmer.presentation.main.ui.MainActivity
-import com.develop.rs_school.swimmer.presentation.main.ui.ProfileFragment
 import dagger.Subcomponent
 
 // Definition of a Dagger subcomponent

@@ -3,7 +3,7 @@ package com.develop.rs_school.swimmer.data.network
 import com.squareup.moshi.FromJson
 import com.squareup.moshi.ToJson
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Date
 
 class CustomDateTimeAdapter {
     @ToJson

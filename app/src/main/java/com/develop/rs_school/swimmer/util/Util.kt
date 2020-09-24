@@ -1,21 +1,8 @@
 package com.develop.rs_school.swimmer.util
 
 import java.text.SimpleDateFormat
-import java.util.*
-
-enum class AgendaStatus {
-    NONE,
-    PLANNED,
-    PREPAID,
-    VISIT_PAID,
-    VISIT_NOT_PAID,
-    MISSED_NOT_PAID,
-    MISSED_FREE,
-    MISSED_PAID,
-    FORGOT,
-    CANCELED,
-    PAUSE //don't use
-}
+import java.util.Calendar
+import java.util.Date
 
 fun getPhoneNumber(phone: String): String {
     val filtered = "()+-"

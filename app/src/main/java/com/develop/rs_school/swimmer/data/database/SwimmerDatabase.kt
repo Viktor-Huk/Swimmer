@@ -4,8 +4,8 @@ import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverter
 import androidx.room.TypeConverters
-import com.develop.rs_school.swimmer.util.AgendaStatus
-import java.util.*
+import com.develop.rs_school.swimmer.domain.AgendaStatus
+import java.util.Date
 
 @Database(
     entities = [DatabaseCustomer::class, DatabaseLesson::class],

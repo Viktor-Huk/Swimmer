@@ -2,12 +2,12 @@ package com.develop.rs_school.swimmer.repository
 
 import androidx.lifecycle.LiveData
 import com.develop.rs_school.swimmer.data.DataSource
-import com.develop.rs_school.swimmer.util.Result
 import com.develop.rs_school.swimmer.di.DataSourceModule
+import com.develop.rs_school.swimmer.domain.AgendaStatus
 import com.develop.rs_school.swimmer.domain.Customer
 import com.develop.rs_school.swimmer.domain.Lesson
-import com.develop.rs_school.swimmer.util.AgendaStatus
-import java.util.*
+import com.develop.rs_school.swimmer.util.Result
+import java.util.Date
 import javax.inject.Inject
 
 class DataRepository @Inject constructor(
@@ -16,10 +16,10 @@ class DataRepository @Inject constructor(
 ) {
 
     suspend fun refreshLessons(customerId: Int) {
-        val lessons: Result<List<Lesson>>  = networkDataSource.getLessons(customerId)
-        if (lessons is Result.Success){
+        val lessons: Result<List<Lesson>> = networkDataSource.getLessons(customerId)
+        if (lessons is Result.Success) {
             databaseDataSource.deleteLessons() // FIXME id problem
-            databaseDataSource.saveLessons(lessons.data)
+            databaseDataSource.saveLessons(fakeLessonsData)
         }
         if (lessons is Result.Error)
             throw lessons.exception
@@ -45,7 +45,6 @@ class DataRepository @Inject constructor(
 }
 
 val fakeLessonsData = listOf<Lesson>(
-    Lesson("0", "1", "3", Date(), AgendaStatus.NONE),
     Lesson("1", "2", "3", Date(), AgendaStatus.PLANNED),
     Lesson("2", "3", "3", Date(), AgendaStatus.PREPAID),
     Lesson("3", "4", "3", Date(), AgendaStatus.VISIT_PAID),

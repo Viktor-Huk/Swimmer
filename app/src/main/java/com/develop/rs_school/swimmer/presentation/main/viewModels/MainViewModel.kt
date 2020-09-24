@@ -7,9 +7,9 @@ import androidx.lifecycle.map
 import androidx.lifecycle.viewModelScope
 import com.develop.rs_school.swimmer.SingleLiveEvent
 import com.develop.rs_school.swimmer.data.SessionSource
+import com.develop.rs_school.swimmer.domain.AgendaStatus
 import com.develop.rs_school.swimmer.domain.Lesson
 import com.develop.rs_school.swimmer.repository.DataRepository
-import com.develop.rs_school.swimmer.util.AgendaStatus
 import com.develop.rs_school.swimmer.util.Result
 import com.develop.rs_school.swimmer.util.getDateMinusFormat
 import kotlinx.coroutines.launch
@@ -46,7 +46,7 @@ class MainViewModel @Inject constructor(
     private fun addCurrentMoment(data: List<Lesson>): List<Lesson> {
         val lessons = mutableListOf<Lesson>()
         lessons.addAll(data)
-        val currentMoment = Lesson("","", "", getDateMinusFormat(), AgendaStatus.NONE)
+        val currentMoment = Lesson("", "", "", getDateMinusFormat(), AgendaStatus.NONE)
         lessons.add(currentMoment)
         lessons.sortBy { it.date }
         return lessons

@@ -2,10 +2,10 @@ package com.develop.rs_school.swimmer.data.database
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.develop.rs_school.swimmer.domain.AgendaStatus
 import com.develop.rs_school.swimmer.domain.Customer
 import com.develop.rs_school.swimmer.domain.Lesson
-import com.develop.rs_school.swimmer.util.AgendaStatus
-import java.util.*
+import java.util.Date
 
 @Entity(tableName = "customer")
 data class DatabaseCustomer(

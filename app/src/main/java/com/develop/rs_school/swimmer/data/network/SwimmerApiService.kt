@@ -21,7 +21,7 @@ import retrofit2.http.Body
 import retrofit2.http.Header
 import retrofit2.http.POST
 import retrofit2.http.Query
-import java.util.*
+import java.util.Date
 
 private const val BASE_URL = "https://mevis.s20.online/v2api/"
 private const val BRANCH_ID = "2"
@@ -57,6 +57,8 @@ object SwimmerApi {
     private var token: String = ""
     private const val lessonStatusForHistory = 3
     private const val tokenErrorCode = 403
+    private const val defaultDateIntervalStart = -182
+    private const val defaultDateIntervalEnd = 182
 
     private val moshi = Moshi.Builder()
         .add(KotlinJsonAdapterFactory())
@@ -98,8 +100,8 @@ object SwimmerApi {
 
     suspend fun getCustomerCalendarImpl(
         customerId: String,
-        dateFrom: Date = getDateDotFormat(getDateWithOffset(-182)),
-        dateTo: Date = getDateDotFormat(getDateWithOffset(182))
+        dateFrom: Date = getDateDotFormat(getDateWithOffset(defaultDateIntervalStart)),
+        dateTo: Date = getDateDotFormat(getDateWithOffset(defaultDateIntervalEnd))
     ): List<CustomerCalendar> {
         return withContext(Dispatchers.IO) {
             val response = retrofitService.getCustomerCalendar(token, customerId, dateFrom, dateTo)

@@ -76,7 +76,8 @@ class LoginActivity : AppCompatActivity() {
                     binding.textInput.text.toString(),
                     binding.textInputCode.text.toString()
                 )
-                getString(R.string.button_get_code) -> loginViewModel.sendCodeInSms(binding.textInput.text.toString())
+                getString(R.string.button_get_code) ->
+                    loginViewModel.sendCodeInSms(binding.textInput.text.toString())
             }
         }
     }

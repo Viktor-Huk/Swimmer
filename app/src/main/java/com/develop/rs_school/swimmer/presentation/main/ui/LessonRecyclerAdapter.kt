@@ -11,10 +11,10 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.develop.rs_school.swimmer.R
 import com.develop.rs_school.swimmer.databinding.RecyclerViewRawBinding
+import com.develop.rs_school.swimmer.domain.AgendaStatus
 import com.develop.rs_school.swimmer.domain.Lesson
-import com.develop.rs_school.swimmer.util.AgendaStatus
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Locale
 
 class LessonRecyclerAdapter(private val itemClickListener: LessonRecyclerItemListener) :
     ListAdapter<Lesson, LessonRecyclerAdapter.ViewHolder>(
@@ -55,7 +55,7 @@ class LessonRecyclerAdapter(private val itemClickListener: LessonRecyclerItemLis
                 itemBinding.weekDay.text = weekPattern.format(it).capitalize()
             }
 
-            when(lesson.agendaStatus){
+            when (lesson.agendaStatus) {
                 AgendaStatus.NONE -> {
                     itemView.setBackgroundResource(R.drawable.layout_border_white)
                     itemBinding.date.text = "Сейчас"
@@ -72,7 +72,9 @@ class LessonRecyclerAdapter(private val itemClickListener: LessonRecyclerItemLis
                 AgendaStatus.CANCELED -> {
                     itemView.setBackgroundResource(R.drawable.layout_border_gray)
                     selectImageType(itemBinding, lesson.type)
-                    itemBinding.icon.setImageResource(R.drawable.ic_baseline_remove_circle_outline_24)
+                    itemBinding.icon.setImageResource(
+                        R.drawable.ic_baseline_remove_circle_outline_24
+                    )
                     itemBinding.date.paintFlags =
                         itemBinding.date.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
                     itemBinding.weekDay.paintFlags =
@@ -87,12 +89,12 @@ class LessonRecyclerAdapter(private val itemClickListener: LessonRecyclerItemLis
                     itemBinding.weekDay.paintFlags =
                         itemBinding.weekDay.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
                 }
-                 AgendaStatus.PLANNED -> {
-                    itemBinding.image.setColorFilter(parseColor(PLANED_COLOR))
+                AgendaStatus.PLANNED -> {
                     itemView.setBackgroundResource(R.drawable.layout_border_gray)
                     selectImageType(itemBinding, lesson.type)
+                    itemBinding.image.setColorFilter(parseColor(PLANED_COLOR))
                 }
-                AgendaStatus.FORGOT ->{
+                AgendaStatus.FORGOT -> {
                     itemView.setBackgroundResource(R.drawable.layout_border_gray)
                     selectImageType(itemBinding, lesson.type)
                     itemBinding.icon.setImageResource(R.drawable.question)
