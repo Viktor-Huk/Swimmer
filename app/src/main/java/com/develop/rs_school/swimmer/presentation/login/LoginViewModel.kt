@@ -5,7 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.develop.rs_school.swimmer.SingleLiveEvent
+import com.develop.rs_school.swimmer.util.SingleLiveEvent
 import com.develop.rs_school.swimmer.data.AuthSource
 import com.develop.rs_school.swimmer.data.SessionSource
 import com.develop.rs_school.swimmer.di.AuthSourceModule

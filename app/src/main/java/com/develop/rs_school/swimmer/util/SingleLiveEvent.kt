@@ -1,4 +1,4 @@
-package com.develop.rs_school.swimmer
+package com.develop.rs_school.swimmer.util
 
 /*
  *  Copyright 2017 Google Inc.
