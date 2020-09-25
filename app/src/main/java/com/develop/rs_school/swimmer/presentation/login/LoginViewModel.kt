@@ -13,7 +13,6 @@ import com.develop.rs_school.swimmer.util.Result
 import com.develop.rs_school.swimmer.util.getPhoneNumber
 import kotlinx.coroutines.launch
 import java.net.UnknownHostException
-import java.util.*
 import javax.inject.Inject
 
 class LoginViewModel @Inject constructor(
@@ -51,7 +50,7 @@ class LoginViewModel @Inject constructor(
     }
 
     fun sendCodeInSms(phone: String) {
-        if(validatePhone(phone))
+        if (validatePhone(phone))
             viewModelScope.launch {
                 try {
                     val smsStatus = authSource.sendSms(getPhoneNumber(phone))
@@ -67,7 +66,7 @@ class LoginViewModel @Inject constructor(
                     _showError.value = true
                 }
             }
-        else{
+        else {
             _errorString = "Phone number format error"
             _showError.value = true
         }
@@ -77,6 +76,7 @@ class LoginViewModel @Inject constructor(
         private const val belPhoneLength = 17
         private const val codeLength = 4
     }
+
     private fun validatePhone(phone: String) = phone.length == belPhoneLength
     private fun validateSmsCode(code: String) = code.length == codeLength
 
@@ -87,9 +87,8 @@ class LoginViewModel @Inject constructor(
             _showCodeBar.value = false
         } else
             viewModelScope.launch {
-                // FIXME val t : Result<Int> = Result.Success(2376)
                 when (val authApiStatus =
-                    authSource.authorize(phone)) { // FIXME debug authSource.authorize(phone) {
+                    authSource.authorize(phone)) {
                     is Result.Success -> {
                         saveSession(authApiStatus.data)
                         _goToProfile.value = true

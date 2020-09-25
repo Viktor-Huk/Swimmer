@@ -30,6 +30,7 @@ class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         (application as SwimmerApp).appComponent.inject(this)
 
+        setTheme(R.style.AppTheme)
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -75,7 +76,8 @@ class LoginActivity : AppCompatActivity() {
                     binding.textInput.text.toString(),
                     binding.textInputCode.text.toString()
                 )
-                getString(R.string.button_get_code) -> loginViewModel.sendCodeInSms(binding.textInput.text.toString())
+                getString(R.string.button_get_code) ->
+                    loginViewModel.sendCodeInSms(binding.textInput.text.toString())
             }
         }
     }
@@ -91,7 +93,6 @@ class LoginActivity : AppCompatActivity() {
         if (hasFocus) hideSystemUI()
     }
 
-    // FIXME see rssFeed project
     private fun hideSystemUI() {
         window.decorView.systemUiVisibility = (View.SYSTEM_UI_FLAG_IMMERSIVE
                 or View.SYSTEM_UI_FLAG_LAYOUT_STABLE

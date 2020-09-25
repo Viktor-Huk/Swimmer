@@ -5,11 +5,16 @@ import com.develop.rs_school.swimmer.data.network.SmsApi.sendSmsImpl
 import com.develop.rs_school.swimmer.data.network.SwimmerApi
 import com.develop.rs_school.swimmer.util.Result
 import java.net.UnknownHostException
-import java.util.*
 import javax.inject.Inject
 import kotlin.random.Random.Default.nextInt
 
 class NetworkAuthSource @Inject constructor() : AuthSource {
+
+    private companion object {
+        private const val MIN_SMS_CODE = 1000
+        private const val MAX_SMS_CODE = 9999
+    }
+
     override suspend fun authorize(authData: String): Result<Int> {
         return try {
             SwimmerApi.firstAuth()
@@ -29,7 +34,7 @@ class NetworkAuthSource @Inject constructor() : AuthSource {
     }
 
     override suspend fun sendSms(phone: String): String {
-        code = nextInt(1000, 9999).toString()
+        code = nextInt(MIN_SMS_CODE, MAX_SMS_CODE).toString()
         return sendSmsImpl(code, phone)
     }
 

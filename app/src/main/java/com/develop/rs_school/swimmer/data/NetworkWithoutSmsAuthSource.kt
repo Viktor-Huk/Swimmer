@@ -4,7 +4,6 @@ import android.util.Log
 import com.develop.rs_school.swimmer.data.network.SwimmerApi
 import com.develop.rs_school.swimmer.util.Result
 import java.net.UnknownHostException
-import java.util.*
 import javax.inject.Inject
 
 class NetworkWithoutSmsAuthSource @Inject constructor() : AuthSource {
@@ -18,6 +17,9 @@ class NetworkWithoutSmsAuthSource @Inject constructor() : AuthSource {
             Log.d("1", "authError for $authData")
             Result.Error(e)
         } catch (e: UnknownHostException) {
+            Log.d("1", e.toString())
+            Result.Error(e)
+        } catch (e: Exception) {
             Log.d("1", e.toString())
             Result.Error(e)
         }

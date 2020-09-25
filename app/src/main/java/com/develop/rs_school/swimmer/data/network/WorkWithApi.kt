@@ -1,8 +1,9 @@
 package com.develop.rs_school.swimmer.data.network
 
+import com.develop.rs_school.swimmer.domain.AgendaStatus
 import com.develop.rs_school.swimmer.domain.Lesson
-import com.develop.rs_school.swimmer.util.AgendaStatus
-import java.util.*
+import com.develop.rs_school.swimmer.util.getDateMinusFormat
+import java.util.Date
 
 suspend fun SwimmerApi.getCustomerLesson(customerId: String): List<CustomerLesson> {
     val allLessonsContainsDetails = SwimmerApi.getLessonsImpl()
@@ -24,7 +25,8 @@ suspend fun SwimmerApi.getCustomerLesson(customerId: String): List<CustomerLesso
     }
 }
 
-suspend fun SwimmerApi.getCustomerLessonsWithFullInfo(customerId: Int): MutableList<CustomerLessonWithAgenda> {
+suspend fun SwimmerApi.getCustomerLessonsWithFullInfo(customerId: Int):
+        MutableList<CustomerLessonWithAgenda> {
 
     val customer = SwimmerApi.getCustomersImpl().first { it.id == customerId }
 
@@ -48,7 +50,7 @@ suspend fun SwimmerApi.getCustomerLessonsWithFullInfo(customerId: Int): MutableL
                 date = item.date
             )
         if (item.status == "1") {
-            if (item.date != null && item.date > Date())
+            if (item.date != null && item.date > getDateMinusFormat())
                 lessonWithStatus.agendaStatus = AgendaStatus.PLANNED
             else
                 lessonWithStatus.agendaStatus = AgendaStatus.FORGOT
@@ -81,17 +83,6 @@ suspend fun SwimmerApi.getCustomerLessonsWithFullInfo(customerId: Int): MutableL
         resultList.add(lessonWithStatus)
     }
 
-    // FIXME
-    val currentMoment =
-        CustomerLessonWithAgenda(
-            "",
-            "", "",
-            Date(),
-            AgendaStatus.NONE
-        )
-    resultList.add(currentMoment)
-    resultList.sortBy { it.date }
-
     return resultList
 }
 
@@ -110,7 +101,7 @@ data class CustomerLesson(
 
 data class CustomerLessonWithAgenda(
     val id: String,
-    val type: String, // 1-6 Индивидуальный Групповой Пробный Отработка Индивид.2 Инд+ - от этого разная иконка
+    val type: String, // 1-6 Индивидуальный Групп Пробный Отработка Индивид.2 Инд+
     val status: String, // 1 - запланировано, 3 - проведено, 2 - отменено
     val date: Date?,
     var agendaStatus: AgendaStatus = AgendaStatus.NONE

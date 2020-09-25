@@ -7,8 +7,11 @@ import androidx.lifecycle.map
 import androidx.lifecycle.viewModelScope
 import com.develop.rs_school.swimmer.util.SingleLiveEvent
 import com.develop.rs_school.swimmer.data.SessionSource
+import com.develop.rs_school.swimmer.domain.AgendaStatus
+import com.develop.rs_school.swimmer.domain.Lesson
 import com.develop.rs_school.swimmer.repository.DataRepository
 import com.develop.rs_school.swimmer.util.Result
+import com.develop.rs_school.swimmer.util.getDateMinusFormat
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -34,7 +37,20 @@ class MainViewModel @Inject constructor(
         updateData()
     }
 
-    val lessons = dataRepository.lessons.map { if (it is Result.Success) it.data else listOf() }
+    val lessons = dataRepository.lessons.map {
+        if (it is Result.Success) {
+            addCurrentMoment(it.data)
+        } else listOf()
+    }
+
+    private fun addCurrentMoment(data: List<Lesson>): List<Lesson> {
+        val lessons = mutableListOf<Lesson>()
+        lessons.addAll(data)
+        val currentMoment = Lesson("", "", "", getDateMinusFormat(), AgendaStatus.NONE)
+        lessons.add(currentMoment)
+        lessons.sortBy { it.date }
+        return lessons
+    }
 
     val profile = dataRepository.getCustomer(customerId).map {
         if (it is Result.Success) it.data else null

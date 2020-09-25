@@ -1,7 +1,6 @@
 package com.develop.rs_school.swimmer.domain
 
-import com.develop.rs_school.swimmer.util.AgendaStatus
-import java.util.*
+import java.util.Date
 
 data class Lesson(
     val id: String,

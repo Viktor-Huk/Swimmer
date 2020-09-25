@@ -37,6 +37,7 @@ class DatabaseDataSource @Inject internal constructor(
 
     override fun observeCustomer(customerId: Int): LiveData<Result<Customer>> {
         return customerDao.getCustomer(customerId).map {
+            @Suppress("SENSELESS_COMPARISON")
             if (it != null)
                 Result.Success(it.asDomainModel())
             else

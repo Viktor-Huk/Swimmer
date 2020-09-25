@@ -3,7 +3,6 @@ package com.develop.rs_school.swimmer.di
 import com.develop.rs_school.swimmer.data.AuthSource
 import com.develop.rs_school.swimmer.data.NetworkAuthSource
 import com.develop.rs_school.swimmer.data.NetworkWithoutSmsAuthSource
-import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import javax.inject.Qualifier
@@ -19,7 +18,6 @@ object AuthSourceModule {
     @Qualifier
     @Retention(AnnotationRetention.RUNTIME)
     annotation class NetworkWithoutSms
-
 
     @Singleton
     @NetworkAuth

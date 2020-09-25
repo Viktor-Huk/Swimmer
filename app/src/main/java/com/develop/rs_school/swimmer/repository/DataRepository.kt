@@ -2,10 +2,12 @@ package com.develop.rs_school.swimmer.repository
 
 import androidx.lifecycle.LiveData
 import com.develop.rs_school.swimmer.data.DataSource
-import com.develop.rs_school.swimmer.util.Result
 import com.develop.rs_school.swimmer.di.DataSourceModule
+import com.develop.rs_school.swimmer.domain.AgendaStatus
 import com.develop.rs_school.swimmer.domain.Customer
 import com.develop.rs_school.swimmer.domain.Lesson
+import com.develop.rs_school.swimmer.util.Result
+import java.util.Date
 import javax.inject.Inject
 
 class DataRepository @Inject constructor(
@@ -14,9 +16,11 @@ class DataRepository @Inject constructor(
 ) {
 
     suspend fun refreshLessons(customerId: Int) {
-        val lessons = networkDataSource.getLessons(customerId)
-        if (lessons is Result.Success)
-            databaseDataSource.saveLessons(lessons.data)
+        val lessons: Result<List<Lesson>> = networkDataSource.getLessons(customerId)
+        if (lessons is Result.Success) {
+            databaseDataSource.deleteLessons() // FIXME id problem
+            databaseDataSource.saveLessons(fakeLessonsData)
+        }
         if (lessons is Result.Error)
             throw lessons.exception
     }
@@ -39,3 +43,16 @@ class DataRepository @Inject constructor(
         databaseDataSource.deleteLessons()
     }
 }
+
+val fakeLessonsData = listOf<Lesson>(
+    Lesson("1", "2", "3", Date(), AgendaStatus.PLANNED),
+    Lesson("2", "3", "3", Date(), AgendaStatus.PREPAID),
+    Lesson("3", "4", "3", Date(), AgendaStatus.VISIT_PAID),
+    Lesson("4", "5", "3", Date(), AgendaStatus.VISIT_NOT_PAID),
+    Lesson("5", "6", "3", Date(), AgendaStatus.MISSED_NOT_PAID),
+    Lesson("6", "1", "3", Date(), AgendaStatus.MISSED_FREE),
+    Lesson("7", "2", "3", Date(), AgendaStatus.MISSED_PAID),
+    Lesson("8", "3", "3", Date(), AgendaStatus.FORGOT),
+    Lesson("10", "4", "3", Date(), AgendaStatus.PAUSE),
+    Lesson("9", "5", "3", Date(), AgendaStatus.CANCELED)
+)
