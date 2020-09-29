@@ -3,6 +3,7 @@ package com.develop.rs_school.swimmer.data.network
 import com.develop.rs_school.swimmer.data.network.dto.AuthObject
 import com.develop.rs_school.swimmer.data.network.dto.Customer
 import com.develop.rs_school.swimmer.data.network.dto.CustomerCalendar
+import com.develop.rs_school.swimmer.data.network.dto.CustomerFilterObject
 import com.develop.rs_school.swimmer.data.network.dto.CustomerList
 import com.develop.rs_school.swimmer.data.network.dto.Lesson
 import com.develop.rs_school.swimmer.data.network.dto.LessonList
@@ -34,7 +35,8 @@ interface SwimmerApiService {
 
     @POST("$BRANCH_ID/customer/index")
     suspend fun getCustomers(
-        @Header("X-ALFACRM-TOKEN") token: String
+        @Header("X-ALFACRM-TOKEN") token: String,
+        @Body customerFilterObject: CustomerFilterObject
     ): Response<CustomerList>
 
     @POST("$BRANCH_ID/lesson/index")
@@ -84,14 +86,26 @@ object SwimmerApi {
     }
 
     // TODO make fabric method
-    suspend fun getCustomersImpl(): List<Customer> {
+    suspend fun getAllCustomers(): List<Customer> {
+        val resultList = mutableListOf<Customer>()
+        var page = 0
+        do {
+            val customerList = getCustomersImpl(page)
+            page++
+            resultList.addAll(customerList)
+        } while (customerList.isNotEmpty())
+        return resultList
+    }
+
+    private suspend fun getCustomersImpl(page: Int = 0): List<Customer> {
         return withContext(Dispatchers.IO) {
-            val response = retrofitService.getCustomers(token)
+            val response = retrofitService.getCustomers(token, CustomerFilterObject(page))
             when {
                 response.isSuccessful -> response.body()?.items ?: listOf()
                 response.code() == tokenErrorCode -> {
                     getAuthTokenImpl()
-                    retrofitService.getCustomers(token).body()?.items ?: listOf()
+                    retrofitService.getCustomers(token, CustomerFilterObject(page)).body()?.items
+                        ?: listOf()
                 }
                 else -> listOf()
             }

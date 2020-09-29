@@ -28,7 +28,7 @@ suspend fun SwimmerApi.getCustomerLesson(customerId: String): List<CustomerLesso
 suspend fun SwimmerApi.getCustomerLessonsWithFullInfo(customerId: Int):
         MutableList<CustomerLessonWithAgenda> {
 
-    val customer = SwimmerApi.getCustomersImpl().first { it.id == customerId }
+    val customer = SwimmerApi.getAllCustomers().first { it.id == customerId }
 
     val lessonInCalendarList =
         SwimmerApi.getCustomerCalendarImpl(customerId.toString()).sortedBy { it.date }

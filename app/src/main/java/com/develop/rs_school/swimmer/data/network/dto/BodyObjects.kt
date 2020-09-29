@@ -19,3 +19,8 @@ data class LessonFilterObject(
     val status: Int,
     val page: Int
 ) : Parcelable
+
+@Parcelize
+data class CustomerFilterObject(
+    val page: Int
+) : Parcelable

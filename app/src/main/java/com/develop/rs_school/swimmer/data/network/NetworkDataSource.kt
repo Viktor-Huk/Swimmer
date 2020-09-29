@@ -41,7 +41,7 @@ class NetworkDataSource : DataSource {
         withContext(Dispatchers.IO) {
             try {
                 return@withContext Result.Success(
-                    SwimmerApi.getCustomersImpl().first { it.id == customerId }.asDomainModel()
+                    SwimmerApi.getAllCustomers().first { it.id == customerId }.asDomainModel()
                 )
             } catch (e: Exception) {
                 return@withContext Result.Error(e)
