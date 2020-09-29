@@ -6,7 +6,7 @@ import com.develop.rs_school.swimmer.util.getDateMinusFormat
 import java.util.Date
 
 suspend fun SwimmerApi.getCustomerLesson(customerId: String): List<CustomerLesson> {
-    val allLessonsContainsDetails = SwimmerApi.getLessonsImpl()
+    val allLessonsContainsDetails = SwimmerApi.getAllLessons()
 
     return allLessonsContainsDetails.filter { lesson ->
         lesson.lessonDetails.find { it.customerId == customerId } != null

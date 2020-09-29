@@ -15,4 +15,7 @@ data class AuthObject(
 data class TokenObject(val token: String) : Parcelable
 
 @Parcelize
-data class LessonStatusObject(val status: String) : Parcelable
+data class LessonFilterObject(
+    val status: Int,
+    val page: Int
+) : Parcelable

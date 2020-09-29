@@ -7,6 +7,12 @@ import kotlinx.android.parcel.Parcelize
 import java.util.Date
 
 @Parcelize
+data class CustomerList(
+    val total: Int,
+    val items: List<Customer>
+) : Parcelable
+
+@Parcelize
 data class Customer(
     val id: Int,
     val name: String,
@@ -16,12 +22,6 @@ data class Customer(
     @Json(name = "paid_till") val paidDate: Date?,
     val phone: List<String>,
     val email: List<String>
-) : Parcelable
-
-@Parcelize
-data class CustomerList(
-    val total: Int,
-    val items: List<Customer>
 ) : Parcelable
 
 fun Customer.asDatabaseModel(): DatabaseCustomer {

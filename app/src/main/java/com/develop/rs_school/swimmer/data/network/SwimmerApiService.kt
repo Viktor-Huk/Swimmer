@@ -6,7 +6,7 @@ import com.develop.rs_school.swimmer.data.network.dto.CustomerCalendar
 import com.develop.rs_school.swimmer.data.network.dto.CustomerList
 import com.develop.rs_school.swimmer.data.network.dto.Lesson
 import com.develop.rs_school.swimmer.data.network.dto.LessonList
-import com.develop.rs_school.swimmer.data.network.dto.LessonStatusObject
+import com.develop.rs_school.swimmer.data.network.dto.LessonFilterObject
 import com.develop.rs_school.swimmer.data.network.dto.TokenObject
 import com.develop.rs_school.swimmer.util.getDateDotFormat
 import com.develop.rs_school.swimmer.util.getDateWithOffset
@@ -40,7 +40,7 @@ interface SwimmerApiService {
     @POST("$BRANCH_ID/lesson/index")
     suspend fun getLessons(
         @Header("X-ALFACRM-TOKEN") token: String,
-        @Body statusObject: LessonStatusObject
+        @Body lessonFilterObject: LessonFilterObject
     ): Response<LessonList>
 
     @POST("$BRANCH_ID/calendar/customer")
@@ -117,14 +117,28 @@ object SwimmerApi {
         }
     }
 
-    suspend fun getLessonsImpl(status: Int = lessonStatusForHistory): List<Lesson> {
+    suspend fun getAllLessons(status: Int = lessonStatusForHistory): List<Lesson> {
+        val resultList = mutableListOf<Lesson>()
+        var page = 0
+        do {
+            val lessonList = getLessonsImpl(status, page)
+            page++
+            resultList.addAll(lessonList)
+        } while (lessonList.isNotEmpty())
+        return resultList
+    }
+
+    private suspend fun getLessonsImpl(
+        status: Int = lessonStatusForHistory,
+        page: Int = 0
+    ): List<Lesson> {
         return withContext(Dispatchers.IO) {
-            val response = retrofitService.getLessons(token, LessonStatusObject(status.toString()))
+            val response = retrofitService.getLessons(token, LessonFilterObject(status, page))
             when {
                 response.isSuccessful -> response.body()?.items ?: listOf()
                 response.code() == tokenErrorCode -> {
                     getAuthTokenImpl()
-                    retrofitService.getLessons(token, LessonStatusObject(status.toString()))
+                    retrofitService.getLessons(token, LessonFilterObject(status, page))
                         .body()?.items ?: listOf()
                 }
                 else -> listOf()

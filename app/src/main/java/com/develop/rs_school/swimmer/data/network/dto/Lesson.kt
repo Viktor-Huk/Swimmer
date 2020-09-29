@@ -8,6 +8,8 @@ import java.util.Date
 @Parcelize
 data class LessonList(
     val total: Int,
+    @Json(name = "count") val countInPage: Int,
+    val page: Int,
     val items: List<Lesson>
 ) : Parcelable
 
