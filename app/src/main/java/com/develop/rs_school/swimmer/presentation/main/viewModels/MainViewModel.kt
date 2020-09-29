@@ -38,7 +38,7 @@ class MainViewModel @Inject constructor(
     }
 
     val lessons = dataRepository.lessons.map {
-        if (it is Result.Success) {
+        if (it is Result.Success && it.data.isNotEmpty()) {
             addCurrentMoment(it.data)
         } else listOf()
     }

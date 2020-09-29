@@ -19,7 +19,7 @@ class DataRepository @Inject constructor(
         val lessons: Result<List<Lesson>> = networkDataSource.getLessons(customerId)
         if (lessons is Result.Success) {
             databaseDataSource.deleteLessons() // FIXME id problem
-            databaseDataSource.saveLessons(fakeLessonsData)
+            databaseDataSource.saveLessons(lessons.data)
         }
         if (lessons is Result.Error)
             throw lessons.exception
