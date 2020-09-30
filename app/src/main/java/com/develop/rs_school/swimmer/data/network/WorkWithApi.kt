@@ -99,6 +99,7 @@ suspend fun SwimmerApi.getCustomerLessonsWithFullInfo(customerId: Int):
     return resultList
 }
 
+// FIXME work only for bylessons tariff!
 fun isLessonInTariff(item: CustomerCalendar, tariff: List<Tariff>): Boolean {
     for (tariffItem in tariff) {
         if (!tariffItem.subjects.contains(item.subject)) continue

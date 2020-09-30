@@ -48,6 +48,7 @@ class MainViewModel @Inject constructor(
         lessons.addAll(data)
         val currentMoment = Lesson("", "", "", getDateMinusFormat(), AgendaStatus.NONE)
         lessons.add(currentMoment)
+        // FIXME in CRM other sort - first by status
         lessons.sortBy { it.date }
         return lessons
     }
