@@ -19,6 +19,7 @@ data class Lesson(
     @Json(name = "time_from") val date: Date?,
     @Json(name = "time_to") val dateEnd: String,
     @Json(name = "lesson_type_id") val type: String,
+    @Json(name = "subject_id") val subject: Int,
     val status: String,
     @Json(name = "details") val lessonDetails: List<LessonDetailsByCustomer>
 ) : Parcelable

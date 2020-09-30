@@ -24,3 +24,8 @@ data class LessonFilterObject(
 data class CustomerFilterObject(
     val page: Int
 ) : Parcelable
+
+@Parcelize
+data class TariffFilterObject(
+    val page: Int
+) : Parcelable

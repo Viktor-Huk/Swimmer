@@ -11,13 +11,18 @@ fun getPhoneNumber(phone: String): String {
 }
 
 fun getDateMinusFormat(): Date {
-    val sdf = SimpleDateFormat("yyyy-MM-dd")
+    val sdf = simpleDateFormatWrapper("yyyy-MM-dd")
     return requireNotNull(sdf.parse(sdf.format(Date())))
 }
 
 fun getDateDotFormat(date: Date): Date {
-    val sdf = SimpleDateFormat("dd.MM.yyyy")
+    val sdf = simpleDateFormatWrapper("dd.MM.yyyy")
     return requireNotNull(sdf.parse(sdf.format(date)))
+}
+
+fun parseDateDotFormatFromString(dateString: String): Date {
+    val parser = simpleDateFormatWrapper("dd.MM.yyyy")
+    return parser.parse(dateString) ?: Date()
 }
 
 fun getDateWithOffset(offset: Int, date: Date = Date()): Date {
@@ -28,11 +33,15 @@ fun getDateWithOffset(offset: Int, date: Date = Date()): Date {
 }
 
 fun getCapitalizingDayOfWeek(date: Date): String {
-    val weekPattern = SimpleDateFormat("E")
+    val weekPattern = simpleDateFormatWrapper("E")
     return weekPattern.format(date).capitalize()
 }
 
 fun getDateDDMM(date: Date): String {
-    val datePattern = SimpleDateFormat("dd.MM", Locale("ru"))
+    val datePattern = simpleDateFormatWrapper("dd.MM")
     return datePattern.format(date)
+}
+
+fun simpleDateFormatWrapper(format: String): SimpleDateFormat {
+    return SimpleDateFormat(format, Locale("ru"))
 }

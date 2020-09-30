@@ -1,12 +1,16 @@
 package com.develop.rs_school.swimmer.data.network
 
+import com.develop.rs_school.swimmer.data.network.dto.CustomerCalendar
+import com.develop.rs_school.swimmer.data.network.dto.Tariff
 import com.develop.rs_school.swimmer.domain.AgendaStatus
 import com.develop.rs_school.swimmer.domain.Lesson
+import com.develop.rs_school.swimmer.util.getDateDotFormat
 import com.develop.rs_school.swimmer.util.getDateMinusFormat
+import com.develop.rs_school.swimmer.util.parseDateDotFormatFromString
 import java.util.Date
 
 suspend fun SwimmerApi.getCustomerLesson(customerId: String): List<CustomerLesson> {
-    val allLessonsContainsDetails = SwimmerApi.getAllLessons()
+    val allLessonsContainsDetails = getAllLessons()
 
     return allLessonsContainsDetails.filter { lesson ->
         lesson.lessonDetails.find { it.customerId == customerId } != null
@@ -28,18 +32,22 @@ suspend fun SwimmerApi.getCustomerLesson(customerId: String): List<CustomerLesso
 suspend fun SwimmerApi.getCustomerLessonsWithFullInfo(customerId: Int):
         MutableList<CustomerLessonWithAgenda> {
 
-    val customer = SwimmerApi.getAllCustomers().first { it.id == customerId }
+    val customer = getAllCustomers().first { it.id == customerId }
+    val tariff = getAllTariff(customerId)
 
     val lessonInCalendarList =
-        SwimmerApi.getCustomerCalendarImpl(customerId.toString()).sortedBy { it.date }
+        getCustomerCalendarImpl(customerId.toString()).sortedBy { it.date }
+    //FIXME get by ids
     val lessonList = getCustomerLesson(customerId.toString()).sortedByDescending { it.date }
 
     val resultList = mutableListOf<CustomerLessonWithAgenda>()
     var paidLessonInFuture = customer.paidLesson
+
     val notPaidLessonIdsInHistory =
         if (paidLessonInFuture < 0)
             lessonList.map { it.id }.subList(0, -paidLessonInFuture)
         else listOf()
+
     for (item in lessonInCalendarList) {
 
         val lessonWithStatus =
@@ -54,10 +62,12 @@ suspend fun SwimmerApi.getCustomerLessonsWithFullInfo(customerId: Int):
                 lessonWithStatus.agendaStatus = AgendaStatus.PLANNED
             else
                 lessonWithStatus.agendaStatus = AgendaStatus.FORGOT
-            // TODO hack
+
             if (lessonWithStatus.agendaStatus == AgendaStatus.PLANNED && paidLessonInFuture > 0) {
-                lessonWithStatus.agendaStatus = AgendaStatus.PREPAID
-                paidLessonInFuture--
+                if (isLessonInTariff(item, tariff)) {
+                    lessonWithStatus.agendaStatus = AgendaStatus.PREPAID
+                    paidLessonInFuture--
+                }
             }
         }
         if (item.status == "2") {
@@ -84,6 +94,20 @@ suspend fun SwimmerApi.getCustomerLessonsWithFullInfo(customerId: Int):
     }
 
     return resultList
+}
+
+fun isLessonInTariff(item: CustomerCalendar, tariff: List<Tariff>): Boolean {
+    for (tariffItem in tariff) {
+        if (!tariffItem.subjects.contains(item.subject)) continue
+        if (!tariffItem.lessonTypes.contains(item.type.toInt())) continue
+        if (item.date != null)
+            if (!(getDateDotFormat(item.date) >= parseDateDotFormatFromString(tariffItem.dateStart) &&
+                        getDateDotFormat(item.date) <= parseDateDotFormatFromString(tariffItem.dateEnd))
+            )
+                continue
+        return true
+    }
+    return false
 }
 
 // TODO move to other file

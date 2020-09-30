@@ -6,8 +6,10 @@ import com.develop.rs_school.swimmer.data.network.dto.CustomerCalendar
 import com.develop.rs_school.swimmer.data.network.dto.CustomerFilterObject
 import com.develop.rs_school.swimmer.data.network.dto.CustomerList
 import com.develop.rs_school.swimmer.data.network.dto.Lesson
-import com.develop.rs_school.swimmer.data.network.dto.LessonList
 import com.develop.rs_school.swimmer.data.network.dto.LessonFilterObject
+import com.develop.rs_school.swimmer.data.network.dto.LessonList
+import com.develop.rs_school.swimmer.data.network.dto.Tariff
+import com.develop.rs_school.swimmer.data.network.dto.TariffList
 import com.develop.rs_school.swimmer.data.network.dto.TokenObject
 import com.develop.rs_school.swimmer.util.getDateDotFormat
 import com.develop.rs_school.swimmer.util.getDateWithOffset
@@ -52,6 +54,12 @@ interface SwimmerApiService {
         @Query(value = "date1") dateFrom: Date,
         @Query(value = "date2") dateTo: Date
     ): Response<List<CustomerCalendar>>
+
+    @POST("$BRANCH_ID/customer-tariff/index")
+    suspend fun getCustomerTariff(
+        @Header("X-ALFACRM-TOKEN") token: String,
+        @Query(value = "customer_id") id: Int
+    ): Response<TariffList>
 }
 
 // TODO move to another file
@@ -154,6 +162,34 @@ object SwimmerApi {
                     getAuthTokenImpl()
                     retrofitService.getLessons(token, LessonFilterObject(status, page))
                         .body()?.items ?: listOf()
+                }
+                else -> listOf()
+            }
+        }
+    }
+
+    // TODO make generic method!
+    // FIXME paging dont work with tariff in API!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    suspend fun getAllTariff(customerId: Int): List<Tariff> {
+        val resultList = mutableListOf<Tariff>()
+        var page = 0
+        //do {
+            val tariffList = getTariffImpl(customerId, page)
+            page++
+            resultList.addAll(tariffList)
+        //} while (tariffList.isNotEmpty())
+        return resultList
+    }
+
+    private suspend fun getTariffImpl(customerId: Int, page: Int = 0): List<Tariff> {
+        return withContext(Dispatchers.IO) {
+            val response = retrofitService.getCustomerTariff(token, customerId)
+            when {
+                response.isSuccessful -> response.body()?.items ?: listOf()
+                response.code() == tokenErrorCode -> {
+                    getAuthTokenImpl()
+                    retrofitService.getCustomerTariff(token, customerId).body()?.items
+                        ?: listOf()
                 }
                 else -> listOf()
             }
