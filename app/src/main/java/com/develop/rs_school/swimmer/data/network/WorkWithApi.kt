@@ -43,10 +43,21 @@ suspend fun SwimmerApi.getCustomerLessonsWithFullInfo(customerId: Int):
     val resultList = mutableListOf<CustomerLessonWithAgenda>()
     var paidLessonInFuture = customer.paidLesson
 
+    val balance = customer.balance.toFloat()
     val notPaidLessonIdsInHistory =
-        if (paidLessonInFuture < 0)
-            lessonList.map { it.id }.subList(0, -paidLessonInFuture)
-        else listOf()
+        if (customer.balance.toFloat() < 0) {
+            var currentSum = 0.0
+            val list = mutableListOf<String>()
+            for (item in lessonList) {
+                if (currentSum < -balance) {
+                    list.add(item.id)
+                    currentSum += item.price.toFloat()
+                } else
+                    break
+            }
+            list
+        } else
+            listOf<String>()
 
     for (item in lessonInCalendarList) {
 
