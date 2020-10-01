@@ -105,14 +105,18 @@ object SwimmerApi {
         return resultList
     }
 
-    private suspend fun getCustomersImpl(page: Int = 0): List<Customer> {
+    suspend fun getCustomerById(customerId: Int): Customer{
+       return getCustomersImpl(customerId = customerId).single()
+    }
+
+    private suspend fun getCustomersImpl(page: Int = 0, customerId: Int = 0): List<Customer> {
         return withContext(Dispatchers.IO) {
-            val response = retrofitService.getCustomers(token, CustomerFilterObject(page))
+            val response = retrofitService.getCustomers(token, CustomerFilterObject(page, customerId))
             when {
                 response.isSuccessful -> response.body()?.items ?: listOf()
                 response.code() == tokenErrorCode -> {
                     getAuthTokenImpl()
-                    retrofitService.getCustomers(token, CustomerFilterObject(page)).body()?.items
+                    retrofitService.getCustomers(token, CustomerFilterObject(page, customerId)).body()?.items
                         ?: listOf()
                 }
                 else -> listOf()

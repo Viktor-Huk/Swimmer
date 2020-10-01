@@ -22,7 +22,8 @@ data class LessonFilterObject(
 
 @Parcelize
 data class CustomerFilterObject(
-    val page: Int
+    val page: Int,
+    @Json(name = "id") val customerId: Int = 0
 ) : Parcelable
 
 @Parcelize

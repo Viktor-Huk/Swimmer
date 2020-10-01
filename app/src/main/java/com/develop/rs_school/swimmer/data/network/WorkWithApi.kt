@@ -32,7 +32,7 @@ suspend fun SwimmerApi.getCustomerLesson(customerId: String): List<CustomerLesso
 suspend fun SwimmerApi.getCustomerLessonsWithFullInfo(customerId: Int):
         MutableList<CustomerLessonWithAgenda> {
 
-    val customer = getAllCustomers().first { it.id == customerId }
+    val customer = getCustomerById(customerId)
     val tariff = getAllTariff(customerId)
 
     val lessonInCalendarList =
