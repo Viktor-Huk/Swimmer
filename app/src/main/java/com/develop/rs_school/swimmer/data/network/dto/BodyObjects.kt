@@ -17,7 +17,8 @@ data class TokenObject(val token: String) : Parcelable
 @Parcelize
 data class LessonFilterObject(
     val status: Int,
-    val page: Int
+    val page: Int,
+    @Json(name = "id") val ids: List<String> = listOf()
 ) : Parcelable
 
 @Parcelize

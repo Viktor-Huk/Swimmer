@@ -9,12 +9,11 @@ import com.develop.rs_school.swimmer.util.getDateMinusFormat
 import com.develop.rs_school.swimmer.util.parseDateDotFormatFromString
 import java.util.Date
 
-suspend fun SwimmerApi.getCustomerLesson(customerId: String): List<CustomerLesson> {
-    val allLessonsContainsDetails = getAllLessons()
-
-    return allLessonsContainsDetails.filter { lesson ->
-        lesson.lessonDetails.find { it.customerId == customerId } != null
-    }.map {
+suspend fun SwimmerApi.getCustomerLesson(
+    customerId: String,
+    lessonIds: List<String>
+): List<CustomerLesson> {
+    return getAllLessons(lessonsIds = lessonIds).map {
         val detail = it.lessonDetails.first { d -> d.customerId == customerId }
         CustomerLesson(
             isAttend = detail.isAttend,
@@ -35,10 +34,10 @@ suspend fun SwimmerApi.getCustomerLessonsWithFullInfo(customerId: Int):
     val customer = getCustomerById(customerId)
     val tariff = getAllTariff(customerId)
 
-    val lessonInCalendarList =
-        getCustomerCalendarImpl(customerId.toString()).sortedBy { it.date }
-    //FIXME get by ids
-    val lessonList = getCustomerLesson(customerId.toString()).sortedByDescending { it.date }
+    val lessonInCalendarList = getCustomerCalendarImpl(customerId.toString()).sortedBy { it.date }
+    val lessonIds = lessonInCalendarList.filter { it.status == "3" }.map { it.id }
+    val lessonList =
+        getCustomerLesson(customerId.toString(), lessonIds).sortedByDescending { it.date }
 
     val resultList = mutableListOf<CustomerLessonWithAgenda>()
     var paidLessonInFuture = customer.paidLesson
@@ -46,7 +45,7 @@ suspend fun SwimmerApi.getCustomerLessonsWithFullInfo(customerId: Int):
     var balance = customer.balance.toFloat()
     val notPaidLessonIdsInHistory =
         if (balance < 0) {
-            lessonList.takeWhile { balance += it.price.toFloat();balance < it.price.toFloat() }
+            lessonList.takeWhile { balance += it.price.toFloat(); balance < it.price.toFloat() }
                 .map { it.id }
         } else
             listOf()
@@ -104,11 +103,13 @@ fun isLessonInTariff(item: CustomerCalendar, tariff: List<Tariff>): Boolean {
     for (tariffItem in tariff) {
         if (!tariffItem.subjects.contains(item.subject)) continue
         if (!tariffItem.lessonTypes.contains(item.type.toInt())) continue
-        if (item.date != null)
-            if (!(getDateDotFormat(item.date) >= parseDateDotFormatFromString(tariffItem.dateStart) &&
-                        getDateDotFormat(item.date) <= parseDateDotFormatFromString(tariffItem.dateEnd))
+        if (item.date != null) {
+            val date = getDateDotFormat(item.date)
+            if (!(date >= parseDateDotFormatFromString(tariffItem.dateStart) &&
+                        date <= parseDateDotFormatFromString(tariffItem.dateEnd))
             )
                 continue
+        }
         return true
     }
     return false

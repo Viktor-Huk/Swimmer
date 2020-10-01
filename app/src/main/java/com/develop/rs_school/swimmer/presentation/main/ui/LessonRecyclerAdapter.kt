@@ -23,7 +23,7 @@ class LessonRecyclerAdapter(private val itemClickListener: LessonRecyclerItemLis
     private companion object {
         private const val NEUTRAL_COLOR = "#2E7D32"
         private const val BAD_COLOR = "#C62828"
-        private const val PLANED_COLOR = "#575757" //FIXME WTF
+        private const val PLANED_COLOR = "#575757" // FIXME WTF
         private const val FREE_COLOR = "#FFA000"
     }
 

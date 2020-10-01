@@ -105,18 +105,20 @@ object SwimmerApi {
         return resultList
     }
 
-    suspend fun getCustomerById(customerId: Int): Customer{
-       return getCustomersImpl(customerId = customerId).single()
+    suspend fun getCustomerById(customerId: Int): Customer {
+        return getCustomersImpl(customerId = customerId).single()
     }
 
     private suspend fun getCustomersImpl(page: Int = 0, customerId: Int = 0): List<Customer> {
         return withContext(Dispatchers.IO) {
-            val response = retrofitService.getCustomers(token, CustomerFilterObject(page, customerId))
+            val response =
+                retrofitService.getCustomers(token, CustomerFilterObject(page, customerId))
             when {
                 response.isSuccessful -> response.body()?.items ?: listOf()
                 response.code() == tokenErrorCode -> {
                     getAuthTokenImpl()
-                    retrofitService.getCustomers(token, CustomerFilterObject(page, customerId)).body()?.items
+                    retrofitService.getCustomers(token, CustomerFilterObject(page, customerId))
+                        .body()?.items
                         ?: listOf()
                 }
                 else -> listOf()
@@ -143,11 +145,14 @@ object SwimmerApi {
         }
     }
 
-    suspend fun getAllLessons(status: Int = lessonStatusForHistory): List<Lesson> {
+    suspend fun getAllLessons(
+        status: Int = lessonStatusForHistory,
+        lessonsIds: List<String> = listOf()
+    ): List<Lesson> {
         val resultList = mutableListOf<Lesson>()
         var page = 0
         do {
-            val lessonList = getLessonsImpl(status, page)
+            val lessonList = getLessonsImpl(status, page, lessonsIds)
             page++
             resultList.addAll(lessonList)
         } while (lessonList.isNotEmpty())
@@ -156,15 +161,16 @@ object SwimmerApi {
 
     private suspend fun getLessonsImpl(
         status: Int = lessonStatusForHistory,
-        page: Int = 0
+        page: Int = 0,
+        ids: List<String> = listOf()
     ): List<Lesson> {
         return withContext(Dispatchers.IO) {
-            val response = retrofitService.getLessons(token, LessonFilterObject(status, page))
+            val response = retrofitService.getLessons(token, LessonFilterObject(status, page, ids))
             when {
                 response.isSuccessful -> response.body()?.items ?: listOf()
                 response.code() == tokenErrorCode -> {
                     getAuthTokenImpl()
-                    retrofitService.getLessons(token, LessonFilterObject(status, page))
+                    retrofitService.getLessons(token, LessonFilterObject(status, page, ids))
                         .body()?.items ?: listOf()
                 }
                 else -> listOf()
@@ -177,11 +183,11 @@ object SwimmerApi {
     suspend fun getAllTariff(customerId: Int): List<Tariff> {
         val resultList = mutableListOf<Tariff>()
         var page = 0
-        //do {
-            val tariffList = getTariffImpl(customerId, page)
-            page++
-            resultList.addAll(tariffList)
-        //} while (tariffList.isNotEmpty())
+        // do {
+        val tariffList = getTariffImpl(customerId, page)
+        page++
+        resultList.addAll(tariffList)
+        // } while (tariffList.isNotEmpty())
         return resultList
     }
 
