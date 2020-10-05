@@ -12,6 +12,7 @@ import com.develop.rs_school.swimmer.domain.Lesson
 import com.develop.rs_school.swimmer.repository.DataRepository
 import com.develop.rs_school.swimmer.util.Result
 import com.develop.rs_school.swimmer.util.getDateMinusFormat
+import com.develop.rs_school.swimmer.util.getDateWithOffset
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -46,11 +47,17 @@ class MainViewModel @Inject constructor(
     private fun addCurrentMoment(data: List<Lesson>): List<Lesson> {
         val lessons = mutableListOf<Lesson>()
         lessons.addAll(data)
-        val currentMoment = Lesson("", "", "", getDateMinusFormat(), AgendaStatus.NONE)
+        val currentMoment = Lesson("", "", "1", getDateMinusFormat(), AgendaStatus.NONE)
         lessons.add(currentMoment)
-        // FIXME in CRM other sort - first by status
         lessons.sortBy { it.date }
-        return lessons
+        return sortLikeCRM(lessons) // FIXME in CRM other sort - status first in current day
+    }
+
+    private fun sortLikeCRM(data: List<Lesson>): List<Lesson> {
+        val pastLessons = data.takeWhile { it.date != getDateMinusFormat() }
+        val futureLessons = data.takeLastWhile { it.date!! > getDateWithOffset(1, getDateMinusFormat()) }
+        val currentDayLessons = data.subList(pastLessons.size, data.size - futureLessons.size).sortedBy { it.status == "1" }
+        return pastLessons + currentDayLessons + futureLessons
     }
 
     val profile = dataRepository.getCustomer(customerId).map {
