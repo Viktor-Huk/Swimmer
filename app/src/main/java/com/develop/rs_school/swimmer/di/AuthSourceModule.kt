@@ -3,13 +3,14 @@ package com.develop.rs_school.swimmer.di
 import com.develop.rs_school.swimmer.data.AuthSource
 import com.develop.rs_school.swimmer.data.NetworkAuthSource
 import com.develop.rs_school.swimmer.data.NetworkWithoutSmsAuthSource
+import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import javax.inject.Qualifier
 import javax.inject.Singleton
 
 @Module
-object AuthSourceModule {
+abstract class AuthSourceModule {
 
     @Qualifier
     @Retention(AnnotationRetention.RUNTIME)
@@ -21,11 +22,11 @@ object AuthSourceModule {
 
     @Singleton
     @NetworkAuth
-    @Provides
-    fun provideNetworkAuthSource(): AuthSource = NetworkAuthSource()
+    @Binds
+    abstract fun provideNetworkAuthSource(networkAuthSource: NetworkAuthSource): AuthSource
 
     @Singleton
     @NetworkWithoutSms
-    @Provides
-    fun provideNetworkWithoutSmsSource(): AuthSource = NetworkWithoutSmsAuthSource()
+    @Binds
+    abstract fun provideNetworkWithoutSmsSource(networkWithoutSmsAuthSource: NetworkWithoutSmsAuthSource): AuthSource
 }

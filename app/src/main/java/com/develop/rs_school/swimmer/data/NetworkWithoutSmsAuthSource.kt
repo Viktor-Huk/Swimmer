@@ -6,11 +6,11 @@ import com.develop.rs_school.swimmer.util.Result
 import java.net.UnknownHostException
 import javax.inject.Inject
 
-class NetworkWithoutSmsAuthSource @Inject constructor() : AuthSource {
+class NetworkWithoutSmsAuthSource @Inject constructor(private val swimmerApi: SwimmerApi) : AuthSource {
     override suspend fun authorize(authData: String): Result<Int> {
         return try {
-            SwimmerApi.firstAuth()
-            val res = SwimmerApi.getAllCustomers().first { it.phone.contains(authData) }
+            swimmerApi.firstAuth()
+            val res = swimmerApi.getAllCustomers().first { it.phone.contains(authData) }
             Log.d("1", res.name)
             Result.Success(res.id)
         } catch (e: NoSuchElementException) {

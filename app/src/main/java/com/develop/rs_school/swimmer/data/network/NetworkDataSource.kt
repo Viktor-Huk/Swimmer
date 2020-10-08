@@ -9,8 +9,7 @@ import com.develop.rs_school.swimmer.util.Result
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-// FIXME SwimmerApi - DI
-class NetworkDataSource : DataSource {
+class NetworkDataSource(private val swimmerApi: SwimmerApi) : DataSource {
     override fun observeLessons(): LiveData<Result<List<Lesson>>> {
         TODO("Not yet implemented")
     }
@@ -18,7 +17,7 @@ class NetworkDataSource : DataSource {
     override suspend fun getLessons(customerId: Int): Result<List<Lesson>> =
         withContext(Dispatchers.IO) {
             try {
-                val networkLessons = SwimmerApi.getCustomerLessonsWithFullInfo(customerId)
+                val networkLessons = swimmerApi.getCustomerLessonsWithFullInfo(customerId)
                 return@withContext Result.Success(networkLessons.asDomainModel())
             } catch (e: Exception) {
                 return@withContext Result.Error(e)
@@ -41,7 +40,7 @@ class NetworkDataSource : DataSource {
         withContext(Dispatchers.IO) {
             try {
                 return@withContext Result.Success(
-                    SwimmerApi.getCustomerById(customerId).asDomainModel()
+                    swimmerApi.getCustomerById(customerId).asDomainModel()
                 )
             } catch (e: Exception) {
                 return@withContext Result.Error(e)

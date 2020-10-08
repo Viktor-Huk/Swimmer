@@ -9,9 +9,8 @@ import com.develop.rs_school.swimmer.util.Result
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import javax.inject.Inject
 
-class DatabaseDataSource @Inject internal constructor(
+class DatabaseDataSource(
     private val lessonDao: LessonDao,
     private val customerDao: CustomerDao,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO

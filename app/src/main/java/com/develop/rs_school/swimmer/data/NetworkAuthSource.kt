@@ -1,14 +1,14 @@
 package com.develop.rs_school.swimmer.data
 
 import android.util.Log
-import com.develop.rs_school.swimmer.data.network.SmsApi.sendSmsImpl
+import com.develop.rs_school.swimmer.data.network.SmsApi
 import com.develop.rs_school.swimmer.data.network.SwimmerApi
 import com.develop.rs_school.swimmer.util.Result
 import java.net.UnknownHostException
 import javax.inject.Inject
 import kotlin.random.Random.Default.nextInt
 
-class NetworkAuthSource @Inject constructor() : AuthSource {
+class NetworkAuthSource @Inject constructor(private val swimmerApi: SwimmerApi) : AuthSource {
 
     private companion object {
         private const val MIN_SMS_CODE = 1000
@@ -17,8 +17,8 @@ class NetworkAuthSource @Inject constructor() : AuthSource {
 
     override suspend fun authorize(authData: String): Result<Int> {
         return try {
-            SwimmerApi.firstAuth()
-            val res = SwimmerApi.getAllCustomers().first { it.phone.contains(authData) }
+            swimmerApi.firstAuth()
+            val res = swimmerApi.getAllCustomers().first { it.phone.contains(authData) }
             Log.d("1", res.name)
             Result.Success(res.id)
         } catch (e: NoSuchElementException) {
@@ -35,7 +35,8 @@ class NetworkAuthSource @Inject constructor() : AuthSource {
 
     override suspend fun sendSms(phone: String): String {
         code = nextInt(MIN_SMS_CODE, MAX_SMS_CODE).toString()
-        return sendSmsImpl(code, phone)
+        //FIXME DI SmsApi
+        return SmsApi.sendSmsImpl(code, phone)
     }
 
     private var code = "1234"
