@@ -5,7 +5,6 @@ import com.develop.rs_school.swimmer.data.NetworkAuthSource
 import com.develop.rs_school.swimmer.data.NetworkWithoutSmsAuthSource
 import dagger.Binds
 import dagger.Module
-import dagger.Provides
 import javax.inject.Qualifier
 import javax.inject.Singleton
 

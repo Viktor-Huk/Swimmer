@@ -73,11 +73,12 @@ class LoginViewModel @Inject constructor(
     }
 
     private companion object {
-        private const val belPhoneLength = 17
+        private const val belPhoneLength = 17 // +375(33)123-45-67 all symbols
+        private val belPhoneCodes = listOf("25", "44", "33", "29")
         private const val codeLength = 4
     }
 
-    private fun validatePhone(phone: String) = phone.length == belPhoneLength
+    private fun validatePhone(phone: String) = (phone.length == belPhoneLength) && (belPhoneCodes.contains(phone.substring(5, 7)))
     private fun validateSmsCode(code: String) = code.length == codeLength
 
     fun loginAttempt(phone: String, code: String) {
@@ -107,5 +108,5 @@ class LoginViewModel @Inject constructor(
             }
     }
 
-    private fun smsCodeCheck(code: String) = authSource.smsCodeCheck(code) && validateSmsCode(code)
+    private fun smsCodeCheck(code: String) = validateSmsCode(code) && authSource.smsCodeCheck(code)
 }

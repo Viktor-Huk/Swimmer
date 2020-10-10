@@ -35,7 +35,7 @@ class NetworkAuthSource @Inject constructor(private val swimmerApi: SwimmerApi) 
 
     override suspend fun sendSms(phone: String): String {
         code = nextInt(MIN_SMS_CODE, MAX_SMS_CODE).toString()
-        //FIXME DI SmsApi
+        // FIXME DI SmsApi
         return SmsApi.sendSmsImpl(code, phone)
     }
 

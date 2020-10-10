@@ -59,6 +59,7 @@ interface SwimmerApiService {
 
 // TODO move to another file
 class SwimmerApi(private val retrofitService: SwimmerApiService) {
+    // TODO to constants
     private var token: String = ""
     val lessonStatusForHistory = 3
     private val tokenErrorCode = 403
