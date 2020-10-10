@@ -37,8 +37,8 @@ suspend fun SwimmerApi.getCustomerLessonsWithFullInfo(customerId: Int):
     val lessonInCalendarList = getCustomerCalendarImpl(customerId.toString()).sortedBy { it.date }
     val lessonIds =
         lessonInCalendarList.filter { it.status == lessonStatusForHistory.toString() }.map { it.id }
-    val lessonList =
-        getCustomerLesson(customerId.toString(), lessonIds).sortedByDescending { it.date }
+    val lessonList = if(lessonIds.isEmpty()) listOf()
+        else getCustomerLesson(customerId.toString(), lessonIds).sortedByDescending { it.date }
 
     val resultList = mutableListOf<CustomerLessonWithAgenda>()
     var paidLessonInFuture = customer.paidLesson
