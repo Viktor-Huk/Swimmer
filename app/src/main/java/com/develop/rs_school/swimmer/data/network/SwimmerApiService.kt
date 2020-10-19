@@ -96,19 +96,8 @@ class SwimmerApi(private val retrofitService: SwimmerApiService) {
 
     private suspend fun getCustomersImpl(page: Int = 0, customerId: Int = 0): List<Customer> {
         return withContext(Dispatchers.IO) {
-            val response =
-                retrofitService.getCustomers(token, CustomerFilterObject(page, customerId))
-            when {
-                response.isSuccessful -> response.body()?.items ?: listOf()
-                response.code() == tokenErrorCode -> {
-                    getAuthTokenImpl()
-                    retrofitService.getCustomers(token, CustomerFilterObject(page, customerId))
-                        .body()?.items
-                        ?: listOf()
-                }
-                else -> listOf()
-            }
-        }
+            getDataFromApi { retrofitService.getCustomers(token, CustomerFilterObject(page, customerId)) }
+            }?.items ?: listOf()
     }
 
     suspend fun getCustomerCalendarImpl(
@@ -117,17 +106,8 @@ class SwimmerApi(private val retrofitService: SwimmerApiService) {
         dateTo: Date = getDateDotFormat(getDateWithOffset(defaultDateIntervalEnd))
     ): List<CustomerCalendar> {
         return withContext(Dispatchers.IO) {
-            val response = retrofitService.getCustomerCalendar(token, customerId, dateFrom, dateTo)
-            when {
-                response.isSuccessful -> response.body() ?: listOf()
-                response.code() == tokenErrorCode -> {
-                    getAuthTokenImpl()
-                    retrofitService.getCustomerCalendar(token, customerId, dateFrom, dateTo).body()
-                        ?: listOf()
-                }
-                else -> listOf()
-            }
-        }
+            getDataFromApi { retrofitService.getCustomerCalendar(token, customerId, dateFrom, dateTo) }
+        } ?: listOf()
     }
 
     suspend fun getAllLessons(
@@ -150,20 +130,10 @@ class SwimmerApi(private val retrofitService: SwimmerApiService) {
         ids: List<String> = listOf()
     ): List<Lesson> {
         return withContext(Dispatchers.IO) {
-            val response = retrofitService.getLessons(token, LessonFilterObject(status, page, ids))
-            when {
-                response.isSuccessful -> response.body()?.items ?: listOf()
-                response.code() == tokenErrorCode -> {
-                    getAuthTokenImpl()
-                    retrofitService.getLessons(token, LessonFilterObject(status, page, ids))
-                        .body()?.items ?: listOf()
-                }
-                else -> listOf()
-            }
-        }
+            getDataFromApi {retrofitService.getLessons(token, LessonFilterObject(status, page, ids))}
+        }?.items ?: listOf()
     }
 
-    // TODO make generic method!
     // FIXME paging dont work with tariff in API!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     suspend fun getAllTariff(customerId: Int): List<Tariff> {
         val resultList = mutableListOf<Tariff>()
@@ -177,17 +147,21 @@ class SwimmerApi(private val retrofitService: SwimmerApiService) {
     }
 
     private suspend fun getTariffImpl(customerId: Int, page: Int = 0): List<Tariff> {
-        return withContext(Dispatchers.IO) {
-            val response = retrofitService.getCustomerTariff(token, customerId)
-            when {
-                response.isSuccessful -> response.body()?.items ?: listOf()
-                response.code() == tokenErrorCode -> {
-                    getAuthTokenImpl()
-                    retrofitService.getCustomerTariff(token, customerId).body()?.items
-                        ?: listOf()
-                }
-                else -> listOf()
+        val tariffList = withContext(Dispatchers.IO) {
+            getDataFromApi { retrofitService.getCustomerTariff(token, customerId)}
+        }
+        return tariffList?.items ?: listOf()
+    }
+
+    private suspend inline fun <T> getDataFromApi(apiCall:()->Response<T>): T? {
+        val apiResponse = apiCall()
+        return when {
+            apiResponse.isSuccessful -> apiResponse.body()
+            apiResponse.code() == tokenErrorCode -> {
+                getAuthTokenImpl()
+                apiCall().body()
             }
+            else -> null
         }
     }
 }
