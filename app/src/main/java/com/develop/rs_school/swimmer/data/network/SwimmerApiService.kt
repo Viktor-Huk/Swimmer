@@ -62,7 +62,7 @@ class SwimmerApi(private val retrofitService: SwimmerApiService) {
     // TODO to constants
     private var token: String = ""
     val lessonStatusForHistory = 3
-    private val tokenErrorCode = 403
+    private val tokenErrorCode = 401
     private val defaultDateIntervalStart = -182
     private val defaultDateIntervalEnd = 182
 
