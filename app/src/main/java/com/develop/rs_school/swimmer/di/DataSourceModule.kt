@@ -20,7 +20,7 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 import javax.inject.Qualifier
 import javax.inject.Singleton
 
-private const val BASE_URL = "https://mevis.s20.online/v2api/"
+private const val BASE_URL = "https://morning-cove-66722.herokuapp.com/v2api/"
 
 // Tells Dagger this is a Dagger module
 @Module

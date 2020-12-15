@@ -4,15 +4,18 @@ import android.os.Parcelable
 import com.squareup.moshi.Json
 import kotlinx.android.parcel.Parcelize
 
-// FIXME
 @Parcelize
 data class AuthObject(
-    val email: String = "luba200296.lv@gmail.com",
-    @Json(name = "api_key") val apiKey: String = "02bb1557-d34d-11ea-a443-ac1f6b478310"
+    @Json(name = "phoneNumber") var phone: String
 ) : Parcelable
 
 @Parcelize
-data class TokenObject(val token: String) : Parcelable
+data class TokenObject(
+    @Json(name = "id") val id: Int,
+    @Json(name = "type") val type : String,
+    @Json(name = "accessToken") val accessToken : String,
+    @Json(name = "refreshToken") val refreshToken : String,
+    @Json(name = "expiresIn") val expiresIn : Int) : Parcelable
 
 @Parcelize
 data class LessonFilterObject(

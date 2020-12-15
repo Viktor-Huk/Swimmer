@@ -17,7 +17,7 @@ class NetworkAuthSource @Inject constructor(private val swimmerApi: SwimmerApi) 
 
     override suspend fun authorize(authData: String): Result<Int> {
         return try {
-            swimmerApi.firstAuth()
+            swimmerApi.firstAuth(authData)
             val res = swimmerApi.getAllCustomers().first { it.phone.contains(authData) }
             Log.d("1", res.name)
             Result.Success(res.id)

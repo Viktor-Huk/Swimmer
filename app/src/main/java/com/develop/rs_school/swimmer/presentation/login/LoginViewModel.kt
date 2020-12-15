@@ -5,11 +5,11 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.develop.rs_school.swimmer.util.SingleLiveEvent
 import com.develop.rs_school.swimmer.data.AuthSource
 import com.develop.rs_school.swimmer.data.SessionSource
 import com.develop.rs_school.swimmer.di.AuthSourceModule
 import com.develop.rs_school.swimmer.util.Result
+import com.develop.rs_school.swimmer.util.SingleLiveEvent
 import com.develop.rs_school.swimmer.util.getPhoneNumber
 import kotlinx.coroutines.launch
 import java.net.UnknownHostException
@@ -88,8 +88,7 @@ class LoginViewModel @Inject constructor(
             _showCodeBar.value = false
         } else
             viewModelScope.launch {
-                when (val authApiStatus =
-                    authSource.authorize(phone)) {
+                when (val authApiStatus = authSource.authorize(phone)) {
                     is Result.Success -> {
                         saveSession(authApiStatus.data)
                         _goToProfile.value = true

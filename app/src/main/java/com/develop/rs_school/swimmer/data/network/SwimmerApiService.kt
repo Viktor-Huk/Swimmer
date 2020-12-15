@@ -20,6 +20,7 @@ import retrofit2.http.Body
 import retrofit2.http.Header
 import retrofit2.http.POST
 import retrofit2.http.Query
+import java.text.SimpleDateFormat
 import java.util.Date
 
 private const val BRANCH_ID = "2"
@@ -32,28 +33,32 @@ interface SwimmerApiService {
 
     @POST("$BRANCH_ID/customer/index")
     suspend fun getCustomers(
-        @Header("X-ALFACRM-TOKEN") token: String,
-        @Body customerFilterObject: CustomerFilterObject
+        @Header("Authorization") bearer: String,
+        @Body customerFilterObject: CustomerFilterObject,
+        @Header("Content-Type") type: String = "application/json"
     ): Response<CustomerList>
 
     @POST("$BRANCH_ID/lesson/index")
     suspend fun getLessons(
-        @Header("X-ALFACRM-TOKEN") token: String,
-        @Body lessonFilterObject: LessonFilterObject
+        @Header("Authorization") bearer: String,
+        @Body lessonFilterObject: LessonFilterObject,
+        @Header("Content-Type") type: String = "application/json"
     ): Response<LessonList>
 
     @POST("$BRANCH_ID/calendar/customer")
     suspend fun getCustomerCalendar(
-        @Header("X-ALFACRM-TOKEN") token: String,
+        @Header("Authorization") bearer: String,
         @Query(value = "id") id: String,
-        @Query(value = "date1") dateFrom: Date,
-        @Query(value = "date2") dateTo: Date
+        @Query(value = "date1") dateFrom: String,
+        @Query(value = "date2") dateTo: String,
+        @Header("Content-Type") type: String = "application/json"
     ): Response<List<CustomerCalendar>>
 
     @POST("$BRANCH_ID/customer-tariff/index")
     suspend fun getCustomerTariff(
-        @Header("X-ALFACRM-TOKEN") token: String,
-        @Query(value = "customer_id") id: Int
+        @Header("Authorization") bearer: String,
+        @Query(value = "customer_id") id: Int,
+        @Header("Content-Type") type: String = "application/json"
     ): Response<TariffList>
 }
 
@@ -61,19 +66,23 @@ interface SwimmerApiService {
 class SwimmerApi(private val retrofitService: SwimmerApiService) {
     // TODO to constants
     private var token: String = ""
+        get() = "Bearer $field"
     val lessonStatusForHistory = 3
-    private val tokenErrorCode = 401
+    private val tokenErrorCode = 401  // FIXME maybe 403 problem in server
     private val defaultDateIntervalStart = -182
     private val defaultDateIntervalEnd = 182
 
+    private var phoneNumb = "" // FIXME problem with reAuth getAuthTokenImpl()
+
     // TODO make one method for auth
     private suspend fun getAuthTokenImpl() {
-        val auth = AuthObject()
-        token = retrofitService.getAuthToken(auth).token
+        val auth = AuthObject(phone = phoneNumb)
+        token = retrofitService.getAuthToken(auth).accessToken
     }
 
-    suspend fun firstAuth() {
+    suspend fun firstAuth(auth: String) {
         withContext(Dispatchers.IO) {
+            phoneNumb = auth
             getAuthTokenImpl()
         }
     }
@@ -96,8 +105,13 @@ class SwimmerApi(private val retrofitService: SwimmerApiService) {
 
     private suspend fun getCustomersImpl(page: Int = 0, customerId: Int = 0): List<Customer> {
         return withContext(Dispatchers.IO) {
-            getDataFromApi { retrofitService.getCustomers(token, CustomerFilterObject(page, customerId)) }
-            }?.items ?: listOf()
+            getDataFromApi {
+                retrofitService.getCustomers(
+                    token,
+                    CustomerFilterObject(page, customerId)
+                )
+            }
+        }?.items ?: listOf()
     }
 
     suspend fun getCustomerCalendarImpl(
@@ -106,7 +120,14 @@ class SwimmerApi(private val retrofitService: SwimmerApiService) {
         dateTo: Date = getDateDotFormat(getDateWithOffset(defaultDateIntervalEnd))
     ): List<CustomerCalendar> {
         return withContext(Dispatchers.IO) {
-            getDataFromApi { retrofitService.getCustomerCalendar(token, customerId, dateFrom, dateTo) }
+            getDataFromApi {
+                retrofitService.getCustomerCalendar(
+                    token,
+                    customerId,
+                    SimpleDateFormat("dd.MM.yyyy").format(dateFrom),
+                    SimpleDateFormat("dd.MM.yyyy").format(dateTo)
+                )
+            }
         } ?: listOf()
     }
 
@@ -130,7 +151,12 @@ class SwimmerApi(private val retrofitService: SwimmerApiService) {
         ids: List<String> = listOf()
     ): List<Lesson> {
         return withContext(Dispatchers.IO) {
-            getDataFromApi {retrofitService.getLessons(token, LessonFilterObject(status, page, ids))}
+            getDataFromApi {
+                retrofitService.getLessons(
+                    token,
+                    LessonFilterObject(status, page, ids)
+                )
+            }
         }?.items ?: listOf()
     }
 
@@ -148,16 +174,16 @@ class SwimmerApi(private val retrofitService: SwimmerApiService) {
 
     private suspend fun getTariffImpl(customerId: Int, page: Int = 0): List<Tariff> {
         val tariffList = withContext(Dispatchers.IO) {
-            getDataFromApi { retrofitService.getCustomerTariff(token, customerId)}
+            getDataFromApi { retrofitService.getCustomerTariff(token, customerId) }
         }
         return tariffList?.items ?: listOf()
     }
 
-    private suspend inline fun <T> getDataFromApi(apiCall:()->Response<T>): T? {
+    private suspend inline fun <T> getDataFromApi(apiCall: () -> Response<T>): T? {
         val apiResponse = apiCall()
         return when {
             apiResponse.isSuccessful -> apiResponse.body()
-            apiResponse.code() == tokenErrorCode -> {
+            apiResponse.code() == 403 -> {
                 getAuthTokenImpl()
                 apiCall().body()
             }

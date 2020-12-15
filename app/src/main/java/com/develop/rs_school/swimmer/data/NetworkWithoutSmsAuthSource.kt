@@ -9,8 +9,10 @@ import javax.inject.Inject
 class NetworkWithoutSmsAuthSource @Inject constructor(private val swimmerApi: SwimmerApi) : AuthSource {
     override suspend fun authorize(authData: String): Result<Int> {
         return try {
-            swimmerApi.firstAuth()
+            // FIXME with server another way
+            swimmerApi.firstAuth(authData)
             val res = swimmerApi.getAllCustomers().first { it.phone.contains(authData) }
+
             Log.d("1", res.name)
             Result.Success(res.id)
         } catch (e: NoSuchElementException) {
