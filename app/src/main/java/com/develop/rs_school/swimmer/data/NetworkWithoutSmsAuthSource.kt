@@ -30,4 +30,8 @@ class NetworkWithoutSmsAuthSource @Inject constructor(private val swimmerApi: Sw
     override suspend fun sendSms(phone: String) = "success"
 
     override fun smsCodeCheck(code: String) = true
+
+    override fun saveAuthData(authData: String){
+        swimmerApi.setAuthPhone(authData)
+    }
 }

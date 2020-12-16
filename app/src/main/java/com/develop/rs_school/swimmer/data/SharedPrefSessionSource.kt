@@ -9,13 +9,15 @@ class SharedPrefSessionSource @Inject constructor(val context: Context) : Sessio
     private val sharedPreferences =
         context.getSharedPreferences(context.getString(R.string.app_pref), Context.MODE_PRIVATE)
 
-    override fun getSession(): Int {
-        return sharedPreferences.getInt(context.getString(R.string.session_id_pref), 0)
+    override fun getSession(): CustomerSession {
+        return CustomerSession(sharedPreferences.getInt(context.getString(R.string.session_id_pref), 0),
+            sharedPreferences.getString(context.getString(R.string.session_phone_pref), "") ?: "")
     }
 
-    override fun saveSession(session: Int) {
+    override fun saveSession(session: CustomerSession) {
         with(sharedPreferences.edit()) {
-            putInt(context.getString(R.string.session_id_pref), session)
+            putInt(context.getString(R.string.session_id_pref), session.id)
+            putString(context.getString(R.string.session_phone_pref), session.phone)
             apply()
         }
     }
@@ -23,6 +25,7 @@ class SharedPrefSessionSource @Inject constructor(val context: Context) : Sessio
     override fun deleteSession() {
         with(sharedPreferences.edit()) {
             remove(context.getString(R.string.session_id_pref))
+            remove(context.getString(R.string.session_phone_pref))
             commit()
         }
     }

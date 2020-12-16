@@ -29,4 +29,5 @@
     <string name="site_link">Сайт школы http://www.swimmer.by/</string>
     <string name="about_school_title">О школе</string>
     <string name="hint_code">Введите полученный sms код</string>
+    <string name="session_phone_pref">CustomerPhoneInPref</string>
 </resources>

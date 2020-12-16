@@ -76,15 +76,19 @@ class SwimmerApi(private val retrofitService: SwimmerApiService) {
 
     // TODO make one method for auth
     private suspend fun getAuthTokenImpl() {
-        val auth = AuthObject(phone = phoneNumb)
+        val auth = AuthObject(phoneNumb)
         token = retrofitService.getAuthToken(auth).accessToken
     }
 
     suspend fun firstAuth(auth: String) {
         withContext(Dispatchers.IO) {
-            phoneNumb = auth
+            setAuthPhone(auth)
             getAuthTokenImpl()
         }
+    }
+
+    fun setAuthPhone(authPhone: String){
+        phoneNumb = authPhone
     }
 
     // TODO make fabric method
