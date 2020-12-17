@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.develop.rs_school.swimmer.data.AuthSource
+import com.develop.rs_school.swimmer.data.CustomerSession
 import com.develop.rs_school.swimmer.data.SessionSource
 import com.develop.rs_school.swimmer.di.AuthSourceModule
 import com.develop.rs_school.swimmer.util.Result
@@ -35,17 +36,19 @@ class LoginViewModel @Inject constructor(
     val errorString: String
         get() = _errorString
 
-    private fun saveSession(session: Int) {
+    private fun saveSession(session: CustomerSession) {
         sessionSource.saveSession(session)
     }
 
-    private fun getSession(): Int {
+    private fun getSession(): CustomerSession {
         return sessionSource.getSession()
     }
 
     init {
-        if (getSession() != 0) {
+        val session = getSession()
+        if (session.id != 0) {
             _goToProfile.value = true
+            authSource.saveAuthData(session.phone)
         }
     }
 
@@ -90,7 +93,7 @@ class LoginViewModel @Inject constructor(
             viewModelScope.launch {
                 when (val authApiStatus = authSource.authorize(phone)) {
                     is Result.Success -> {
-                        saveSession(authApiStatus.data)
+                        saveSession(CustomerSession(authApiStatus.data, phone))
                         _goToProfile.value = true
                     }
                     is Result.Error -> {

@@ -28,8 +28,13 @@ class NetworkAuthSource @Inject constructor(private val swimmerApi: SwimmerApi) 
             Log.d("1", e.toString())
             Result.Error(e)
         } catch (e: Exception) {
-            Log.d("1", e.toString())
-            Result.Error(e)
+            // FIXME our not very cool server)
+            if (e.toString() == "retrofit2.HttpException: HTTP 403 ")
+                Result.Error(NoSuchElementException())
+            else {
+                Log.d("1", e.toString())
+                Result.Error(e)
+            }
         }
     }
 
@@ -42,4 +47,8 @@ class NetworkAuthSource @Inject constructor(private val swimmerApi: SwimmerApi) 
     private var code = "1234"
 
     override fun smsCodeCheck(code: String) = this.code == code
+
+    override fun saveAuthData(authData: String){
+        swimmerApi.setAuthPhone(authData)
+    }
 }

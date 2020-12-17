@@ -6,10 +6,10 @@ import com.develop.rs_school.swimmer.util.Result
 import java.net.UnknownHostException
 import javax.inject.Inject
 
-class NetworkWithoutSmsAuthSource @Inject constructor(private val swimmerApi: SwimmerApi) : AuthSource {
+class NetworkWithoutSmsAuthSource @Inject constructor(private val swimmerApi: SwimmerApi) :
+    AuthSource {
     override suspend fun authorize(authData: String): Result<Int> {
         return try {
-            // FIXME with server another way
             swimmerApi.firstAuth(authData)
             val res = swimmerApi.getAllCustomers().first { it.phone.contains(authData) }
 
@@ -22,12 +22,21 @@ class NetworkWithoutSmsAuthSource @Inject constructor(private val swimmerApi: Sw
             Log.d("1", e.toString())
             Result.Error(e)
         } catch (e: Exception) {
-            Log.d("1", e.toString())
-            Result.Error(e)
+            // FIXME our not very cool server)
+            if (e.toString() == "retrofit2.HttpException: HTTP 403 ")
+                Result.Error(NoSuchElementException())
+            else {
+                Log.d("1", e.toString())
+                Result.Error(e)
+            }
         }
     }
 
     override suspend fun sendSms(phone: String) = "success"
 
     override fun smsCodeCheck(code: String) = true
+
+    override fun saveAuthData(authData: String) {
+        swimmerApi.setAuthPhone(authData)
+    }
 }

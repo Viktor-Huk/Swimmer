@@ -6,4 +6,5 @@ interface AuthSource {
     suspend fun authorize(authData: String): Result<Int>
     suspend fun sendSms(phone: String): String
     fun smsCodeCheck(code: String): Boolean
+    fun saveAuthData(authData: String)
 }

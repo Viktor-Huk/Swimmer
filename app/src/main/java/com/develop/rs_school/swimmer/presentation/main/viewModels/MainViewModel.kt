@@ -32,7 +32,7 @@ class MainViewModel @Inject constructor(
     val goToLogin: SingleLiveEvent<Boolean>
         get() = _goToLogin
 
-    private var customerId: Int = sessionSource.getSession()
+    private var customerId: Int = sessionSource.getSession().id
 
     init {
         updateData()
